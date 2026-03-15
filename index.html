@@ -78,6 +78,30 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .theme-btn{background:none;border:1px solid var(--border2);border-radius:8px;padding:5px 11px;font-size:12.5px;color:var(--t2);cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s;display:flex;align-items:center;gap:5px;}
 .theme-btn:hover{background:var(--p50);border-color:var(--p400);color:var(--p600);}
 
+/* ══ DROPDOWN NAV ══════════════════════════════════════ */
+.hdr-dropdown{position:relative;display:inline-flex;}
+.hdr-btn-drop{display:flex;align-items:center;gap:5px;}
+.drop-chevron{transition:transform .22s ease;flex-shrink:0;}
+.hdr-dropdown.open .drop-chevron{transform:rotate(180deg);}
+.hdr-drop-menu{
+  position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(-6px);
+  min-width:520px;background:var(--surface);border:1px solid var(--border);
+  border-radius:16px;padding:1rem;box-shadow:var(--shadow-lg);
+  opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:300;
+  display:grid;grid-template-columns:1fr 1fr 1fr;gap:.75rem;
+}
+[data-theme="dark"] .hdr-drop-menu{background:#13112a;border-color:#2a2450;}
+.hdr-dropdown.open .hdr-drop-menu{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0);}
+.hdm-group{}
+.hdm-group-label{font-family:'Inter',sans-serif;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);padding:0 .5rem .5rem;margin-bottom:.2rem;}
+.hdm-item{width:100%;display:flex;align-items:center;gap:10px;padding:.55rem .6rem;border-radius:10px;border:none;background:none;cursor:pointer;transition:background .15s;text-align:left;}
+.hdm-item:hover{background:var(--p50);}
+[data-theme="dark"] .hdm-item:hover{background:var(--p100);}
+.hdm-icon{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0;}
+.hdm-title{font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:var(--t1);line-height:1.2;}
+.hdm-sub{font-family:'Inter',sans-serif;font-size:10.5px;color:var(--t3);margin-top:1px;line-height:1.3;}
+/* close dropdown on outside click */
+
 /* ══ HERO ══════════════════════════════════════════════ */
 .hero{position:relative;overflow:hidden;padding:5.5rem 1.5rem 4.5rem;text-align:center;}
 #hero-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;}
@@ -105,6 +129,8 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 /* ══ LAYOUT ════════════════════════════════════════════ */
 .container{max-width:1380px;margin:0 auto;padding:0 1.5rem;position:relative;z-index:1;}
 .section{padding:4rem 0;}
+/* Provider deep-dive sections sit tighter — they have their own internal spacing */
+#aws.section, #azure.section, #gcp.section{padding:2rem 0 1rem;}
 .sec-label{display:inline-flex;align-items:center;gap:7px;font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--p500);margin-bottom:.7rem;}
 .sec-label::before{content:'';width:18px;height:2px;background:var(--p400);border-radius:2px;}
 .sec-title{font-family:'Outfit',sans-serif;font-size:clamp(1.6rem,3vw,2.3rem);font-weight:800;letter-spacing:-.03em;color:var(--t1);line-height:1.12;}
@@ -112,99 +138,184 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 
 /* ══ PROVIDER BANNERS ══════════════════════════════════ */
 .providers-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:2.5rem;}
-.pvdr-banner{border-radius:20px;padding:2rem;border:1.5px solid;position:relative;overflow:hidden;cursor:pointer;transition:transform .25s cubic-bezier(.4,0,.2,1),box-shadow .25s;}
-.pvdr-banner:hover{transform:translateY(-6px);}
-.pvdr-banner canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;}
-.pvdr-content{position:relative;z-index:1;}
+.pvdr-banner{
+  border-radius:22px;border:1.5px solid;position:relative;overflow:hidden;cursor:pointer;
+  transition:transform .32s cubic-bezier(.34,1.2,.64,1),box-shadow .32s;
+  display:flex;flex-direction:column;background:var(--surface);
+}
+.pvdr-banner:hover{transform:translateY(-8px);}
+/* Canvas sits ONLY in the bottom decorative strip — never overlaps text */
+.pvdr-banner canvas{
+  position:absolute;bottom:0;left:0;right:0;
+  width:100% !important;height:80px !important;
+  pointer-events:none;z-index:0;opacity:.5;
+}
+.pvdr-content{position:relative;z-index:2;display:flex;flex-direction:column;flex:1;padding:1.75rem 1.75rem 1.4rem;}
 .pb-aws{background:var(--aws-bg);border-color:var(--aws-b);}
-.pb-aws:hover{box-shadow:0 16px 48px rgba(255,153,0,.2);}
+.pb-aws:hover{box-shadow:0 20px 56px rgba(255,153,0,.22);}
 .pb-az{background:var(--az-bg);border-color:var(--az-b);}
-.pb-az:hover{box-shadow:0 16px 48px rgba(0,120,212,.2);}
+.pb-az:hover{box-shadow:0 20px 56px rgba(0,120,212,.22);}
 .pb-gcp{background:var(--gcp-bg);border-color:var(--gcp-b);}
-.pb-gcp:hover{box-shadow:0 16px 48px rgba(66,133,244,.2);}
-.pb-logo{width:50px;height:50px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;box-shadow:var(--shadow-sm);font-size:1.5rem;}
+.pb-gcp:hover{box-shadow:0 20px 56px rgba(66,133,244,.22);}
+/* Provider top accent bar */
+.pvdr-banner::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;z-index:1;}
+.pb-aws::before{background:linear-gradient(90deg,#ff9900,#ffb830);}
+.pb-az::before{background:linear-gradient(90deg,#0078D4,#3b9ef5);}
+.pb-gcp::before{background:linear-gradient(90deg,#4285F4,#34a853,#fbbc05);}
+/* Logo */
+.pb-logo{width:50px;height:50px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;box-shadow:0 4px 14px rgba(0,0,0,.15);font-size:1.5rem;flex-shrink:0;}
 .pb-logo-aws{background:linear-gradient(135deg,#ff9900,#e68900);}
 .pb-logo-az{background:linear-gradient(135deg,#0078D4,#005ea3);}
 .pb-logo-gcp{background:linear-gradient(135deg,#4285F4,#2563d0);}
-.pb-name{font-family:'Outfit',sans-serif;font-size:1.25rem;font-weight:800;letter-spacing:-.02em;margin-bottom:.3rem;}
+/* Name + tagline */
+.pb-name{font-family:'Outfit',sans-serif;font-size:1.2rem;font-weight:800;letter-spacing:-.02em;margin-bottom:.35rem;}
 .pb-aws .pb-name{color:#a16500;}
 .pb-az .pb-name{color:var(--az2);}
 .pb-gcp .pb-name{color:var(--gcp2);}
 [data-theme="dark"] .pb-aws .pb-name{color:#ffa720;}
 [data-theme="dark"] .pb-az .pb-name{color:#4ea8ff;}
 [data-theme="dark"] .pb-gcp .pb-name{color:#7ab0ff;}
-.pb-tagline{font-family:'Inter',sans-serif;font-size:13.5px;color:var(--t2);margin-bottom:1.2rem;line-height:1.6;}
-.pb-chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.4rem;}
-.pb-chip{font-family:'Inter',sans-serif;font-size:11px;font-weight:600;padding:3px 10px;border-radius:10px;border:1px solid;}
+.pb-tagline{font-family:'Inter',sans-serif;font-size:13px;color:var(--t2);margin-bottom:1.1rem;line-height:1.6;}
+/* Keyword chips */
+.pb-chips{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:1.2rem;}
+.pb-chip{font-family:'Inter',sans-serif;font-size:10.5px;font-weight:600;padding:3px 9px;border-radius:8px;border:1px solid;}
 .pbc-aws{background:rgba(255,153,0,.1);border-color:rgba(255,153,0,.3);color:#a16500;}
 .pbc-az{background:rgba(0,120,212,.08);border-color:rgba(0,120,212,.25);color:var(--az2);}
 .pbc-gcp{background:rgba(66,133,244,.08);border-color:rgba(66,133,244,.25);color:var(--gcp2);}
 [data-theme="dark"] .pbc-aws{color:#ffa720;}
 [data-theme="dark"] .pbc-az{color:#4ea8ff;}
 [data-theme="dark"] .pbc-gcp{color:#7ab0ff;}
-.pb-svcs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:1.5rem;}
-.pb-svc{padding:8px 5px;border-radius:10px;text-align:center;border:1px solid;transition:transform .15s;}
-.pb-svc:hover{transform:scale(1.05);}
-.ps-aws{background:rgba(255,153,0,.07);border-color:rgba(255,153,0,.2);}
-.ps-az{background:rgba(0,120,212,.06);border-color:rgba(0,120,212,.18);}
-.ps-gcp{background:rgba(66,133,244,.06);border-color:rgba(66,133,244,.18);}
-.pb-svc-icon{font-size:18px;line-height:1;margin-bottom:3px;}
-.pb-svc-name{font-size:11px;font-weight:700;color:var(--t1);}
-.pb-svc-lbl{font-size:10px;color:var(--t3);}
-.pb-cta{display:inline-flex;align-items:center;gap:6px;padding:9px 20px;border-radius:22px;font-size:13px;font-weight:600;border:none;cursor:pointer;font-family:'Inter',sans-serif;transition:transform .2s,box-shadow .2s;}
+/* Mini services 2×3 grid */
+.pb-svcs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:1.4rem;flex:1;}
+.pb-svc{padding:9px 6px 8px;border-radius:10px;text-align:center;border:1px solid;transition:transform .18s,box-shadow .18s;background:var(--surface);}
+.pb-svc:hover{transform:scale(1.06);box-shadow:var(--shadow-sm);}
+.ps-aws{border-color:rgba(255,153,0,.22);}
+.ps-az{border-color:rgba(0,120,212,.2);}
+.ps-gcp{border-color:rgba(66,133,244,.2);}
+.pb-svc-icon{font-size:18px;line-height:1;margin-bottom:4px;}
+.pb-svc-name{font-family:'Outfit',sans-serif;font-size:11px;font-weight:700;color:var(--t1);line-height:1.2;}
+.pb-svc-lbl{font-family:'Inter',sans-serif;font-size:9.5px;color:var(--t3);margin-top:1px;}
+/* CTA button */
+.pb-cta{display:inline-flex;align-items:center;gap:7px;padding:10px 22px;border-radius:24px;font-size:13px;font-weight:600;border:none;cursor:pointer;font-family:'Inter',sans-serif;transition:transform .2s,box-shadow .2s;align-self:flex-start;margin-top:auto;}
 .pb-cta:hover{transform:translateY(-2px);}
 .cta-aws{background:linear-gradient(135deg,var(--aws),var(--aws2));color:white;box-shadow:0 4px 16px rgba(255,153,0,.35);}
-.cta-aws:hover{box-shadow:0 7px 24px rgba(255,153,0,.5);}
+.cta-aws:hover{box-shadow:0 8px 28px rgba(255,153,0,.5);}
 .cta-az{background:linear-gradient(135deg,var(--az),var(--az2));color:white;box-shadow:0 4px 16px rgba(0,120,212,.35);}
-.cta-az:hover{box-shadow:0 7px 24px rgba(0,120,212,.5);}
+.cta-az:hover{box-shadow:0 8px 28px rgba(0,120,212,.5);}
 .cta-gcp{background:linear-gradient(135deg,var(--gcp),var(--gcp2));color:white;box-shadow:0 4px 16px rgba(66,133,244,.35);}
-.cta-gcp:hover{box-shadow:0 7px 24px rgba(66,133,244,.5);}
+.cta-gcp:hover{box-shadow:0 8px 28px rgba(66,133,244,.5);}
+/* Stagger entrance animation for banner cards */
+.pvdr-banner:nth-child(1){animation:fadeUp .5s .1s both;}
+.pvdr-banner:nth-child(2){animation:fadeUp .5s .2s both;}
+.pvdr-banner:nth-child(3){animation:fadeUp .5s .3s both;}
 
 /* ══ CARD ══════════════════════════════════════════════ */
 .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem;box-shadow:0 1px 4px rgba(99,65,204,.06);transition:transform .25s,box-shadow .25s,border-color .25s;}
 .card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:var(--border2);}
 
 /* ══ PROVIDER DETAIL SECTIONS ══════════════════════════ */
-.ps-section{border-radius:22px;padding:2.5rem;margin-bottom:3rem;border:1.5px solid;position:relative;overflow:hidden;}
+.ps-section{border-radius:24px;padding:0;margin-bottom:2.5rem;border:1.5px solid;position:relative;overflow:hidden;box-shadow:var(--shadow-md);transition:box-shadow .3s;}
+.ps-section:hover{box-shadow:var(--shadow-lg);}
 .ps-aws{background:var(--aws-bg);border-color:var(--aws-b);}
 .ps-az{background:var(--az-bg);border-color:var(--az-b);}
 .ps-gcp{background:var(--gcp-bg);border-color:var(--gcp-b);}
-.ps-hdr{display:flex;align-items:center;gap:14px;margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid;}
+/* Top accent bar */
+.ps-section::before{content:'';display:block;height:4px;width:100%;}
+.ps-aws::before{background:linear-gradient(90deg,#ff9900,#ffb830,#e68900);}
+.ps-az::before{background:linear-gradient(90deg,#0078D4,#3b9ef5,#005ea3);}
+.ps-gcp::before{background:linear-gradient(90deg,#4285F4,#34a853,#fbbc05,#ea4335);}
+/* Header */
+.ps-hdr{display:flex;align-items:center;gap:16px;padding:1.5rem 2rem 1.3rem;border-bottom:1px solid;}
 .ps-aws .ps-hdr{border-color:var(--aws-b);}
 .ps-az .ps-hdr{border-color:var(--az-b);}
 .ps-gcp .ps-hdr{border-color:var(--gcp-b);}
-.ps-logo{width:54px;height:54px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;box-shadow:var(--shadow-sm);}
-.ps-name{font-family:'Outfit',sans-serif;font-size:1.55rem;font-weight:800;letter-spacing:-.03em;}
-.ps-sub{font-family:'Inter',sans-serif;font-size:13.5px;color:var(--t2);margin-top:3px;}
-.ps-badges{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap;}
-.ps-badge{font-family:'Inter',sans-serif;font-size:11px;font-weight:600;padding:4px 11px;border-radius:10px;border:1px solid;}
+.ps-logo{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;box-shadow:0 4px 14px rgba(0,0,0,.15);}
+.ps-hdr-text{flex:1;min-width:0;}
+.ps-name{font-family:'Outfit',sans-serif;font-size:1.4rem;font-weight:800;letter-spacing:-.03em;}
+.ps-sub{font-family:'Inter',sans-serif;font-size:13px;color:var(--t2);margin-top:3px;}
+.ps-badges{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;}
+.ps-badge{font-family:'Inter',sans-serif;font-size:11px;font-weight:600;padding:4px 11px;border-radius:8px;border:1px solid;white-space:nowrap;}
 .pb-aws-b{background:rgba(255,153,0,.1);border-color:rgba(255,153,0,.3);color:#a16500;}
 .pb-az-b{background:rgba(0,120,212,.08);border-color:rgba(0,120,212,.25);color:var(--az2);}
 .pb-gcp-b{background:rgba(66,133,244,.08);border-color:rgba(66,133,244,.25);color:var(--gcp2);}
 [data-theme="dark"] .pb-aws-b{color:#ffa720;}
 [data-theme="dark"] .pb-az-b{color:#4ea8ff;}
 [data-theme="dark"] .pb-gcp-b{color:#7ab0ff;}
-.ps-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.8rem;}
-.ps-tab{background:none;border:1.5px solid var(--border);padding:7px 16px;border-radius:20px;font-family:'Inter',sans-serif;font-size:13px;font-weight:500;color:var(--t2);cursor:pointer;transition:all .18s;white-space:nowrap;}
-.ps-tab:hover,.ps-tab.active{background:var(--surface);border-color:var(--border2);color:var(--t1);box-shadow:var(--shadow-sm);}
-.ps-tab.active{font-weight:600;background:var(--surface);}
-.pt-aws.active{border-color:var(--aws)!important;color:#a16500!important;background:var(--aws-bg)!important;}
-.pt-az.active{border-color:var(--az)!important;color:var(--az2)!important;background:var(--az-bg)!important;}
-.pt-gcp.active{border-color:var(--gcp)!important;color:var(--gcp2)!important;background:var(--gcp-bg)!important;}
+/* Tab bar — segmented control style */
+.ps-tab-bar{display:flex;align-items:center;padding:.75rem 1.5rem;border-bottom:1px solid;overflow-x:auto;scrollbar-width:none;}
+.ps-tab-bar::-webkit-scrollbar{display:none;}
+.ps-aws .ps-tab-bar{border-color:var(--aws-b);background:rgba(255,153,0,.03);}
+.ps-az .ps-tab-bar{border-color:var(--az-b);background:rgba(0,120,212,.025);}
+.ps-gcp .ps-tab-bar{border-color:var(--gcp-b);background:rgba(66,133,244,.025);}
+.ps-tabs{display:flex;gap:3px;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:3px;flex-shrink:0;}
+.ps-tab{background:none;border:none;padding:7px 18px;border-radius:7px;font-family:'Inter',sans-serif;font-size:13px;font-weight:500;color:var(--t2);cursor:pointer;transition:all .18s;white-space:nowrap;display:flex;align-items:center;gap:6px;}
+.ps-tab:hover{color:var(--t1);background:rgba(255,255,255,.5);}
+.ps-tab.active{font-weight:600;background:var(--surface);color:var(--t1);box-shadow:0 1px 5px rgba(0,0,0,.12);}
+.pt-aws.active{color:#a16500!important;}
+.pt-az.active{color:var(--az2)!important;}
+.pt-gcp.active{color:var(--gcp2)!important;}
 [data-theme="dark"] .pt-aws.active{color:#ffa720!important;}
 [data-theme="dark"] .pt-az.active{color:#4ea8ff!important;}
 [data-theme="dark"] .pt-gcp.active{color:#7ab0ff!important;}
-.ps-panel{display:none;animation:fadeIn .25s ease;}
+/* Panel content area */
+.ps-panel{display:none;animation:fadeIn .3s ease;padding:1.75rem 2rem 2rem;}
 .ps-panel.active{display:block;}
+/* Ensure canvas inside panel fills correctly */
+.ps-panel .cvs-wrap{margin-bottom:1.25rem;}
+.ps-panel .cvs-wrap canvas{display:block;width:100%;}
 
 /* ══ SERVICE GRID ══════════════════════════════════════ */
-.svc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:.8rem;}
-.svc-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem;transition:all .2s;cursor:default;}
-.svc-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-sm);}
-.svc-icon{font-size:24px;margin-bottom:.5rem;line-height:1;}
-.svc-name{font-size:13px;font-weight:700;color:var(--t1);margin-bottom:2px;}
-.svc-cat{font-size:11px;color:var(--t3);font-weight:600;letter-spacing:.04em;text-transform:uppercase;}
-.svc-desc{font-size:12.5px;color:var(--t2);margin-top:5px;line-height:1.55;}
+/* Category filter strip */
+.svc-filter-bar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.2rem;align-items:center;}
+.svc-filter-label{font-family:'Inter',sans-serif;font-size:10.5px;font-weight:700;color:var(--t3);letter-spacing:.07em;text-transform:uppercase;margin-right:2px;}
+.svc-filter-btn{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:4px 12px;font-family:'Inter',sans-serif;font-size:11.5px;font-weight:500;color:var(--t2);cursor:pointer;transition:all .15s;white-space:nowrap;}
+.svc-filter-btn:hover{border-color:var(--border2);color:var(--t1);}
+.svc-filter-btn.active{font-weight:600;border-color:var(--border2);background:var(--surface);color:var(--t1);}
+.fb-aws.active{background:var(--aws-bg)!important;border-color:var(--aws-b)!important;color:#a16500!important;}
+.fb-az.active{background:var(--az-bg)!important;border-color:var(--az-b)!important;color:var(--az2)!important;}
+.fb-gcp.active{background:var(--gcp-bg)!important;border-color:var(--gcp-b)!important;color:var(--gcp2)!important;}
+[data-theme="dark"] .fb-aws.active{color:#ffa720!important;}
+[data-theme="dark"] .fb-az.active{color:#4ea8ff!important;}
+[data-theme="dark"] .fb-gcp.active{color:#7ab0ff!important;}
+.svc-card.svc-hidden{display:none!important;}
+/* Cards — with entrance stagger animation */
+.svc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:1rem;}
+.svc-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.1rem 1rem 1rem;cursor:default;display:flex;flex-direction:column;position:relative;overflow:hidden;
+  opacity:1;transform:none;
+  transition:transform .22s cubic-bezier(.4,0,.2,1),box-shadow .22s,border-color .22s;}
+/* Animate cards when panel is freshly shown */
+.ps-panel.tab-entering .svc-card{animation:svcIn .35s forwards;opacity:0;transform:translateY(10px);}
+@keyframes svcIn{to{opacity:1;transform:translateY(0);}}
+.ps-panel.tab-entering .svc-card:nth-child(1){animation-delay:.03s;}
+.ps-panel.tab-entering .svc-card:nth-child(2){animation-delay:.07s;}
+.ps-panel.tab-entering .svc-card:nth-child(3){animation-delay:.11s;}
+.ps-panel.tab-entering .svc-card:nth-child(4){animation-delay:.15s;}
+.ps-panel.tab-entering .svc-card:nth-child(5){animation-delay:.19s;}
+.ps-panel.tab-entering .svc-card:nth-child(6){animation-delay:.23s;}
+.ps-panel.tab-entering .svc-card:nth-child(7){animation-delay:.27s;}
+.ps-panel.tab-entering .svc-card:nth-child(8){animation-delay:.31s;}
+.ps-panel.tab-entering .svc-card:nth-child(9){animation-delay:.35s;}
+.ps-panel.tab-entering .svc-card:nth-child(10){animation-delay:.39s;}
+.ps-panel.tab-entering .svc-card:nth-child(11){animation-delay:.43s;}
+.ps-panel.tab-entering .svc-card:nth-child(12){animation-delay:.47s;}
+.svc-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);border-color:var(--border2);}
+.svc-aws-card:hover{border-color:var(--aws-b);box-shadow:0 8px 28px rgba(255,153,0,.12);}
+.svc-az-card:hover{border-color:var(--az-b);box-shadow:0 8px 28px rgba(0,120,212,.10);}
+.svc-gcp-card:hover{border-color:var(--gcp-b);box-shadow:0 8px 28px rgba(66,133,244,.10);}
+.svc-card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:.75rem;}
+.svc-icon-wrap{width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:1.25rem;flex-shrink:0;}
+.svc-cat-pill{font-family:'Inter',sans-serif;font-size:9.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:5px;align-self:flex-start;margin-top:2px;}
+.cat-pill-aws{background:rgba(255,153,0,.12);color:#a16500;}
+.cat-pill-az{background:rgba(0,120,212,.08);color:var(--az2);}
+.cat-pill-gcp{background:rgba(66,133,244,.08);color:var(--gcp2);}
+[data-theme="dark"] .cat-pill-aws{color:#ffa720;}
+[data-theme="dark"] .cat-pill-az{color:#4ea8ff;}
+[data-theme="dark"] .cat-pill-gcp{color:#7ab0ff;}
+.svc-name{font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;color:var(--t1);margin-bottom:3px;letter-spacing:-.01em;line-height:1.25;}
+.svc-cat{display:none;}
+.svc-desc{font-size:12px;color:var(--t2);line-height:1.55;flex:1;}
+.svc-card.svc-hidden{display:none!important;}
+
 
 /* ══ CANVAS CARDS ══════════════════════════════════════ */
 .cvs-wrap{background:#0c0a1e;border-radius:14px;overflow:hidden;border:1px solid var(--border2);}
@@ -312,12 +423,71 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .ck{color:#9d8df5;}.cs{color:#86efac;}.cc{color:#4a4570;font-style:italic;}.cf{color:#60a5fa;}.cn{color:#fbbf24;}.cv{color:#f472b6;}
 
 /* ══ BEST PRACTICES ════════════════════════════════════ */
-.bp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem;}
-.bp-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.2rem;display:flex;gap:12px;transition:all .2s;}
-.bp-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-sm);border-color:var(--border2);}
-.bp-icon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
-.bp-title{font-size:14px;font-weight:600;color:var(--t1);margin-bottom:4px;}
-.bp-desc{font-size:13px;color:var(--t2);line-height:1.6;}
+/* Section header row */
+.bp-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:.75rem;}
+.bp-header-title{font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;color:var(--t1);letter-spacing:-.01em;display:flex;align-items:center;gap:8px;}
+.bp-header-count{font-family:'Inter',sans-serif;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;background:var(--p50);color:var(--p500);border:1px solid var(--p200);}
+
+/* Pillar tabs */
+.bp-pillars{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.5rem;}
+.bp-pillar{font-family:'Inter',sans-serif;font-size:11.5px;font-weight:500;padding:4px 13px;border-radius:20px;border:1px solid var(--border);background:var(--surface);color:var(--t2);cursor:pointer;transition:all .18s;}
+.bp-pillar:hover{border-color:var(--border2);color:var(--t1);}
+.bp-pillar.active{font-weight:600;background:var(--p50);border-color:var(--p200);color:var(--p600);}
+.bp-aws-pillar.active{background:var(--aws-bg);border-color:var(--aws-b);color:#a16500;}
+.bp-az-pillar.active{background:var(--az-bg);border-color:var(--az-b);color:var(--az2);}
+.bp-gcp-pillar.active{background:var(--gcp-bg);border-color:var(--gcp-b);color:var(--gcp2);}
+[data-theme="dark"] .bp-aws-pillar.active{color:#ffa720;}
+[data-theme="dark"] .bp-az-pillar.active{color:#4ea8ff;}
+[data-theme="dark"] .bp-gcp-pillar.active{color:#7ab0ff;}
+
+/* Card grid */
+.bp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1rem;}
+
+/* Individual card */
+.bp-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:16px;
+  padding:0;overflow:hidden;transition:transform .25s cubic-bezier(.4,0,.2,1),box-shadow .25s,border-color .25s;
+  display:flex;flex-direction:column;position:relative;cursor:default;
+}
+.bp-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);border-color:var(--border2);}
+
+/* Left accent bar per provider */
+.bp-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:3px 0 0 3px;}
+.bp-aws-card::before{background:linear-gradient(180deg,#ff9900,#e68900);}
+.bp-az-card::before{background:linear-gradient(180deg,#0078D4,#005ea3);}
+.bp-gcp-card::before{background:linear-gradient(180deg,#4285F4,#34a853);}
+.bp-card:hover.bp-aws-card{border-color:var(--aws-b);box-shadow:0 8px 28px rgba(255,153,0,.1);}
+.bp-card:hover.bp-az-card{border-color:var(--az-b);box-shadow:0 8px 28px rgba(0,120,212,.1);}
+.bp-card:hover.bp-gcp-card{border-color:var(--gcp-b);box-shadow:0 8px 28px rgba(66,133,244,.1);}
+
+/* Card body */
+.bp-body{padding:1.25rem 1.25rem 1rem 1.5rem;flex:1;display:flex;flex-direction:column;gap:.6rem;}
+
+/* Top row: icon + number badge */
+.bp-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:.1rem;}
+.bp-icon{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,.08);}
+.bp-num{font-family:'Outfit',sans-serif;font-size:10px;font-weight:800;letter-spacing:.06em;color:var(--t3);background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:2px 7px;line-height:1.4;}
+
+/* Title */
+.bp-title{font-family:'Outfit',sans-serif;font-size:14.5px;font-weight:700;color:var(--t1);line-height:1.25;letter-spacing:-.01em;}
+
+/* Description */
+.bp-desc{font-family:'Inter',sans-serif;font-size:12.5px;color:var(--t2);line-height:1.65;flex:1;}
+
+/* Footer row: category tag + arrow */
+.bp-footer{display:flex;align-items:center;justify-content:space-between;padding:.7rem 1.25rem .85rem 1.5rem;border-top:1px solid var(--border);margin-top:auto;}
+.bp-tag{font-family:'Inter',sans-serif;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:2px 8px;border-radius:5px;}
+.bp-aws-tag{background:rgba(255,153,0,.1);color:#a16500;}
+.bp-az-tag{background:rgba(0,120,212,.08);color:var(--az2);}
+.bp-gcp-tag{background:rgba(66,133,244,.08);color:var(--gcp2);}
+[data-theme="dark"] .bp-aws-tag{color:#ffa720;}
+[data-theme="dark"] .bp-az-tag{color:#4ea8ff;}
+[data-theme="dark"] .bp-gcp-tag{color:#7ab0ff;}
+.bp-arrow{font-size:14px;color:var(--t3);transition:transform .2s,color .2s;line-height:1;}
+.bp-card:hover .bp-arrow{transform:translateX(3px);color:var(--t2);}
+
+/* Hide filtered cards */
+.bp-card.bp-hidden{display:none!important;}
 
 /* ══ COMPARISON TABLE ══════════════════════════════════ */
 .cmp-wrap{background:var(--surface);border:1px solid var(--border);border-radius:20px;overflow:hidden;overflow-x:auto;box-shadow:var(--shadow-sm);}
@@ -477,23 +647,75 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .cmp-table tbody tr:hover td:first-child{border-left-color:var(--p400);}
 /* Canvas controls wrap nicely */
 .cvs-ctrls{display:flex;gap:7px;padding:10px 14px;background:rgba(255,255,255,.03);border-top:1px solid rgba(255,255,255,.06);flex-wrap:wrap;align-items:center;}
-/* Smooth provider banner entry */
-.pvdr-banner{transform:translateY(0);transition:transform .28s cubic-bezier(.4,0,.2,1),box-shadow .28s;}
-/* Better svc-grid min size on wide screens */
-.svc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:.9rem;}
-/* Info card title larger */
+/* Provider banner canvas spacer and arrow */
+.pb-canvas-spacer{height:68px;flex-shrink:0;pointer-events:none;}
+.pb-arrow{display:inline-block;transition:transform .25s cubic-bezier(.34,1.5,.64,1);}
+.pvdr-banner:hover .pb-arrow{transform:translateX(4px);}
+/* Info card title */
 .info-title{font-family:'Inter',sans-serif;font-size:13.5px;font-weight:700;color:var(--t1);margin-bottom:.8rem;display:flex;align-items:center;gap:6px;}
-/* Provider section panel transition */
-.ps-panel{display:none;animation:fadeIn .3s ease;}
-.ps-panel.active{display:block;}
 /* Hero stats divider */
 .hero-stats{display:flex;justify-content:center;gap:0;flex-wrap:wrap;animation:fadeUp .6s .4s ease both;border-top:1px solid var(--border2);margin-top:2rem;padding-top:2rem;}
 .hero-stats>div{padding:0 2.5rem;border-right:1px solid var(--border);}
 .hero-stats>div:last-child{border-right:none;}
 @media(max-width:600px){.hero-stats>div{border-right:none;padding:.6rem 1.2rem;}}
 
-@media(max-width:960px){.providers-grid{grid-template-columns:1fr;}.info-grid{grid-template-columns:1fr;}.res-grid{grid-template-columns:1fr 1fr;}.hdr-nav{display:none;}}
-@media(max-width:600px){.res-grid{grid-template-columns:1fr;}.hero-stats{gap:1.2rem;}}
+/* ══ ARCHITECTURE & SECURITY SECTIONS ═════════════════ */
+/* Shared section shell */
+.arch-section{border-radius:24px;border:1.5px solid var(--border);overflow:hidden;margin-bottom:3rem;background:var(--surface);box-shadow:var(--shadow-sm);}
+.arch-hdr{display:flex;align-items:center;gap:16px;padding:1.6rem 2rem 1.4rem;border-bottom:1px solid var(--border);position:relative;}
+.arch-hdr::before{content:'';position:absolute;top:0;left:0;right:0;height:3.5px;}
+.arch-icon-wrap{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;box-shadow:0 4px 14px rgba(0,0,0,.12);}
+.arch-hdr-text{flex:1;}
+.arch-title{font-family:'Outfit',sans-serif;font-size:1.4rem;font-weight:800;letter-spacing:-.03em;color:var(--t1);}
+.arch-subtitle{font-family:'Inter',sans-serif;font-size:13px;color:var(--t2);margin-top:3px;}
+.arch-badges{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap;}
+.arch-badge{font-family:'Inter',sans-serif;font-size:11px;font-weight:600;padding:4px 11px;border-radius:8px;border:1px solid var(--border);color:var(--t2);background:var(--p50);}
+/* Body layout */
+.arch-body{display:grid;grid-template-columns:1fr 1fr;gap:0;}
+.arch-body.single{grid-template-columns:1fr;}
+.arch-canvas-col{background:#0c0a1e;border-right:1px solid #1a1640;position:relative;min-height:300px;}
+.arch-canvas-col canvas{display:block;width:100%;}
+.arch-canvas-ctrls{display:flex;gap:6px;padding:10px 14px;background:rgba(255,255,255,.03);border-top:1px solid rgba(255,255,255,.07);flex-wrap:wrap;}
+.arch-info-col{padding:1.75rem 2rem;display:flex;flex-direction:column;gap:1.25rem;}
+/* Description prose */
+.arch-desc{font-family:'Inter',sans-serif;font-size:13.5px;color:var(--t2);line-height:1.75;}
+.arch-desc strong{color:var(--t1);font-weight:600;}
+/* Feature bullets */
+.arch-features{display:flex;flex-direction:column;gap:.6rem;}
+.arch-feature{display:flex;align-items:flex-start;gap:10px;padding:.7rem .9rem;border-radius:10px;background:var(--bg);border:1px solid var(--border);transition:all .2s;}
+.arch-feature:hover{border-color:var(--border2);background:var(--surface);transform:translateX(3px);}
+.af-icon{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0;}
+.af-title{font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:var(--t1);line-height:1.3;}
+.af-desc{font-family:'Inter',sans-serif;font-size:11.5px;color:var(--t3);line-height:1.45;margin-top:1px;}
+/* Use-cases row */
+.arch-usecases{display:flex;flex-wrap:wrap;gap:.5rem;}
+.arch-usecase{font-family:'Inter',sans-serif;font-size:11.5px;font-weight:500;padding:4px 12px;border-radius:20px;border:1px solid var(--border);background:var(--p50);color:var(--p600);}
+/* Comparison grid for tiers */
+.tier-compare{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:.25rem;}
+.tc-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:1rem;}
+.tc-label{font-family:'Inter',sans-serif;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--t3);margin-bottom:.4rem;}
+.tc-val{font-family:'Inter',sans-serif;font-size:12.5px;color:var(--t1);line-height:1.5;}
+/* Security cards grid */
+.sec-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem;padding:1.75rem 2rem;}
+.sec-card{background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:1.1rem;transition:all .22s;overflow:hidden;position:relative;}
+.sec-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.sec-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:var(--border2);}
+.sc-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.15rem;margin-bottom:.75rem;}
+.sc-title{font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;color:var(--t1);margin-bottom:.35rem;letter-spacing:-.01em;}
+.sc-desc{font-family:'Inter',sans-serif;font-size:12px;color:var(--t2);line-height:1.6;}
+.sc-tags{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.65rem;}
+.sc-tag{font-size:10px;font-weight:600;padding:2px 7px;border-radius:5px;font-family:'Inter',sans-serif;}
+.arch-hdr::before{content:'';position:absolute;top:0;left:0;right:0;height:3.5px;background:var(--accent,linear-gradient(90deg,var(--p500),#1d4ed8));}
+/* Per-section accent overrides injected via inline style --accent */
+@media(max-width:900px){
+  .arch-body{grid-template-columns:1fr;}
+  .arch-canvas-col{border-right:none;border-bottom:1px solid #1a1640;}
+  .tier-compare{grid-template-columns:1fr;}
+  .info-grid{grid-template-columns:1fr;}
+  .res-grid{grid-template-columns:1fr 1fr;}
+  .providers-grid{grid-template-columns:1fr;}
+}
+@media(max-width:960px){.hdr-drop-menu{min-width:280px;grid-template-columns:1fr;}.hdr-nav{display:flex;gap:2px;}}
 </style>
 </head>
 <body>
@@ -514,11 +736,64 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
     </div>
     <nav class="hdr-nav">
       <button class="hdr-btn" onclick="scrollToSec('providers')">Providers</button>
+      <!-- Architecture dropdown -->
+      <div class="hdr-dropdown">
+        <button class="hdr-btn hdr-btn-drop" onclick="toggleDrop(this)">
+          Architecture
+          <svg class="drop-chevron" viewBox="0 0 12 8" width="10" height="7" fill="none"><path d="M1 1.5l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </button>
+        <div class="hdr-drop-menu">
+          <div class="hdm-group">
+            <div class="hdm-group-label">Business Models</div>
+            <button class="hdm-item" onclick="closeDrop();scrollToSec('b2b-arch')">
+              <span class="hdm-icon" style="background:linear-gradient(135deg,#6366f1,#4f46e5);">🏢</span>
+              <div><div class="hdm-title">B2B Architecture</div><div class="hdm-sub">Business-to-Business cloud patterns</div></div>
+            </button>
+            <button class="hdm-item" onclick="closeDrop();scrollToSec('b2c-arch')">
+              <span class="hdm-icon" style="background:linear-gradient(135deg,#ec4899,#db2777);">👤</span>
+              <div><div class="hdm-title">B2C Architecture</div><div class="hdm-sub">Consumer-scale cloud design</div></div>
+            </button>
+          </div>
+          <div class="hdm-group">
+            <div class="hdm-group-label">Application Tiers</div>
+            <button class="hdm-item" onclick="closeDrop();scrollToSec('one-tier')">
+              <span class="hdm-icon" style="background:linear-gradient(135deg,#f59e0b,#d97706);">1️⃣</span>
+              <div><div class="hdm-title">One-Tier</div><div class="hdm-sub">Monolithic single-layer apps</div></div>
+            </button>
+            <button class="hdm-item" onclick="closeDrop();scrollToSec('two-tier')">
+              <span class="hdm-icon" style="background:linear-gradient(135deg,#10b981,#059669);">2️⃣</span>
+              <div><div class="hdm-title">Two-Tier</div><div class="hdm-sub">Client-server separation</div></div>
+            </button>
+            <button class="hdm-item" onclick="closeDrop();scrollToSec('three-tier')">
+              <span class="hdm-icon" style="background:linear-gradient(135deg,#3b82f6,#2563eb);">3️⃣</span>
+              <div><div class="hdm-title">Three-Tier</div><div class="hdm-sub">Presentation, logic, data layers</div></div>
+            </button>
+            <button class="hdm-item" onclick="closeDrop();scrollToSec('n-tier')">
+              <span class="hdm-icon" style="background:linear-gradient(135deg,#8b5cf6,#7c3aed);">🔢</span>
+              <div><div class="hdm-title">N-Tier</div><div class="hdm-sub">Microservices & distributed layers</div></div>
+            </button>
+          </div>
+          <div class="hdm-group">
+            <div class="hdm-group-label">Industry Platforms</div>
+            <button class="hdm-item" onclick="closeDrop();scrollToSec('ecommerce-arch')">
+              <span class="hdm-icon" style="background:linear-gradient(135deg,#f97316,#ea580c);">🛒</span>
+              <div><div class="hdm-title">E-Commerce Platform</div><div class="hdm-sub">Catalogue, cart, checkout at scale</div></div>
+            </button>
+            <button class="hdm-item" onclick="closeDrop();scrollToSec('payment-arch')">
+              <span class="hdm-icon" style="background:linear-gradient(135deg,#0ea5e9,#0284c7);">💳</span>
+              <div><div class="hdm-title">Payment & Banking</div><div class="hdm-sub">PCI-DSS, real-time transactions</div></div>
+            </button>
+          </div>
+        </div>
+      </div>
+      <button class="hdr-btn" onclick="scrollToSec('cloud-security')">
+        <svg viewBox="0 0 16 16" width="13" height="13" fill="none" style="margin-right:3px;vertical-align:-2px"><path d="M8 2L3 4.5v4C3 11.3 5.2 13.7 8 14.5c2.8-.8 5-3.2 5-6V4.5L8 2z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+        Security
+      </button>
       <button class="hdr-btn btn-aws" onclick="scrollToSec('aws')">AWS</button>
       <button class="hdr-btn btn-az" onclick="scrollToSec('azure')">Azure</button>
       <button class="hdr-btn btn-gcp" onclick="scrollToSec('gcp')">GCP</button>
       <button class="hdr-btn" onclick="scrollToSec('compare')">Compare</button>
-      <button class="hdr-btn" onclick="scrollToSec('devops')">DevOps</button>
       <button class="hdr-btn" onclick="scrollToSec('learn')">Learn</button>
     </nav>
     <button class="theme-btn" id="theme-btn" onclick="toggleTheme()">
@@ -572,7 +847,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
   <div class="providers-grid">
     <!-- AWS -->
     <div class="pvdr-banner pb-aws reveal" onclick="scrollToSec('aws')">
-      <canvas id="cvs-aws-banner" data-h="300"></canvas>
+      <canvas id="cvs-aws-banner" data-h="80"></canvas>
       <div class="pvdr-content">
         <div class="pb-logo pb-logo-aws">☁️</div>
         <div class="pb-name">Amazon Web Services</div>
@@ -588,12 +863,12 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
           <div class="pb-svc ps-aws"><div class="pb-svc-icon">🌐</div><div class="pb-svc-name">CloudFront</div><div class="pb-svc-lbl">CDN</div></div>
           <div class="pb-svc ps-aws"><div class="pb-svc-icon">🔐</div><div class="pb-svc-name">IAM</div><div class="pb-svc-lbl">Security</div></div>
         </div>
-        <button class="pb-cta cta-aws">Explore AWS ›</button>
+        <div class="pb-canvas-spacer"></div><button class="pb-cta cta-aws"><span>Explore AWS</span><span class="pb-arrow">›</span></button>
       </div>
     </div>
     <!-- AZURE -->
     <div class="pvdr-banner pb-az reveal" onclick="scrollToSec('azure')">
-      <canvas id="cvs-az-banner" data-h="300"></canvas>
+      <canvas id="cvs-az-banner" data-h="80"></canvas>
       <div class="pvdr-content">
         <div class="pb-logo pb-logo-az">
           <svg viewBox="0 0 24 24" width="26" height="26" fill="white"><path d="M5.5 3h6l-4 7h5l-7 11 2-7H4z"/></svg>
@@ -611,12 +886,12 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
           <div class="pb-svc ps-az"><div class="pb-svc-icon">☸️</div><div class="pb-svc-name">AKS</div><div class="pb-svc-lbl">Kubernetes</div></div>
           <div class="pb-svc ps-az"><div class="pb-svc-icon">🤖</div><div class="pb-svc-name">OpenAI</div><div class="pb-svc-lbl">AI</div></div>
         </div>
-        <button class="pb-cta cta-az">Explore Azure ›</button>
+        <div class="pb-canvas-spacer"></div><button class="pb-cta cta-az"><span>Explore Azure</span><span class="pb-arrow">›</span></button>
       </div>
     </div>
     <!-- GCP -->
     <div class="pvdr-banner pb-gcp reveal" onclick="scrollToSec('gcp')">
-      <canvas id="cvs-gcp-banner" data-h="300"></canvas>
+      <canvas id="cvs-gcp-banner" data-h="80"></canvas>
       <div class="pvdr-content">
         <div class="pb-logo pb-logo-gcp">
           <svg viewBox="0 0 24 24" width="26" height="26"><circle cx="12" cy="12" r="3.5" fill="white"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4" stroke="white" stroke-width="2" stroke-linecap="round"/><path d="M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M18.4 5.6l-2.8 2.8M8.4 15.6l-2.8 2.8" stroke="white" stroke-width="1.6" stroke-linecap="round"/></svg>
@@ -634,7 +909,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
           <div class="pb-svc ps-gcp"><div class="pb-svc-icon">🤖</div><div class="pb-svc-name">Vertex AI</div><div class="pb-svc-lbl">ML/AI</div></div>
           <div class="pb-svc ps-gcp"><div class="pb-svc-icon">📡</div><div class="pb-svc-name">Pub/Sub</div><div class="pb-svc-lbl">Messaging</div></div>
         </div>
-        <button class="pb-cta cta-gcp">Explore GCP ›</button>
+        <div class="pb-canvas-spacer"></div><button class="pb-cta cta-gcp"><span>Explore GCP</span><span class="pb-arrow">›</span></button>
       </div>
     </div>
   </div>
@@ -645,7 +920,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
   <div class="ps-section ps-aws reveal">
     <div class="ps-hdr">
       <div class="ps-logo pb-logo-aws" style="font-size:22px;">☁️</div>
-      <div>
+      <div class="ps-hdr-text">
         <div class="ps-name" style="color:#a16500;">Amazon Web Services</div>
         <div class="ps-sub">200+ cloud services · 33 global regions · Market leader since 2006</div>
       </div>
@@ -655,6 +930,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
         <span class="ps-badge pb-aws-b">102 AZs</span>
       </div>
     </div>
+    <div class="ps-tab-bar">
     <div class="ps-tabs">
       <button class="ps-tab pt-aws active" onclick="showTab('aws','svc',this)">Core Services</button>
       <button class="ps-tab pt-aws" onclick="showTab('aws','arch',this)">Architecture</button>
@@ -662,21 +938,9 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
       <button class="ps-tab pt-aws" onclick="showTab('aws','best',this)">Best Practices</button>
       <button class="ps-tab pt-aws" onclick="showTab('aws','code',this)">Code Examples</button>
     </div>
+    </div>
     <div id="aws-svc" class="ps-panel active">
-      <div class="svc-grid">
-        <div class="svc-card"><div class="svc-icon">⚡</div><div class="svc-name">EC2</div><div class="svc-cat">Compute</div><div class="svc-desc">Scalable VMs with 750+ instance types across CPU, GPU, and memory optimized families.</div></div>
-        <div class="svc-card"><div class="svc-icon">⚙️</div><div class="svc-name">Lambda</div><div class="svc-cat">Serverless</div><div class="svc-desc">Run code without managing servers. Pay only per invocation. Supports 15+ runtimes.</div></div>
-        <div class="svc-card"><div class="svc-icon">☸️</div><div class="svc-name">EKS</div><div class="svc-cat">Containers</div><div class="svc-desc">Managed Kubernetes with native AWS integrations for IAM, VPC, and load balancing.</div></div>
-        <div class="svc-card"><div class="svc-icon">🗄️</div><div class="svc-name">S3</div><div class="svc-cat">Storage</div><div class="svc-desc">Object storage with 11 9s durability. Supports versioning, lifecycle, and replication.</div></div>
-        <div class="svc-card"><div class="svc-icon">🗃️</div><div class="svc-name">RDS</div><div class="svc-cat">Database</div><div class="svc-desc">Managed relational DB supporting PostgreSQL, MySQL, MariaDB, Oracle, and SQL Server.</div></div>
-        <div class="svc-card"><div class="svc-icon">⚡</div><div class="svc-name">DynamoDB</div><div class="svc-cat">NoSQL</div><div class="svc-desc">Fully managed key-value and document DB with single-digit millisecond performance.</div></div>
-        <div class="svc-card"><div class="svc-icon">🌐</div><div class="svc-name">CloudFront</div><div class="svc-cat">CDN</div><div class="svc-desc">Global CDN with 450+ edge locations for low-latency static and dynamic content delivery.</div></div>
-        <div class="svc-card"><div class="svc-icon">🔐</div><div class="svc-name">IAM</div><div class="svc-cat">Security</div><div class="svc-desc">Fine-grained access control. Manage users, roles, and policies for all AWS services.</div></div>
-        <div class="svc-card"><div class="svc-icon">📊</div><div class="svc-name">CloudWatch</div><div class="svc-cat">Monitoring</div><div class="svc-desc">Unified observability for logs, metrics, traces, and automated alarms.</div></div>
-        <div class="svc-card"><div class="svc-icon">🔔</div><div class="svc-name">SNS / SQS</div><div class="svc-cat">Messaging</div><div class="svc-desc">Managed pub/sub notifications and decoupled message queuing at any scale.</div></div>
-        <div class="svc-card"><div class="svc-icon">🤖</div><div class="svc-name">SageMaker</div><div class="svc-cat">ML/AI</div><div class="svc-desc">End-to-end ML platform for building, training, and deploying models at scale.</div></div>
-        <div class="svc-card"><div class="svc-icon">🏗️</div><div class="svc-name">CloudFormation</div><div class="svc-cat">IaC</div><div class="svc-desc">Infrastructure as code using JSON/YAML templates for repeatable provisioning.</div></div>
-      </div>
+      <div class="svc-filter-bar"><span class="svc-filter-label">Filter:</span><button class="svc-filter-btn fb-aws active" data-cat="all" onclick="filterSvc(this,'aws')">All</button><button class="svc-filter-btn fb-aws" data-cat="Compute" onclick="filterSvc(this,'aws')">Compute</button><button class="svc-filter-btn fb-aws" data-cat="Serverless" onclick="filterSvc(this,'aws')">Serverless</button><button class="svc-filter-btn fb-aws" data-cat="Containers" onclick="filterSvc(this,'aws')">Containers</button><button class="svc-filter-btn fb-aws" data-cat="Storage" onclick="filterSvc(this,'aws')">Storage</button><button class="svc-filter-btn fb-aws" data-cat="Database" onclick="filterSvc(this,'aws')">Database</button><button class="svc-filter-btn fb-aws" data-cat="NoSQL" onclick="filterSvc(this,'aws')">NoSQL</button><button class="svc-filter-btn fb-aws" data-cat="CDN" onclick="filterSvc(this,'aws')">CDN</button><button class="svc-filter-btn fb-aws" data-cat="Security" onclick="filterSvc(this,'aws')">Security</button><button class="svc-filter-btn fb-aws" data-cat="Monitoring" onclick="filterSvc(this,'aws')">Monitoring</button><button class="svc-filter-btn fb-aws" data-cat="Messaging" onclick="filterSvc(this,'aws')">Messaging</button><button class="svc-filter-btn fb-aws" data-cat="ML/AI" onclick="filterSvc(this,'aws')">ML/AI</button><button class="svc-filter-btn fb-aws" data-cat="IaC" onclick="filterSvc(this,'aws')">IaC</button></div><div class="svc-grid" id="svc-grid-aws"><div class="svc-card svc-aws-card" data-cat="Compute"><div class="svc-card-top"><div class="svc-icon-wrap" style="background:#fff8ee;">⚡</div><span class="svc-cat-pill cat-pill-aws">Compute</span></div><div class="svc-name">EC2</div><div class="svc-desc">Scalable VMs with 750+ instance types across CPU, GPU, and memory optimized families.</div></div><div class="svc-card svc-aws-card" data-cat="Serverless"><div class="svc-card-top"><div class="svc-icon-wrap" style="background:#fef3c7;">⚙️</div><span class="svc-cat-pill cat-pill-aws">Serverless</span></div><div class="svc-name">Lambda</div><div class="svc-desc">Run code without managing servers. Pay only per invocation. Supports 15+ runtimes.</div></div><div class="svc-card svc-aws-card" data-cat="Containers"><div class="svc-card-top"><div class="svc-icon-wrap" style="background:#eff6ff;">☸️</div><span class="svc-cat-pill cat-pill-aws">Containers</span></div><div class="svc-name">EKS</div><div class="svc-desc">Managed Kubernetes with native AWS integrations for IAM, VPC, and load balancing.</div></div><div class="svc-card svc-aws-card" data-cat="Storage"><div class="svc-card-top"><div class="svc-icon-wrap" style="background:#f0fdf4;">🗄️</div><span class="svc-cat-pill cat-pill-aws">Storage</span></div><div class="svc-name">S3</div><div class="svc-desc">Object storage with 11 9s durability. Supports versioning, lifecycle, and replication.</div></div><div class="svc-card svc-aws-card" data-cat="Database"><div class="svc-card-top"><div class="svc-icon-wrap" style="background:#fdf4ff;">🗃️</div><span class="svc-cat-pill cat-pill-aws">Database</span></div><div class="svc-name">RDS</div><div class="svc-desc">Managed relational DB supporting PostgreSQL, MySQL, MariaDB, Oracle, and SQL Server.</div></div><div class="svc-card svc-aws-card" data-cat="NoSQL"><div class="svc-card-top"><div class="svc-icon-wrap" style="background:#fdf4ff;">⚡</div><span class="svc-cat-pill cat-pill-aws">NoSQL</span></div><div class="svc-name">DynamoDB</div><div class="svc-desc">Fully managed key-value and document DB with single-digit millisecond performance.</div></div><div class="svc-card svc-aws-card" data-cat="CDN"><div class="svc-card-top"><div class="svc-icon-wrap" style="background:#eff6ff;">🌐</div><span class="svc-cat-pill cat-pill-aws">CDN</span></div><div class="svc-name">CloudFront</div><div class="svc-desc">Global CDN with 450+ edge locations for low-latency static and dynamic content delivery.</div></div><div class="svc-card svc-aws-card" data-cat="Security"><div class="svc-card-top"><div class="svc-icon-wrap" style="background:#fff1f2;">🔐</div><span class="svc-cat-pill cat-pill-aws">Security</span></div><div class="svc-name">IAM</div><div class="svc-desc">Fine-grained access control. Manage users, roles, and policies for all AWS services.</div></div><div class="svc-card svc-aws-card" data-cat="Monitoring"><div class="svc-card-top"><div class="svc-icon-wrap" style="background:#f0fdf4;">📊</div><span class="svc-cat-pill cat-pill-aws">Monitoring</span></div><div class="svc-name">CloudWatch</div><div class="svc-desc">Unified observability for logs, metrics, traces, and automated alarms.</div></div><div class="svc-card svc-aws-card" data-cat="Messaging"><div class="svc-card-top"><div class="svc-icon-wrap" style="background:#fdf4ff;">🔔</div><span class="svc-cat-pill cat-pill-aws">Messaging</span></div><div class="svc-name">SNS / SQS</div><div class="svc-desc">Managed pub/sub notifications and decoupled message queuing at any scale.</div></div><div class="svc-card svc-aws-card" data-cat="ML/AI"><div class="svc-card-top"><div class="svc-icon-wrap" style="background:#f5f3ff;">🤖</div><span class="svc-cat-pill cat-pill-aws">ML/AI</span></div><div class="svc-name">SageMaker</div><div class="svc-desc">End-to-end ML platform for building, training, and deploying models at scale.</div></div><div class="svc-card svc-aws-card" data-cat="IaC"><div class="svc-card-top"><div class="svc-icon-wrap" style="background:#fafaf9;">🏗️</div><span class="svc-cat-pill cat-pill-aws">IaC</span></div><div class="svc-name">CloudFormation</div><div class="svc-desc">Infrastructure as code using JSON/YAML templates for repeatable provisioning.</div></div>    </div>
     </div>
     <div id="aws-arch" class="ps-panel">
       <div class="cvs-wrap" style="margin-bottom:1.2rem;">
@@ -740,13 +1004,105 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
       <div class="pipe-wrap"><canvas id="cvs-aws-pipe" data-h="180"></canvas></div>
     </div>
     <div id="aws-best" class="ps-panel">
+      <div class="bp-header">
+        <div class="bp-header-title">
+          <svg viewBox="0 0 16 16" width="14" height="14" fill="none"><path d="M8 1L2 4v4c0 3.3 2.5 6.4 6 7.2 3.5-.8 6-3.9 6-7.2V4L8 1z" stroke="#FF9900" stroke-width="1.5" stroke-linejoin="round"/></svg>
+          AWS Well-Architected Best Practices
+        </div>
+        <span class="bp-header-count">6 Practices</span>
+      </div>
       <div class="bp-grid">
-        <div class="bp-card"><div class="bp-icon" style="background:#fff8ee;">🔐</div><div><div class="bp-title">Least Privilege IAM</div><div class="bp-desc">Grant only minimum required permissions. Use IAM roles for EC2/Lambda. Never embed credentials in code.</div></div></div>
-        <div class="bp-card"><div class="bp-icon" style="background:#fff8ee;">🌍</div><div><div class="bp-title">Multi-Region Design</div><div class="bp-desc">Design for failure across AZs and regions. Use Route 53 health checks for automatic failover.</div></div></div>
-        <div class="bp-card"><div class="bp-icon" style="background:#fff8ee;">💰</div><div><div class="bp-title">Cost Optimization</div><div class="bp-desc">Use Reserved Instances for predictable loads, Spot for batch. Enable Cost Explorer and billing alerts.</div></div></div>
-        <div class="bp-card"><div class="bp-icon" style="background:#fff8ee;">📈</div><div><div class="bp-title">Auto Scaling</div><div class="bp-desc">Configure target tracking policies. Scale on real metrics. Use predictive scaling for known patterns.</div></div></div>
-        <div class="bp-card"><div class="bp-icon" style="background:#fff8ee;">🏗️</div><div><div class="bp-title">Infrastructure as Code</div><div class="bp-desc">Use AWS CDK for type-safe IaC. Avoid console changes in production. Version all CloudFormation stacks.</div></div></div>
-        <div class="bp-card"><div class="bp-icon" style="background:#fff8ee;">🔒</div><div><div class="bp-title">Encrypt Everything</div><div class="bp-desc">Encrypt at rest with KMS and in transit with TLS. Enable S3 default encryption. Use Secrets Manager.</div></div></div>
+
+        <div class="bp-card bp-aws-card">
+          <div class="bp-body">
+            <div class="bp-top">
+              <div class="bp-icon" style="background:#fff8ee;">🔐</div>
+              <span class="bp-num">01</span>
+            </div>
+            <div class="bp-title">Least Privilege IAM</div>
+            <div class="bp-desc">Grant only the minimum permissions required. Use IAM roles for EC2 and Lambda — never embed long-lived credentials in code or environment variables.</div>
+          </div>
+          <div class="bp-footer">
+            <span class="bp-tag bp-aws-tag">Security</span>
+            <span class="bp-arrow">→</span>
+          </div>
+        </div>
+
+        <div class="bp-card bp-aws-card">
+          <div class="bp-body">
+            <div class="bp-top">
+              <div class="bp-icon" style="background:#fff8ee;">🌍</div>
+              <span class="bp-num">02</span>
+            </div>
+            <div class="bp-title">Multi-Region Design</div>
+            <div class="bp-desc">Design for failure across AZs and regions. Use Route 53 health checks and failover routing for automatic regional failover with zero manual intervention.</div>
+          </div>
+          <div class="bp-footer">
+            <span class="bp-tag bp-aws-tag">Reliability</span>
+            <span class="bp-arrow">→</span>
+          </div>
+        </div>
+
+        <div class="bp-card bp-aws-card">
+          <div class="bp-body">
+            <div class="bp-top">
+              <div class="bp-icon" style="background:#fff8ee;">💰</div>
+              <span class="bp-num">03</span>
+            </div>
+            <div class="bp-title">Cost Optimization</div>
+            <div class="bp-desc">Use Reserved Instances for steady-state workloads and Spot Instances for batch. Enable AWS Cost Explorer, set billing alerts and use Savings Plans proactively.</div>
+          </div>
+          <div class="bp-footer">
+            <span class="bp-tag bp-aws-tag">Cost</span>
+            <span class="bp-arrow">→</span>
+          </div>
+        </div>
+
+        <div class="bp-card bp-aws-card">
+          <div class="bp-body">
+            <div class="bp-top">
+              <div class="bp-icon" style="background:#fff8ee;">📈</div>
+              <span class="bp-num">04</span>
+            </div>
+            <div class="bp-title">Auto Scaling</div>
+            <div class="bp-desc">Configure target tracking scaling policies on real business metrics. Use predictive scaling for known traffic patterns and schedule-based scaling for recurring spikes.</div>
+          </div>
+          <div class="bp-footer">
+            <span class="bp-tag bp-aws-tag">Performance</span>
+            <span class="bp-arrow">→</span>
+          </div>
+        </div>
+
+        <div class="bp-card bp-aws-card">
+          <div class="bp-body">
+            <div class="bp-top">
+              <div class="bp-icon" style="background:#fff8ee;">🏗️</div>
+              <span class="bp-num">05</span>
+            </div>
+            <div class="bp-title">Infrastructure as Code</div>
+            <div class="bp-desc">Use AWS CDK for type-safe, programmatic IaC. Never apply manual console changes in production. Version all CloudFormation stacks and enforce via CI/CD pipelines.</div>
+          </div>
+          <div class="bp-footer">
+            <span class="bp-tag bp-aws-tag">Operations</span>
+            <span class="bp-arrow">→</span>
+          </div>
+        </div>
+
+        <div class="bp-card bp-aws-card">
+          <div class="bp-body">
+            <div class="bp-top">
+              <div class="bp-icon" style="background:#fff8ee;">🔒</div>
+              <span class="bp-num">06</span>
+            </div>
+            <div class="bp-title">Encrypt Everything</div>
+            <div class="bp-desc">Enable S3 default encryption with KMS. Enforce TLS for all data in transit. Rotate keys automatically. Store all secrets in AWS Secrets Manager — never in config files.</div>
+          </div>
+          <div class="bp-footer">
+            <span class="bp-tag bp-aws-tag">Security</span>
+            <span class="bp-arrow">→</span>
+          </div>
+        </div>
+
       </div>
     </div>
     <div id="aws-code" class="ps-panel">
@@ -786,7 +1142,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
   <div class="ps-section ps-az reveal">
     <div class="ps-hdr">
       <div class="ps-logo pb-logo-az"><svg viewBox="0 0 24 24" width="26" height="26" fill="white"><path d="M5.5 3h6l-4 7h5l-7 11 2-7H4z"/></svg></div>
-      <div>
+      <div class="ps-hdr-text">
         <div class="ps-name" style="color:var(--az2);">Microsoft Azure</div>
         <div class="ps-sub">Enterprise hybrid cloud · 60+ regions · Deep Microsoft 365 integration</div>
       </div>
@@ -796,6 +1152,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
         <span class="ps-badge pb-az-b">Hybrid Cloud</span>
       </div>
     </div>
+    <div class="ps-tab-bar">
     <div class="ps-tabs">
       <button class="ps-tab pt-az active" onclick="showTab('az','svc',this)">Core Services</button>
       <button class="ps-tab pt-az" onclick="showTab('az','arch',this)">Architecture</button>
@@ -803,21 +1160,9 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
       <button class="ps-tab pt-az" onclick="showTab('az','best',this)">Best Practices</button>
       <button class="ps-tab pt-az" onclick="showTab('az','code',this)">Code Examples</button>
     </div>
+    </div>
     <div id="az-svc" class="ps-panel active">
-      <div class="svc-grid">
-        <div class="svc-card"><div class="svc-icon">💻</div><div class="svc-name">Virtual Machines</div><div class="svc-cat">Compute</div><div class="svc-desc">Windows and Linux VMs with up to 96 vCPUs, GPU instances, and spot pricing.</div></div>
-        <div class="svc-card"><div class="svc-icon">🔧</div><div class="svc-name">App Service</div><div class="svc-cat">PaaS</div><div class="svc-desc">Fully managed platform for web apps, REST APIs, and mobile backends.</div></div>
-        <div class="svc-card"><div class="svc-icon">⚡</div><div class="svc-name">Functions</div><div class="svc-cat">Serverless</div><div class="svc-desc">Event-driven serverless compute with 60-min timeout and Durable Functions support.</div></div>
-        <div class="svc-card"><div class="svc-icon">☸️</div><div class="svc-name">AKS</div><div class="svc-cat">Kubernetes</div><div class="svc-desc">Managed Kubernetes with built-in Azure DevOps, ACR, and monitoring integration.</div></div>
-        <div class="svc-card"><div class="svc-icon">📦</div><div class="svc-name">Blob Storage</div><div class="svc-cat">Storage</div><div class="svc-desc">Massively scalable object storage for unstructured data, backups, and archives.</div></div>
-        <div class="svc-card"><div class="svc-icon">🗃️</div><div class="svc-name">Azure SQL</div><div class="svc-cat">Database</div><div class="svc-desc">Fully managed SQL with built-in intelligence, auto-tuning, and serverless tier.</div></div>
-        <div class="svc-card"><div class="svc-icon">🤖</div><div class="svc-name">Azure OpenAI</div><div class="svc-cat">AI</div><div class="svc-desc">GPT-4, DALL-E and Embeddings with enterprise security, compliance, and SLAs.</div></div>
-        <div class="svc-card"><div class="svc-icon">🔗</div><div class="svc-name">Service Bus</div><div class="svc-cat">Messaging</div><div class="svc-desc">Enterprise messaging with queues, topics, and sessions for decoupled architectures.</div></div>
-        <div class="svc-card"><div class="svc-icon">🌐</div><div class="svc-name">Azure CDN</div><div class="svc-cat">CDN</div><div class="svc-desc">Global content delivery with 118 PoPs and DDoS protection built-in.</div></div>
-        <div class="svc-card"><div class="svc-icon">🔐</div><div class="svc-name">Azure AD</div><div class="svc-cat">Identity</div><div class="svc-desc">Cloud identity with SSO, MFA, conditional access, and B2B/B2C support.</div></div>
-        <div class="svc-card"><div class="svc-icon">📊</div><div class="svc-name">Azure Monitor</div><div class="svc-cat">Monitoring</div><div class="svc-desc">Full-stack monitoring with Application Insights and Log Analytics workspaces.</div></div>
-        <div class="svc-card"><div class="svc-icon">🔄</div><div class="svc-name">Azure DevOps</div><div class="svc-cat">DevOps</div><div class="svc-desc">Complete DevOps toolchain: Boards, Repos, Pipelines, Artifacts, and Test Plans.</div></div>
-      </div>
+      <div class="svc-filter-bar"><span class="svc-filter-label">Filter:</span><button class="svc-filter-btn fb-az active" data-cat="all" onclick="filterSvc(this,'az')">All</button><button class="svc-filter-btn fb-az" data-cat="Compute" onclick="filterSvc(this,'az')">Compute</button><button class="svc-filter-btn fb-az" data-cat="PaaS" onclick="filterSvc(this,'az')">PaaS</button><button class="svc-filter-btn fb-az" data-cat="Serverless" onclick="filterSvc(this,'az')">Serverless</button><button class="svc-filter-btn fb-az" data-cat="Kubernetes" onclick="filterSvc(this,'az')">Kubernetes</button><button class="svc-filter-btn fb-az" data-cat="Storage" onclick="filterSvc(this,'az')">Storage</button><button class="svc-filter-btn fb-az" data-cat="Database" onclick="filterSvc(this,'az')">Database</button><button class="svc-filter-btn fb-az" data-cat="AI" onclick="filterSvc(this,'az')">AI</button><button class="svc-filter-btn fb-az" data-cat="Messaging" onclick="filterSvc(this,'az')">Messaging</button><button class="svc-filter-btn fb-az" data-cat="CDN" onclick="filterSvc(this,'az')">CDN</button><button class="svc-filter-btn fb-az" data-cat="Identity" onclick="filterSvc(this,'az')">Identity</button><button class="svc-filter-btn fb-az" data-cat="Monitoring" onclick="filterSvc(this,'az')">Monitoring</button><button class="svc-filter-btn fb-az" data-cat="DevOps" onclick="filterSvc(this,'az')">DevOps</button></div><div class="svc-grid" id="svc-grid-az"><div class="svc-card svc-az-card" data-cat="Compute"><div class="svc-card-top"><div class="svc-icon-wrap" style="background:#fff8ee;">💻</div><span class="svc-cat-pill cat-pill-az">Compute</span></div><div class="svc-name">Virtual Machines</div><div class="svc-desc">Windows and Linux VMs with up to 96 vCPUs, GPU instances, and spot pricing.</div></div><div class="svc-card svc-az-card" data-cat="PaaS"><div class="svc-card-top"><div class="svc-icon-wrap" style="background:#eff6ff;">🔧</div><span class="svc-cat-pill cat-pill-az">PaaS</span></div><div class="svc-name">App Service</div><div class="svc-desc">Fully managed platform for web apps, REST APIs, and mobile backends.</div></div><div class="svc-card svc-az-card" data-cat="Serverless"><div class="svc-card-top"><div class="svc-icon-wrap" style="background:#fef3c7;">⚡</div><span class="svc-cat-pill cat-pill-az">Serverless</span></div><div class="svc-name">Functions</div><div class="svc-desc">Event-driven serverless compute with 60-min timeout and Durable Functions support.</div></div><div class="svc-card svc-az-card" data-cat="Kubernetes"><div class="svc-card-top"><div class="svc-icon-wrap" style="background:#eff6ff;">☸️</div><span class="svc-cat-pill cat-pill-az">Kubernetes</span></div><div class="svc-name">AKS</div><div class="svc-desc">Managed Kubernetes with built-in Azure DevOps, ACR, and monitoring integration.</div></div><div class="svc-card svc-az-card" data-cat="Storage"><div class="svc-card-top"><div class="svc-icon-wrap" style="background:#f0fdf4;">📦</div><span class="svc-cat-pill cat-pill-az">Storage</span></div><div class="svc-name">Blob Storage</div><div class="svc-desc">Massively scalable object storage for unstructured data, backups, and archives.</div></div><div class="svc-card svc-az-card" data-cat="Database"><div class="svc-card-top"><div class="svc-icon-wrap" style="background:#fdf4ff;">🗃️</div><span class="svc-cat-pill cat-pill-az">Database</span></div><div class="svc-name">Azure SQL</div><div class="svc-desc">Fully managed SQL with built-in intelligence, auto-tuning, and serverless tier.</div></div><div class="svc-card svc-az-card" data-cat="AI"><div class="svc-card-top"><div class="svc-icon-wrap" style="background:#f5f3ff;">🤖</div><span class="svc-cat-pill cat-pill-az">AI</span></div><div class="svc-name">Azure OpenAI</div><div class="svc-desc">GPT-4, DALL-E and Embeddings with enterprise security, compliance, and SLAs.</div></div><div class="svc-card svc-az-card" data-cat="Messaging"><div class="svc-card-top"><div class="svc-icon-wrap" style="background:#fdf4ff;">🔗</div><span class="svc-cat-pill cat-pill-az">Messaging</span></div><div class="svc-name">Service Bus</div><div class="svc-desc">Enterprise messaging with queues, topics, and sessions for decoupled architectures.</div></div><div class="svc-card svc-az-card" data-cat="CDN"><div class="svc-card-top"><div class="svc-icon-wrap" style="background:#eff6ff;">🌐</div><span class="svc-cat-pill cat-pill-az">CDN</span></div><div class="svc-name">Azure CDN</div><div class="svc-desc">Global content delivery with 118 PoPs and DDoS protection built-in.</div></div><div class="svc-card svc-az-card" data-cat="Identity"><div class="svc-card-top"><div class="svc-icon-wrap" style="background:#fff1f2;">🔐</div><span class="svc-cat-pill cat-pill-az">Identity</span></div><div class="svc-name">Azure AD</div><div class="svc-desc">Cloud identity with SSO, MFA, conditional access, and B2B/B2C support.</div></div><div class="svc-card svc-az-card" data-cat="Monitoring"><div class="svc-card-top"><div class="svc-icon-wrap" style="background:#f0fdf4;">📊</div><span class="svc-cat-pill cat-pill-az">Monitoring</span></div><div class="svc-name">Azure Monitor</div><div class="svc-desc">Full-stack monitoring with Application Insights and Log Analytics workspaces.</div></div><div class="svc-card svc-az-card" data-cat="DevOps"><div class="svc-card-top"><div class="svc-icon-wrap" style="background:#eff6ff;">🔄</div><span class="svc-cat-pill cat-pill-az">DevOps</span></div><div class="svc-name">Azure DevOps</div><div class="svc-desc">Complete DevOps toolchain: Boards, Repos, Pipelines, Artifacts, and Test Plans.</div></div>    </div>
     </div>
     <div id="az-arch" class="ps-panel">
       <div class="cvs-wrap" style="margin-bottom:1.2rem;">
@@ -879,13 +1224,105 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
       <div class="pipe-wrap"><canvas id="cvs-az-pipe" data-h="180"></canvas></div>
     </div>
     <div id="az-best" class="ps-panel">
+      <div class="bp-header">
+        <div class="bp-header-title">
+          <svg viewBox="0 0 16 16" width="14" height="14" fill="none"><path d="M8 1L2 4v4c0 3.3 2.5 6.4 6 7.2 3.5-.8 6-3.9 6-7.2V4L8 1z" stroke="#0078D4" stroke-width="1.5" stroke-linejoin="round"/></svg>
+          Azure Well-Architected Best Practices
+        </div>
+        <span class="bp-header-count">6 Practices</span>
+      </div>
       <div class="bp-grid">
-        <div class="bp-card"><div class="bp-icon" style="background:#eef6ff;">🔑</div><div><div class="bp-title">Zero Trust Security</div><div class="bp-desc">Verify explicitly, use least privilege access, and assume breach. Apply Conditional Access policies everywhere.</div></div></div>
-        <div class="bp-card"><div class="bp-icon" style="background:#eef6ff;">🏗️</div><div><div class="bp-title">Infrastructure as Code</div><div class="bp-desc">Use Bicep for type-safe, concise ARM template authoring. Store in Azure Repos and deploy via Pipelines.</div></div></div>
-        <div class="bp-card"><div class="bp-icon" style="background:#eef6ff;">📈</div><div><div class="bp-title">Autoscale Everything</div><div class="bp-desc">Configure VMSS and AKS HPA. Use Azure Load Testing to validate scale targets before production.</div></div></div>
-        <div class="bp-card"><div class="bp-icon" style="background:#eef6ff;">🌍</div><div><div class="bp-title">Geo-Redundancy</div><div class="bp-desc">Pair regions for disaster recovery. Use Azure Traffic Manager for global load balancing and failover.</div></div></div>
-        <div class="bp-card"><div class="bp-icon" style="background:#eef6ff;">💰</div><div><div class="bp-title">Cost Management</div><div class="bp-desc">Use Azure Advisor recommendations. Apply resource tagging for showback. Set budgets and alerts in Cost Management.</div></div></div>
-        <div class="bp-card"><div class="bp-icon" style="background:#eef6ff;">🔒</div><div><div class="bp-title">Key Vault Everywhere</div><div class="bp-desc">Never hardcode secrets. Use Managed Identity to access Key Vault from any Azure service without credentials.</div></div></div>
+
+        <div class="bp-card bp-az-card">
+          <div class="bp-body">
+            <div class="bp-top">
+              <div class="bp-icon" style="background:#eef6ff;">🔑</div>
+              <span class="bp-num">01</span>
+            </div>
+            <div class="bp-title">Zero Trust Security</div>
+            <div class="bp-desc">Verify explicitly, use least privilege access, and assume breach at all times. Apply Conditional Access policies everywhere — no implicit trust based on network location.</div>
+          </div>
+          <div class="bp-footer">
+            <span class="bp-tag bp-az-tag">Security</span>
+            <span class="bp-arrow">→</span>
+          </div>
+        </div>
+
+        <div class="bp-card bp-az-card">
+          <div class="bp-body">
+            <div class="bp-top">
+              <div class="bp-icon" style="background:#eef6ff;">🏗️</div>
+              <span class="bp-num">02</span>
+            </div>
+            <div class="bp-title">Infrastructure as Code</div>
+            <div class="bp-desc">Use Bicep for type-safe, concise ARM template authoring. Store all templates in Azure Repos and enforce deployments exclusively through Azure Pipelines — no ad-hoc portal changes.</div>
+          </div>
+          <div class="bp-footer">
+            <span class="bp-tag bp-az-tag">Operations</span>
+            <span class="bp-arrow">→</span>
+          </div>
+        </div>
+
+        <div class="bp-card bp-az-card">
+          <div class="bp-body">
+            <div class="bp-top">
+              <div class="bp-icon" style="background:#eef6ff;">📈</div>
+              <span class="bp-num">03</span>
+            </div>
+            <div class="bp-title">Autoscale Everything</div>
+            <div class="bp-desc">Configure VMSS and AKS Horizontal Pod Autoscaler with custom metrics. Use Azure Load Testing to validate scale targets under realistic traffic before deploying to production.</div>
+          </div>
+          <div class="bp-footer">
+            <span class="bp-tag bp-az-tag">Performance</span>
+            <span class="bp-arrow">→</span>
+          </div>
+        </div>
+
+        <div class="bp-card bp-az-card">
+          <div class="bp-body">
+            <div class="bp-top">
+              <div class="bp-icon" style="background:#eef6ff;">🌍</div>
+              <span class="bp-num">04</span>
+            </div>
+            <div class="bp-title">Geo-Redundancy</div>
+            <div class="bp-desc">Pair Azure regions for disaster recovery. Use Azure Traffic Manager with priority and weighted routing for global load balancing and seamless automatic regional failover.</div>
+          </div>
+          <div class="bp-footer">
+            <span class="bp-tag bp-az-tag">Reliability</span>
+            <span class="bp-arrow">→</span>
+          </div>
+        </div>
+
+        <div class="bp-card bp-az-card">
+          <div class="bp-body">
+            <div class="bp-top">
+              <div class="bp-icon" style="background:#eef6ff;">💰</div>
+              <span class="bp-num">05</span>
+            </div>
+            <div class="bp-title">Cost Management</div>
+            <div class="bp-desc">Act on Azure Advisor recommendations weekly. Apply mandatory resource tagging for cost showback. Set budgets with action group alerts before hitting spend thresholds.</div>
+          </div>
+          <div class="bp-footer">
+            <span class="bp-tag bp-az-tag">Cost</span>
+            <span class="bp-arrow">→</span>
+          </div>
+        </div>
+
+        <div class="bp-card bp-az-card">
+          <div class="bp-body">
+            <div class="bp-top">
+              <div class="bp-icon" style="background:#eef6ff;">🔒</div>
+              <span class="bp-num">06</span>
+            </div>
+            <div class="bp-title">Key Vault Everywhere</div>
+            <div class="bp-desc">Never hardcode secrets in application code or pipelines. Use Managed Identity to access Key Vault from any Azure service — no passwords, no certificates, no rotation burden.</div>
+          </div>
+          <div class="bp-footer">
+            <span class="bp-tag bp-az-tag">Security</span>
+            <span class="bp-arrow">→</span>
+          </div>
+        </div>
+
       </div>
     </div>
     <div id="az-code" class="ps-panel">
@@ -926,7 +1363,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
   <div class="ps-section ps-gcp reveal">
     <div class="ps-hdr">
       <div class="ps-logo pb-logo-gcp"><svg viewBox="0 0 24 24" width="26" height="26"><circle cx="12" cy="12" r="3.5" fill="white"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
-      <div>
+      <div class="ps-hdr-text">
         <div class="ps-name" style="color:var(--gcp2);">Google Cloud Platform</div>
         <div class="ps-sub">Data-first cloud · Kubernetes birthplace · Leading ML/AI infrastructure</div>
       </div>
@@ -936,6 +1373,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
         <span class="ps-badge pb-gcp-b">BigQuery Leader</span>
       </div>
     </div>
+    <div class="ps-tab-bar">
     <div class="ps-tabs">
       <button class="ps-tab pt-gcp active" onclick="showTab('gcp','svc',this)">Core Services</button>
       <button class="ps-tab pt-gcp" onclick="showTab('gcp','arch',this)">Architecture</button>
@@ -943,21 +1381,9 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
       <button class="ps-tab pt-gcp" onclick="showTab('gcp','best',this)">Best Practices</button>
       <button class="ps-tab pt-gcp" onclick="showTab('gcp','code',this)">Code Examples</button>
     </div>
+    </div>
     <div id="gcp-svc" class="ps-panel active">
-      <div class="svc-grid">
-        <div class="svc-card"><div class="svc-icon">🖥️</div><div class="svc-name">Compute Engine</div><div class="svc-cat">VMs</div><div class="svc-desc">High-performance VMs with live migration, custom machine types, and preemptible instances.</div></div>
-        <div class="svc-card"><div class="svc-icon">☸️</div><div class="svc-name">GKE</div><div class="svc-cat">Kubernetes</div><div class="svc-desc">The original managed Kubernetes — Autopilot mode handles all node operations automatically.</div></div>
-        <div class="svc-card"><div class="svc-icon">🔥</div><div class="svc-name">Cloud Run</div><div class="svc-cat">Serverless</div><div class="svc-desc">Fully managed containers that scale to zero. Deploy any container workload in seconds.</div></div>
-        <div class="svc-card"><div class="svc-icon">🗃️</div><div class="svc-name">Cloud Storage</div><div class="svc-cat">Object Store</div><div class="svc-desc">Unified object storage with global consistency, strong SLAs, and HMAC authentication.</div></div>
-        <div class="svc-card"><div class="svc-icon">📊</div><div class="svc-name">BigQuery</div><div class="svc-cat">Analytics</div><div class="svc-desc">Serverless data warehouse. Analyze petabytes in seconds with SQL. Built-in ML with BQML.</div></div>
-        <div class="svc-card"><div class="svc-icon">🔥</div><div class="svc-name">Firebase</div><div class="svc-cat">App Platform</div><div class="svc-desc">Real-time database, authentication, hosting, and analytics for web and mobile apps.</div></div>
-        <div class="svc-card"><div class="svc-icon">🤖</div><div class="svc-name">Vertex AI</div><div class="svc-cat">ML/AI</div><div class="svc-desc">Unified MLOps platform for training, tuning, and serving Gemini and custom models.</div></div>
-        <div class="svc-card"><div class="svc-icon">📡</div><div class="svc-name">Pub/Sub</div><div class="svc-cat">Messaging</div><div class="svc-desc">Global real-time messaging with at-least-once delivery and push/pull subscriptions.</div></div>
-        <div class="svc-card"><div class="svc-icon">🗄️</div><div class="svc-name">Cloud Spanner</div><div class="svc-cat">Database</div><div class="svc-desc">Globally distributed relational DB with 99.999% availability and horizontal scaling.</div></div>
-        <div class="svc-card"><div class="svc-icon">🌐</div><div class="svc-name">Cloud CDN</div><div class="svc-cat">CDN</div><div class="svc-desc">Google's global edge network with cache fill from Cloud Storage and backends.</div></div>
-        <div class="svc-card"><div class="svc-icon">🔐</div><div class="svc-name">IAM</div><div class="svc-cat">Security</div><div class="svc-desc">Fine-grained access with predefined roles, custom roles, and Workload Identity Federation.</div></div>
-        <div class="svc-card"><div class="svc-icon">🔄</div><div class="svc-name">Dataflow</div><div class="svc-cat">Data Pipelines</div><div class="svc-desc">Unified stream and batch processing powered by Apache Beam with autoscaling.</div></div>
-      </div>
+      <div class="svc-filter-bar"><span class="svc-filter-label">Filter:</span><button class="svc-filter-btn fb-gcp active" data-cat="all" onclick="filterSvc(this,'gcp')">All</button><button class="svc-filter-btn fb-gcp" data-cat="Compute" onclick="filterSvc(this,'gcp')">Compute</button><button class="svc-filter-btn fb-gcp" data-cat="Kubernetes" onclick="filterSvc(this,'gcp')">Kubernetes</button><button class="svc-filter-btn fb-gcp" data-cat="Serverless" onclick="filterSvc(this,'gcp')">Serverless</button><button class="svc-filter-btn fb-gcp" data-cat="Storage" onclick="filterSvc(this,'gcp')">Storage</button><button class="svc-filter-btn fb-gcp" data-cat="Database" onclick="filterSvc(this,'gcp')">Database</button><button class="svc-filter-btn fb-gcp" data-cat="Analytics" onclick="filterSvc(this,'gcp')">Analytics</button><button class="svc-filter-btn fb-gcp" data-cat="ML/AI" onclick="filterSvc(this,'gcp')">ML/AI</button><button class="svc-filter-btn fb-gcp" data-cat="Messaging" onclick="filterSvc(this,'gcp')">Messaging</button><button class="svc-filter-btn fb-gcp" data-cat="App Dev" onclick="filterSvc(this,'gcp')">App Dev</button><button class="svc-filter-btn fb-gcp" data-cat="Security" onclick="filterSvc(this,'gcp')">Security</button><button class="svc-filter-btn fb-gcp" data-cat="DevOps" onclick="filterSvc(this,'gcp')">DevOps</button></div><div class="svc-grid" id="svc-grid-gcp"><div class="svc-card svc-gcp-card" data-cat="Compute"><div class="svc-card-top"><div class="svc-icon-wrap" style="background:#fff8ee;">🖥️</div><span class="svc-cat-pill cat-pill-gcp">Compute</span></div><div class="svc-name">Compute Engine</div><div class="svc-desc">Custom machine types, preemptible VMs, and sole-tenant nodes on Google infrastructure.</div></div><div class="svc-card svc-gcp-card" data-cat="Kubernetes"><div class="svc-card-top"><div class="svc-icon-wrap" style="background:#eff6ff;">☸️</div><span class="svc-cat-pill cat-pill-gcp">Kubernetes</span></div><div class="svc-name">GKE</div><div class="svc-desc">The birthplace of Kubernetes. Autopilot mode for fully managed clusters at scale.</div></div><div class="svc-card svc-gcp-card" data-cat="Serverless"><div class="svc-card-top"><div class="svc-icon-wrap" style="background:#fef3c7;">⚡</div><span class="svc-cat-pill cat-pill-gcp">Serverless</span></div><div class="svc-name">Cloud Run</div><div class="svc-desc">Run containers serverlessly. Auto-scales to zero. Supports any language or binary.</div></div><div class="svc-card svc-gcp-card" data-cat="Storage"><div class="svc-card-top"><div class="svc-icon-wrap" style="background:#f0fdf4;">🗄️</div><span class="svc-cat-pill cat-pill-gcp">Storage</span></div><div class="svc-name">Cloud Storage</div><div class="svc-desc">Unified object storage with strong consistency and multi-region availability.</div></div><div class="svc-card svc-gcp-card" data-cat="Database"><div class="svc-card-top"><div class="svc-icon-wrap" style="background:#fdf4ff;">🗃️</div><span class="svc-cat-pill cat-pill-gcp">Database</span></div><div class="svc-name">Cloud SQL</div><div class="svc-desc">Fully managed PostgreSQL, MySQL, and SQL Server with high availability and PITR.</div></div><div class="svc-card svc-gcp-card" data-cat="Database"><div class="svc-card-top"><div class="svc-icon-wrap" style="background:#fdf4ff;">✨</div><span class="svc-cat-pill cat-pill-gcp">Database</span></div><div class="svc-name">Spanner</div><div class="svc-desc">Globally distributed relational database with unlimited scale and 99.999% availability.</div></div><div class="svc-card svc-gcp-card" data-cat="Analytics"><div class="svc-card-top"><div class="svc-icon-wrap" style="background:#fdf4ff;">📊</div><span class="svc-cat-pill cat-pill-gcp">Analytics</span></div><div class="svc-name">BigQuery</div><div class="svc-desc">Serverless, multi-cloud data warehouse. Analyze petabytes in seconds with SQL.</div></div><div class="svc-card svc-gcp-card" data-cat="ML/AI"><div class="svc-card-top"><div class="svc-icon-wrap" style="background:#f5f3ff;">🤖</div><span class="svc-cat-pill cat-pill-gcp">ML/AI</span></div><div class="svc-name">Vertex AI</div><div class="svc-desc">Unified ML platform — train, deploy, and manage models including Gemini foundation models.</div></div><div class="svc-card svc-gcp-card" data-cat="Messaging"><div class="svc-card-top"><div class="svc-icon-wrap" style="background:#fdf4ff;">📡</div><span class="svc-cat-pill cat-pill-gcp">Messaging</span></div><div class="svc-name">Pub/Sub</div><div class="svc-desc">Fully managed real-time messaging service that scales to millions of messages per second.</div></div><div class="svc-card svc-gcp-card" data-cat="App Dev"><div class="svc-card-top"><div class="svc-icon-wrap" style="background:#fff8ee;">🔥</div><span class="svc-cat-pill cat-pill-gcp">App Dev</span></div><div class="svc-name">Firebase</div><div class="svc-desc">Google's mobile and web app development platform with real-time database and auth.</div></div><div class="svc-card svc-gcp-card" data-cat="Security"><div class="svc-card-top"><div class="svc-icon-wrap" style="background:#fff1f2;">🔐</div><span class="svc-cat-pill cat-pill-gcp">Security</span></div><div class="svc-name">Cloud IAM</div><div class="svc-desc">Fine-grained identity and access management for all GCP resources and services.</div></div><div class="svc-card svc-gcp-card" data-cat="DevOps"><div class="svc-card-top"><div class="svc-icon-wrap" style="background:#eff6ff;">🏗️</div><span class="svc-cat-pill cat-pill-gcp">DevOps</span></div><div class="svc-name">Cloud Build</div><div class="svc-desc">Fully managed CI/CD platform that imports code and executes builds in the cloud.</div></div>    </div>
     </div>
     <div id="gcp-arch" class="ps-panel">
       <div class="cvs-wrap" style="margin-bottom:1.2rem;">
@@ -1019,13 +1445,105 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
       <div class="pipe-wrap"><canvas id="cvs-gcp-pipe" data-h="180"></canvas></div>
     </div>
     <div id="gcp-best" class="ps-panel">
+      <div class="bp-header">
+        <div class="bp-header-title">
+          <svg viewBox="0 0 16 16" width="14" height="14" fill="none"><path d="M8 1L2 4v4c0 3.3 2.5 6.4 6 7.2 3.5-.8 6-3.9 6-7.2V4L8 1z" stroke="#4285F4" stroke-width="1.5" stroke-linejoin="round"/></svg>
+          GCP Well-Architected Best Practices
+        </div>
+        <span class="bp-header-count">6 Practices</span>
+      </div>
       <div class="bp-grid">
-        <div class="bp-card"><div class="bp-icon" style="background:#eef3ff;">🔑</div><div><div class="bp-title">Workload Identity</div><div class="bp-desc">Use Workload Identity Federation instead of service account keys. Eliminates credential management entirely.</div></div></div>
-        <div class="bp-card"><div class="bp-icon" style="background:#eef3ff;">☸️</div><div><div class="bp-title">GKE Autopilot</div><div class="bp-desc">Let Google manage node provisioning. Focus on workloads not infrastructure. Cost by pod resource requests.</div></div></div>
-        <div class="bp-card"><div class="bp-icon" style="background:#eef3ff;">📊</div><div><div class="bp-title">BigQuery Best Practices</div><div class="bp-desc">Partition by date, cluster by high-cardinality columns. Use BI Engine for sub-second dashboard queries.</div></div></div>
-        <div class="bp-card"><div class="bp-icon" style="background:#eef3ff;">🔒</div><div><div class="bp-title">VPC Service Controls</div><div class="bp-desc">Create security perimeters around GCP services to prevent data exfiltration. Enforce within org policies.</div></div></div>
-        <div class="bp-card"><div class="bp-icon" style="background:#eef3ff;">💰</div><div><div class="bp-title">Committed Use Discounts</div><div class="bp-desc">Get up to 57% discount with 1–3 year CUDs. Use Active Assist recommendations to right-size resources.</div></div></div>
-        <div class="bp-card"><div class="bp-icon" style="background:#eef3ff;">🌍</div><div><div class="bp-title">Global Load Balancing</div><div class="bp-desc">Use Google's Anycast IP for single global VIP. Route users to nearest healthy backend with zero RTT.</div></div></div>
+
+        <div class="bp-card bp-gcp-card">
+          <div class="bp-body">
+            <div class="bp-top">
+              <div class="bp-icon" style="background:#eef3ff;">🔑</div>
+              <span class="bp-num">01</span>
+            </div>
+            <div class="bp-title">Workload Identity Federation</div>
+            <div class="bp-desc">Use Workload Identity Federation instead of service account keys. Eliminates credential management, rotation burden, and the risk of key leakage entirely — the safest IAM pattern on GCP.</div>
+          </div>
+          <div class="bp-footer">
+            <span class="bp-tag bp-gcp-tag">Security</span>
+            <span class="bp-arrow">→</span>
+          </div>
+        </div>
+
+        <div class="bp-card bp-gcp-card">
+          <div class="bp-body">
+            <div class="bp-top">
+              <div class="bp-icon" style="background:#eef3ff;">☸️</div>
+              <span class="bp-num">02</span>
+            </div>
+            <div class="bp-title">GKE Autopilot Mode</div>
+            <div class="bp-desc">Let Google manage node provisioning, scaling, and security hardening. Focus entirely on workloads, not infrastructure. Billing by pod resource requests — no idle node waste.</div>
+          </div>
+          <div class="bp-footer">
+            <span class="bp-tag bp-gcp-tag">Operations</span>
+            <span class="bp-arrow">→</span>
+          </div>
+        </div>
+
+        <div class="bp-card bp-gcp-card">
+          <div class="bp-body">
+            <div class="bp-top">
+              <div class="bp-icon" style="background:#eef3ff;">📊</div>
+              <span class="bp-num">03</span>
+            </div>
+            <div class="bp-title">BigQuery Best Practices</div>
+            <div class="bp-desc">Partition tables by date and cluster by high-cardinality columns to minimise bytes scanned. Use BI Engine for sub-second dashboard queries and avoid SELECT * on large tables.</div>
+          </div>
+          <div class="bp-footer">
+            <span class="bp-tag bp-gcp-tag">Performance</span>
+            <span class="bp-arrow">→</span>
+          </div>
+        </div>
+
+        <div class="bp-card bp-gcp-card">
+          <div class="bp-body">
+            <div class="bp-top">
+              <div class="bp-icon" style="background:#eef3ff;">🔒</div>
+              <span class="bp-num">04</span>
+            </div>
+            <div class="bp-title">VPC Service Controls</div>
+            <div class="bp-desc">Create security perimeters around GCP APIs to prevent data exfiltration, even from compromised credentials. Enforce organisation-wide via resource hierarchy and access policies.</div>
+          </div>
+          <div class="bp-footer">
+            <span class="bp-tag bp-gcp-tag">Security</span>
+            <span class="bp-arrow">→</span>
+          </div>
+        </div>
+
+        <div class="bp-card bp-gcp-card">
+          <div class="bp-body">
+            <div class="bp-top">
+              <div class="bp-icon" style="background:#eef3ff;">💰</div>
+              <span class="bp-num">05</span>
+            </div>
+            <div class="bp-title">Committed Use Discounts</div>
+            <div class="bp-desc">Achieve up to 57% discount with 1–3 year Committed Use Discounts. Use Active Assist recommendations to right-size resources weekly and eliminate overprovisioned compute spend.</div>
+          </div>
+          <div class="bp-footer">
+            <span class="bp-tag bp-gcp-tag">Cost</span>
+            <span class="bp-arrow">→</span>
+          </div>
+        </div>
+
+        <div class="bp-card bp-gcp-card">
+          <div class="bp-body">
+            <div class="bp-top">
+              <div class="bp-icon" style="background:#eef3ff;">🌍</div>
+              <span class="bp-num">06</span>
+            </div>
+            <div class="bp-title">Global Load Balancing</div>
+            <div class="bp-desc">Use Google's Anycast IP for a single global VIP. Traffic is automatically routed to the nearest healthy backend over Google's private backbone — zero additional RTT for global users.</div>
+          </div>
+          <div class="bp-footer">
+            <span class="bp-tag bp-gcp-tag">Reliability</span>
+            <span class="bp-arrow">→</span>
+          </div>
+        </div>
+
       </div>
     </div>
     <div id="gcp-code" class="ps-panel">
@@ -1417,6 +1935,648 @@ db = firestore.<span class="cf">Client</span>()
 </section>
 </div><!-- end container -->
 
+<!-- ═══════════════════════════════════════════════════════
+     ENTERPRISE ARCHITECTURE SECTIONS
+     ═══════════════════════════════════════════════════════ -->
+<div class="container">
+
+<!-- ────────── B2B ARCHITECTURE ────────── -->
+<section class="section" id="b2b-arch">
+  <div class="reveal">
+    <div class="sec-label">Enterprise Architecture</div>
+    <h2 class="sec-title">B2B Architecture</h2>
+    <p class="sec-desc">Cloud patterns built for business-to-business integrations, APIs, and partner ecosystems.</p>
+  </div>
+  <div class="arch-section reveal" style="margin-top:2rem;">
+    <div class="arch-hdr" style="--accent:linear-gradient(90deg,#6366f1,#8b5cf6,#4f46e5);">
+      <div class="arch-icon-wrap" style="background:linear-gradient(135deg,#6366f1,#4f46e5);">🏢</div>
+      <div class="arch-hdr-text">
+        <div class="arch-title">Business-to-Business Cloud Architecture</div>
+        <div class="arch-subtitle">Secure partner integrations · API gateways · EDI · Event-driven data exchange</div>
+      </div>
+      <div class="arch-badges">
+        <span class="arch-badge">Enterprise</span><span class="arch-badge">API-First</span><span class="arch-badge">High Security</span>
+      </div>
+    </div>
+    <div class="arch-body">
+      <div class="arch-canvas-col">
+        <canvas id="cvs-b2b" data-h="320"></canvas>
+        <div class="arch-canvas-ctrls">
+          <button class="cbtn active" onclick="b2bMode('api')">🔌 API Gateway</button>
+          <button class="cbtn" onclick="b2bMode('event')">📡 Event-Driven</button>
+          <button class="cbtn" onclick="b2bMode('edi')">📋 EDI / B2Bi</button>
+        </div>
+      </div>
+      <div class="arch-info-col">
+        <p class="arch-desc">B2B architecture enables <strong>secure, scalable communication</strong> between organisations. Rather than direct database access, businesses exchange data through <strong>APIs, message queues, and event buses</strong> — decoupling systems and enabling independent scaling.</p>
+        <div class="arch-features">
+          <div class="arch-feature">
+            <div class="af-icon" style="background:#ede9fe;">🔌</div>
+            <div><div class="af-title">API Gateway Layer</div><div class="af-desc">OAuth 2.0 + mTLS secured endpoints. Rate limiting, versioning, and partner-specific throttling policies.</div></div>
+          </div>
+          <div class="arch-feature">
+            <div class="af-icon" style="background:#ede9fe;">🔐</div>
+            <div><div class="af-title">Zero-Trust Network</div><div class="af-desc">Each service call is authenticated. Private VPC peering, service mesh (Istio), and certificate rotation.</div></div>
+          </div>
+          <div class="arch-feature">
+            <div class="af-icon" style="background:#ede9fe;">📡</div>
+            <div><div class="af-title">Event-Driven Integration</div><div class="af-desc">Kafka or cloud-native event buses decouple partner systems. Replay, audit trails, and dead-letter queues.</div></div>
+          </div>
+          <div class="arch-feature">
+            <div class="af-icon" style="background:#ede9fe;">📊</div>
+            <div><div class="af-title">Observability &amp; SLA Tracking</div><div class="af-desc">Partner SLA dashboards, latency tracking, error budgets, and automated incident escalation.</div></div>
+          </div>
+        </div>
+        <div class="arch-usecases">
+          <span class="arch-usecase">Supply Chain</span><span class="arch-usecase">Payment Processing</span>
+          <span class="arch-usecase">ERP Integration</span><span class="arch-usecase">SaaS Platforms</span>
+          <span class="arch-usecase">Marketplace APIs</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────── B2C ARCHITECTURE ────────── -->
+<section class="section" id="b2c-arch">
+  <div class="reveal">
+    <div class="sec-label">Enterprise Architecture</div>
+    <h2 class="sec-title">B2C Architecture</h2>
+    <p class="sec-desc">High-throughput consumer-facing cloud design built for millions of concurrent users.</p>
+  </div>
+  <div class="arch-section reveal" style="margin-top:2rem;">
+    <div class="arch-hdr">
+      <div class="arch-icon-wrap" style="background:linear-gradient(135deg,#ec4899,#db2777);">👤</div>
+      <div class="arch-hdr-text">
+        <div class="arch-title">Business-to-Consumer Cloud Architecture</div>
+        <div class="arch-subtitle">Global CDN · Auto-scaling · Personalisation · Real-time sessions</div>
+      </div>
+      <div class="arch-badges">
+        <span class="arch-badge">High Traffic</span><span class="arch-badge">Global Scale</span><span class="arch-badge">Low Latency</span>
+      </div>
+    </div>
+    <div class="arch-body">
+      <div class="arch-canvas-col">
+        <canvas id="cvs-b2c" data-h="320"></canvas>
+        <div class="arch-canvas-ctrls">
+          <button class="cbtn active" onclick="b2cMode('cdn')">🌐 CDN + Edge</button>
+          <button class="cbtn" onclick="b2cMode('scale')">📈 Auto-Scale</button>
+          <button class="cbtn" onclick="b2cMode('realtime')">⚡ Real-Time</button>
+        </div>
+      </div>
+      <div class="arch-info-col">
+        <p class="arch-desc">B2C architecture must handle <strong>unpredictable traffic spikes</strong> — flash sales, viral moments, live events. The design prioritises <strong>low latency at the edge</strong>, horizontal auto-scaling, and stateless services to serve millions of consumers globally.</p>
+        <div class="arch-features">
+          <div class="arch-feature">
+            <div class="af-icon" style="background:#fce7f3;">🌍</div>
+            <div><div class="af-title">Global CDN + Edge Computing</div><div class="af-desc">Static assets cached at 200+ PoPs. Edge functions handle personalisation without origin round-trips.</div></div>
+          </div>
+          <div class="arch-feature">
+            <div class="af-icon" style="background:#fce7f3;">⚖️</div>
+            <div><div class="af-title">Horizontal Auto-Scaling</div><div class="af-desc">Load balancers distribute across auto-scaling groups. Scale from 100 to 100,000 requests/sec in minutes.</div></div>
+          </div>
+          <div class="arch-feature">
+            <div class="af-icon" style="background:#fce7f3;">🔔</div>
+            <div><div class="af-title">Push Notifications &amp; WebSockets</div><div class="af-desc">Real-time updates via managed WebSocket APIs. Event sourcing keeps UI state consistent across devices.</div></div>
+          </div>
+          <div class="arch-feature">
+            <div class="af-icon" style="background:#fce7f3;">🤖</div>
+            <div><div class="af-title">Personalisation Engine</div><div class="af-desc">ML-powered recommendations cached in Redis. A/B testing at the edge using feature flags and canary rollouts.</div></div>
+          </div>
+        </div>
+        <div class="arch-usecases">
+          <span class="arch-usecase">E-Commerce</span><span class="arch-usecase">Streaming Media</span>
+          <span class="arch-usecase">Social Platforms</span><span class="arch-usecase">Mobile Apps</span>
+          <span class="arch-usecase">Gaming</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────── ONE-TIER ────────── -->
+<section class="section" id="one-tier">
+  <div class="reveal">
+    <div class="sec-label">Application Tiers</div>
+    <h2 class="sec-title">One-Tier Architecture</h2>
+    <p class="sec-desc">All application components run within a single environment — the simplest, fastest-to-deploy model.</p>
+  </div>
+  <div class="arch-section reveal" style="margin-top:2rem;">
+    <div class="arch-hdr">
+      <div class="arch-icon-wrap" style="background:linear-gradient(135deg,#f59e0b,#d97706);">1️⃣</div>
+      <div class="arch-hdr-text">
+        <div class="arch-title">One-Tier (Monolithic) Architecture</div>
+        <div class="arch-subtitle">Single deployment unit · Shared memory · Zero network latency internally</div>
+      </div>
+      <div class="arch-badges">
+        <span class="arch-badge">Simple</span><span class="arch-badge">Monolithic</span><span class="arch-badge">Single Process</span>
+      </div>
+    </div>
+    <div class="arch-body">
+      <div class="arch-canvas-col">
+        <canvas id="cvs-1tier" data-h="300"></canvas>
+        <div class="arch-canvas-ctrls">
+          <button class="cbtn active" onclick="tierMode('1tier','standard')">📦 Standard</button>
+          <button class="cbtn" onclick="tierMode('1tier','desktop')">🖥️ Desktop App</button>
+        </div>
+      </div>
+      <div class="arch-info-col">
+        <p class="arch-desc">In a one-tier architecture, the <strong>presentation, business logic, and data layer</strong> all reside in a single executable or process. There are no network calls between layers — everything communicates through in-memory function calls.</p>
+        <div class="tier-compare">
+          <div class="tc-card"><div class="tc-label">✅ Advantages</div><div class="tc-val">• Zero network overhead<br>• Simple to develop &amp; debug<br>• Easy local development<br>• Low initial cost</div></div>
+          <div class="tc-card"><div class="tc-label">⚠️ Limitations</div><div class="tc-val">• Hard to scale independently<br>• Single point of failure<br>• Technology lock-in<br>• Large deployment units</div></div>
+        </div>
+        <div class="arch-usecases">
+          <span class="arch-usecase">Desktop Tools</span><span class="arch-usecase">CLI Applications</span>
+          <span class="arch-usecase">Batch Jobs</span><span class="arch-usecase">Prototypes</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────── TWO-TIER ────────── -->
+<section class="section" id="two-tier">
+  <div class="reveal">
+    <div class="sec-label">Application Tiers</div>
+    <h2 class="sec-title">Two-Tier Architecture</h2>
+    <p class="sec-desc">Client-server model separating the user interface from the data store.</p>
+  </div>
+  <div class="arch-section reveal" style="margin-top:2rem;">
+    <div class="arch-hdr">
+      <div class="arch-icon-wrap" style="background:linear-gradient(135deg,#10b981,#059669);">2️⃣</div>
+      <div class="arch-hdr-text">
+        <div class="arch-title">Two-Tier (Client-Server) Architecture</div>
+        <div class="arch-subtitle">UI + Logic client · Data server · Direct DB connection</div>
+      </div>
+      <div class="arch-badges">
+        <span class="arch-badge">Client-Server</span><span class="arch-badge">Direct DB</span><span class="arch-badge">Thin Separation</span>
+      </div>
+    </div>
+    <div class="arch-body">
+      <div class="arch-canvas-col">
+        <canvas id="cvs-2tier" data-h="300"></canvas>
+        <div class="arch-canvas-ctrls">
+          <button class="cbtn active" onclick="tierMode('2tier','standard')">🖥️ Standard</button>
+          <button class="cbtn" onclick="tierMode('2tier','cloud')">☁️ Cloud-Hosted</button>
+        </div>
+      </div>
+      <div class="arch-info-col">
+        <p class="arch-desc">The two-tier model splits the application into a <strong>client tier</strong> (containing UI and business logic) and a <strong>data tier</strong> (database server). The client communicates directly with the database, reducing complexity but limiting scalability.</p>
+        <div class="tier-compare">
+          <div class="tc-card"><div class="tc-label">✅ Advantages</div><div class="tc-val">• Faster than one-tier for teams<br>• Simple architecture<br>• Direct query performance<br>• Easier data consistency</div></div>
+          <div class="tc-card"><div class="tc-label">⚠️ Limitations</div><div class="tc-val">• Business logic in client<br>• Security risks (direct DB)<br>• Hard to maintain consistency<br>• Limited scalability</div></div>
+        </div>
+        <div class="arch-usecases">
+          <span class="arch-usecase">Internal Tools</span><span class="arch-usecase">Legacy ERP</span>
+          <span class="arch-usecase">Small Apps</span><span class="arch-usecase">LAN Applications</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────── THREE-TIER ────────── -->
+<section class="section" id="three-tier">
+  <div class="reveal">
+    <div class="sec-label">Application Tiers</div>
+    <h2 class="sec-title">Three-Tier Architecture</h2>
+    <p class="sec-desc">The industry-standard architecture: presentation, logic, and data as separate, independently scalable layers.</p>
+  </div>
+  <div class="arch-section reveal" style="margin-top:2rem;">
+    <div class="arch-hdr">
+      <div class="arch-icon-wrap" style="background:linear-gradient(135deg,#3b82f6,#2563eb);">3️⃣</div>
+      <div class="arch-hdr-text">
+        <div class="arch-title">Three-Tier (N-Layer) Architecture</div>
+        <div class="arch-subtitle">Presentation · Application Logic · Data — independently deployable and scalable</div>
+      </div>
+      <div class="arch-badges">
+        <span class="arch-badge">Industry Standard</span><span class="arch-badge">Scalable</span><span class="arch-badge">Separation of Concerns</span>
+      </div>
+    </div>
+    <div class="arch-body">
+      <div class="arch-canvas-col">
+        <canvas id="cvs-3tier" data-h="320"></canvas>
+        <div class="arch-canvas-ctrls">
+          <button class="cbtn active" onclick="tierMode('3tier','web')">🌐 Web App</button>
+          <button class="cbtn" onclick="tierMode('3tier','api')">⚡ REST API</button>
+          <button class="cbtn" onclick="tierMode('3tier','cloud')">☁️ Cloud Native</button>
+        </div>
+      </div>
+      <div class="arch-info-col">
+        <p class="arch-desc">Three-tier architecture is the <strong>gold standard for web applications</strong>. Each tier has a distinct responsibility: the <strong>presentation tier</strong> handles UI, the <strong>application tier</strong> runs business logic, and the <strong>data tier</strong> persists state. Tiers communicate only through defined interfaces.</p>
+        <div class="arch-features">
+          <div class="arch-feature">
+            <div class="af-icon" style="background:#dbeafe;">🖥️</div>
+            <div><div class="af-title">Presentation Tier</div><div class="af-desc">React / Angular SPA or server-rendered HTML. Deployed to CDN or static hosting. Calls REST/GraphQL APIs only.</div></div>
+          </div>
+          <div class="arch-feature">
+            <div class="af-icon" style="background:#dbeafe;">⚙️</div>
+            <div><div class="af-title">Application Tier</div><div class="af-desc">Node.js / Spring Boot / Django. Stateless services behind a load balancer. Scales horizontally with demand.</div></div>
+          </div>
+          <div class="arch-feature">
+            <div class="af-icon" style="background:#dbeafe;">🗄️</div>
+            <div><div class="af-title">Data Tier</div><div class="af-desc">Managed PostgreSQL + Redis cache. Read replicas for query scaling. Backups, PITR, and encryption at rest.</div></div>
+          </div>
+        </div>
+        <div class="arch-usecases">
+          <span class="arch-usecase">Web Applications</span><span class="arch-usecase">REST APIs</span>
+          <span class="arch-usecase">E-Commerce</span><span class="arch-usecase">SaaS Products</span><span class="arch-usecase">Portals</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────── N-TIER ────────── -->
+<section class="section" id="n-tier">
+  <div class="reveal">
+    <div class="sec-label">Application Tiers</div>
+    <h2 class="sec-title">N-Tier Architecture</h2>
+    <p class="sec-desc">Distributed microservices — each domain owns its layer, deployed and scaled independently in the cloud.</p>
+  </div>
+  <div class="arch-section reveal" style="margin-top:2rem;">
+    <div class="arch-hdr">
+      <div class="arch-icon-wrap" style="background:linear-gradient(135deg,#8b5cf6,#7c3aed);">🔢</div>
+      <div class="arch-hdr-text">
+        <div class="arch-title">N-Tier (Microservices) Architecture</div>
+        <div class="arch-subtitle">Independent services · Event mesh · API gateway · Domain-driven design</div>
+      </div>
+      <div class="arch-badges">
+        <span class="arch-badge">Microservices</span><span class="arch-badge">Cloud Native</span><span class="arch-badge">DDD</span>
+      </div>
+    </div>
+    <div class="arch-body">
+      <div class="arch-canvas-col">
+        <canvas id="cvs-ntier" data-h="340"></canvas>
+        <div class="arch-canvas-ctrls">
+          <button class="cbtn active" onclick="ntierMode('mesh')">🕸️ Service Mesh</button>
+          <button class="cbtn" onclick="ntierMode('event')">📡 Event Bus</button>
+          <button class="cbtn" onclick="ntierMode('k8s')">☸️ Kubernetes</button>
+        </div>
+      </div>
+      <div class="arch-info-col">
+        <p class="arch-desc">N-Tier takes separation of concerns to the extreme — each <strong>bounded context</strong> becomes an independent deployable service. Services communicate via <strong>async events or REST/gRPC</strong>, each owning its own data store. This enables Netflix-scale independent deployments.</p>
+        <div class="arch-features">
+          <div class="arch-feature">
+            <div class="af-icon" style="background:#ede9fe;">🚪</div>
+            <div><div class="af-title">API Gateway + BFF</div><div class="af-desc">Single entry point for all clients. Backend-for-Frontend pattern serves mobile, web, and partner APIs differently.</div></div>
+          </div>
+          <div class="arch-feature">
+            <div class="af-icon" style="background:#ede9fe;">🕸️</div>
+            <div><div class="af-title">Service Mesh (Istio/Linkerd)</div><div class="af-desc">mTLS between all services automatically. Circuit breakers, retries, and distributed tracing built-in.</div></div>
+          </div>
+          <div class="arch-feature">
+            <div class="af-icon" style="background:#ede9fe;">📬</div>
+            <div><div class="af-title">Event-Driven Decoupling</div><div class="af-desc">Kafka or cloud event buses connect services without tight coupling. CQRS and Event Sourcing for audit trails.</div></div>
+          </div>
+          <div class="arch-feature">
+            <div class="af-icon" style="background:#ede9fe;">☸️</div>
+            <div><div class="af-title">Container Orchestration</div><div class="af-desc">Kubernetes manages service discovery, rolling deploys, auto-healing, and resource scheduling across nodes.</div></div>
+          </div>
+        </div>
+        <div class="arch-usecases">
+          <span class="arch-usecase">Netflix / Uber Scale</span><span class="arch-usecase">Fintech Platforms</span>
+          <span class="arch-usecase">Enterprise SaaS</span><span class="arch-usecase">Trading Systems</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────── CLOUD SECURITY ────────── -->
+<section class="section" id="cloud-security">
+  <div class="reveal">
+    <div class="sec-label">Security</div>
+    <h2 class="sec-title">Cloud Security</h2>
+    <p class="sec-desc">Defence-in-depth strategies, zero-trust principles, and compliance frameworks for enterprise cloud.</p>
+  </div>
+
+  <!-- Security canvas overview -->
+  <div class="arch-section reveal" style="margin-top:2rem;">
+    <div class="arch-hdr">
+      <div class="arch-icon-wrap" style="background:linear-gradient(135deg,#ef4444,#dc2626);">🛡️</div>
+      <div class="arch-hdr-text">
+        <div class="arch-title">Cloud Security Architecture</div>
+        <div class="arch-subtitle">Zero-trust · Defence-in-depth · Shared responsibility · Compliance automation</div>
+      </div>
+      <div class="arch-badges">
+        <span class="arch-badge">Zero Trust</span><span class="arch-badge">SOC 2</span><span class="arch-badge">ISO 27001</span>
+      </div>
+    </div>
+    <div class="arch-body">
+      <div class="arch-canvas-col">
+        <canvas id="cvs-security" data-h="340"></canvas>
+        <div class="arch-canvas-ctrls">
+          <button class="cbtn active" onclick="secMode('layers')">🧅 Defence Layers</button>
+          <button class="cbtn" onclick="secMode('zt')">🔒 Zero Trust</button>
+          <button class="cbtn" onclick="secMode('threat')">⚡ Threat Flow</button>
+        </div>
+      </div>
+      <div class="arch-info-col">
+        <p class="arch-desc">Cloud security follows a <strong>shared responsibility model</strong> — the provider secures the infrastructure, but customers own identity, data, and application security. <strong>Zero trust</strong> means every request is authenticated and authorised, regardless of network location.</p>
+        <div class="arch-features">
+          <div class="arch-feature">
+            <div class="af-icon" style="background:#fee2e2;">🔑</div>
+            <div><div class="af-title">Identity &amp; Access Management</div><div class="af-desc">Least-privilege RBAC, short-lived tokens, MFA everywhere. Workload identity for service-to-service auth.</div></div>
+          </div>
+          <div class="arch-feature">
+            <div class="af-icon" style="background:#fee2e2;">🔒</div>
+            <div><div class="af-title">Encryption Everywhere</div><div class="af-desc">TLS 1.3 in transit. AES-256 at rest. Customer-managed keys (CMEK) in HSM. Envelope encryption for secrets.</div></div>
+          </div>
+          <div class="arch-feature">
+            <div class="af-icon" style="background:#fee2e2;">🕵️</div>
+            <div><div class="af-title">Threat Detection &amp; SIEM</div><div class="af-desc">Anomaly detection on API calls and data access patterns. SIEM aggregates logs for correlation and alerting.</div></div>
+          </div>
+          <div class="arch-feature">
+            <div class="af-icon" style="background:#fee2e2;">📋</div>
+            <div><div class="af-title">Compliance as Code</div><div class="af-desc">Policy guardrails via AWS SCPs / Azure Policy / GCP Org Constraints. Drift detection and automated remediation.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Security domains card grid -->
+  <div class="sec-grid reveal">
+    <div class="sec-card" style="--c:#ef4444;">
+      <div class="sec-card::before" style="background:linear-gradient(90deg,#ef4444,#f87171);"></div>
+      <div class="sc-icon" style="background:#fee2e2;">🔑</div>
+      <div class="sc-title">Identity & Access</div>
+      <div class="sc-desc">Centralised IdP with OIDC/SAML. SCIM provisioning. Privileged access workstations. PAM vaulting for admin credentials.</div>
+      <div class="sc-tags">
+        <span class="sc-tag" style="background:#fee2e2;color:#b91c1c;">IAM</span>
+        <span class="sc-tag" style="background:#fee2e2;color:#b91c1c;">SSO</span>
+        <span class="sc-tag" style="background:#fee2e2;color:#b91c1c;">MFA</span>
+      </div>
+    </div>
+    <div class="sec-card">
+      <div class="sc-icon" style="background:#fef3c7;">🌐</div>
+      <div class="sc-title">Network Security</div>
+      <div class="sc-desc">VPC segmentation, private subnets, NACLs and security groups. WAF at the edge. DDoS protection and IP reputation filtering.</div>
+      <div class="sc-tags">
+        <span class="sc-tag" style="background:#fef3c7;color:#92400e;">VPC</span>
+        <span class="sc-tag" style="background:#fef3c7;color:#92400e;">WAF</span>
+        <span class="sc-tag" style="background:#fef3c7;color:#92400e;">DDoS</span>
+      </div>
+    </div>
+    <div class="sec-card">
+      <div class="sc-icon" style="background:#dbeafe;">🔒</div>
+      <div class="sc-title">Data Protection</div>
+      <div class="sc-desc">AES-256 encryption at rest. TLS 1.3 in transit. CMEK for sensitive workloads. Data classification and DLP policies enforced at query level.</div>
+      <div class="sc-tags">
+        <span class="sc-tag" style="background:#dbeafe;color:#1e40af;">Encryption</span>
+        <span class="sc-tag" style="background:#dbeafe;color:#1e40af;">CMEK</span>
+        <span class="sc-tag" style="background:#dbeafe;color:#1e40af;">DLP</span>
+      </div>
+    </div>
+    <div class="sec-card">
+      <div class="sc-icon" style="background:#d1fae5;">🛡️</div>
+      <div class="sc-title">Container Security</div>
+      <div class="sc-desc">Image scanning in CI/CD pipeline. Non-root containers. Pod security standards. Runtime threat detection with Falco.</div>
+      <div class="sc-tags">
+        <span class="sc-tag" style="background:#d1fae5;color:#065f46;">Falco</span>
+        <span class="sc-tag" style="background:#d1fae5;color:#065f46;">OPA</span>
+        <span class="sc-tag" style="background:#d1fae5;color:#065f46;">SBOM</span>
+      </div>
+    </div>
+    <div class="sec-card">
+      <div class="sc-icon" style="background:#ede9fe;">🕵️</div>
+      <div class="sc-title">Threat Detection</div>
+      <div class="sc-desc">ML-based anomaly detection on API calls. CloudTrail / Activity Log / Cloud Audit forwarded to SIEM. Automated runbooks for response.</div>
+      <div class="sc-tags">
+        <span class="sc-tag" style="background:#ede9fe;color:#5b21b6;">SIEM</span>
+        <span class="sc-tag" style="background:#ede9fe;color:#5b21b6;">SOAR</span>
+        <span class="sc-tag" style="background:#ede9fe;color:#5b21b6;">XDR</span>
+      </div>
+    </div>
+    <div class="sec-card">
+      <div class="sc-icon" style="background:#fce7f3;">📋</div>
+      <div class="sc-title">Compliance & Governance</div>
+      <div class="sc-desc">SOC 2 Type II, ISO 27001, GDPR, HIPAA, PCI-DSS. Policy-as-code enforces guardrails. Continuous compliance scanning and evidence collection.</div>
+      <div class="sc-tags">
+        <span class="sc-tag" style="background:#fce7f3;color:#9d174d;">SOC 2</span>
+        <span class="sc-tag" style="background:#fce7f3;color:#9d174d;">GDPR</span>
+        <span class="sc-tag" style="background:#fce7f3;color:#9d174d;">PCI-DSS</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────── E-COMMERCE PLATFORM ARCHITECTURE ────────── -->
+<section class="section" id="ecommerce-arch">
+  <div class="reveal">
+    <div class="sec-label">Industry Platforms</div>
+    <h2 class="sec-title">E-Commerce Platform Architecture</h2>
+    <p class="sec-desc">Resilient, high-performance commerce infrastructure — from product catalogue to order fulfilment at global scale.</p>
+  </div>
+  <div class="arch-section reveal" style="margin-top:2rem;">
+    <div class="arch-hdr" style="--accent:linear-gradient(90deg,#f97316,#fb923c,#ea580c);">
+      <div class="arch-icon-wrap" style="background:linear-gradient(135deg,#f97316,#ea580c);">🛒</div>
+      <div class="arch-hdr-text">
+        <div class="arch-title">E-Commerce Platform Architecture</div>
+        <div class="arch-subtitle">Catalogue · Cart · Checkout · Payments · Fulfilment · Personalisation</div>
+      </div>
+      <div class="arch-badges">
+        <span class="arch-badge">High Availability</span>
+        <span class="arch-badge">Event-Driven</span>
+        <span class="arch-badge">CDN-First</span>
+        <span class="arch-badge">PCI-DSS</span>
+      </div>
+    </div>
+    <div class="arch-body">
+      <div class="arch-canvas-col">
+        <canvas id="cvs-ecommerce" data-h="340"></canvas>
+        <div class="arch-canvas-ctrls">
+          <button class="cbtn active" onclick="ecomMode('flow')">🛒 Order Flow</button>
+          <button class="cbtn" onclick="ecomMode('infra')">🏗️ Infrastructure</button>
+          <button class="cbtn" onclick="ecomMode('peak')">⚡ Peak Traffic</button>
+        </div>
+      </div>
+      <div class="arch-info-col">
+        <p class="arch-desc">Modern e-commerce platforms are <strong>domain-decomposed microservices</strong> — each bounded context (catalogue, cart, orders, payments, fulfilment) owns its data and scales independently. The <strong>read path</strong> (browsing, search) is heavily cached and CDN-served, while the <strong>write path</strong> (checkout, payment) goes through strict transactional services.</p>
+        <div class="arch-features">
+          <div class="arch-feature">
+            <div class="af-icon" style="background:#fff7ed;">📦</div>
+            <div><div class="af-title">Product Catalogue Service</div><div class="af-desc">ElasticSearch for full-text search. Redis L2 cache for hot SKUs. Event-driven inventory sync via Kafka — zero stale listings.</div></div>
+          </div>
+          <div class="arch-feature">
+            <div class="af-icon" style="background:#fff7ed;">🛒</div>
+            <div><div class="af-title">Cart & Session Service</div><div class="af-desc">Redis-backed distributed cart — survives server failures. Guest carts migrated on login. Promo code validation in real-time.</div></div>
+          </div>
+          <div class="arch-feature">
+            <div class="af-icon" style="background:#fff7ed;">💳</div>
+            <div><div class="af-title">Checkout & Payment Orchestration</div><div class="af-desc">Saga pattern coordinates: reserve stock → charge payment → confirm order → trigger fulfilment. Rollback on any failure.</div></div>
+          </div>
+          <div class="arch-feature">
+            <div class="af-icon" style="background:#fff7ed;">🚚</div>
+            <div><div class="af-title">Order Fulfilment Pipeline</div><div class="af-desc">Async event chain: order confirmed → warehouse pick → shipping label → carrier API → real-time tracking webhook.</div></div>
+          </div>
+          <div class="arch-feature">
+            <div class="af-icon" style="background:#fff7ed;">🤖</div>
+            <div><div class="af-title">Personalisation & Recommendations</div><div class="af-desc">ML-powered collaborative filtering. A/B test variants served at edge. Click-stream analytics in real-time via Kinesis / Pub/Sub.</div></div>
+          </div>
+        </div>
+        <div class="arch-usecases">
+          <span class="arch-usecase">Online Retail</span>
+          <span class="arch-usecase">Flash Sales</span>
+          <span class="arch-usecase">Marketplaces</span>
+          <span class="arch-usecase">D2C Brands</span>
+          <span class="arch-usecase">B2B Commerce</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- E-Commerce domain cards -->
+  <div class="sec-grid reveal" style="padding:0;margin-top:1.5rem;">
+    <div class="sec-card">
+      <div class="sc-icon" style="background:#fff7ed;">🔍</div>
+      <div class="sc-title">Search & Discovery</div>
+      <div class="sc-desc">ElasticSearch / OpenSearch with vector embeddings. Faceted filters, typo tolerance, and synonym expansion. Sub-100ms p99 globally.</div>
+      <div class="sc-tags"><span class="sc-tag" style="background:#fff7ed;color:#9a3412;">ElasticSearch</span><span class="sc-tag" style="background:#fff7ed;color:#9a3412;">Redis</span><span class="sc-tag" style="background:#fff7ed;color:#9a3412;">CDN</span></div>
+    </div>
+    <div class="sec-card">
+      <div class="sc-icon" style="background:#fff7ed;">📊</div>
+      <div class="sc-title">Inventory Management</div>
+      <div class="sc-desc">Real-time stock levels via event sourcing. Optimistic locking prevents overselling. Multi-warehouse routing for fastest fulfilment.</div>
+      <div class="sc-tags"><span class="sc-tag" style="background:#fff7ed;color:#9a3412;">Event Sourcing</span><span class="sc-tag" style="background:#fff7ed;color:#9a3412;">CQRS</span></div>
+    </div>
+    <div class="sec-card">
+      <div class="sc-icon" style="background:#fff7ed;">📈</div>
+      <div class="sc-title">Flash Sale Readiness</div>
+      <div class="sc-desc">Pre-warm caches 15 min before sale. Rate limit checkout to prevent stampede. Queue-based waitlist for sold-out items.</div>
+      <div class="sc-tags"><span class="sc-tag" style="background:#fff7ed;color:#9a3412;">Auto-Scale</span><span class="sc-tag" style="background:#fff7ed;color:#9a3412;">Queue</span></div>
+    </div>
+    <div class="sec-card">
+      <div class="sc-icon" style="background:#fff7ed;">🌍</div>
+      <div class="sc-title">Global Edge Delivery</div>
+      <div class="sc-desc">Product pages, images and JS bundles on CDN. Edge-side includes (ESI) for personalised fragments without full-page miss.</div>
+      <div class="sc-tags"><span class="sc-tag" style="background:#fff7ed;color:#9a3412;">CloudFront</span><span class="sc-tag" style="background:#fff7ed;color:#9a3412;">Fastly</span></div>
+    </div>
+    <div class="sec-card">
+      <div class="sc-icon" style="background:#fff7ed;">🔔</div>
+      <div class="sc-title">Notification Engine</div>
+      <div class="sc-desc">Order status, shipping updates, and abandoned-cart nudges via email, SMS, and push. Template rendering at edge. Preference centre.</div>
+      <div class="sc-tags"><span class="sc-tag" style="background:#fff7ed;color:#9a3412;">SES/SNS</span><span class="sc-tag" style="background:#fff7ed;color:#9a3412;">Twilio</span></div>
+    </div>
+    <div class="sec-card">
+      <div class="sc-icon" style="background:#fff7ed;">📋</div>
+      <div class="sc-title">Analytics & Reporting</div>
+      <div class="sc-desc">Click-stream to data warehouse via streaming ETL. Revenue dashboards, funnel analysis, and cohort retention in near-real-time.</div>
+      <div class="sc-tags"><span class="sc-tag" style="background:#fff7ed;color:#9a3412;">BigQuery</span><span class="sc-tag" style="background:#fff7ed;color:#9a3412;">Redshift</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────── PAYMENT & BANKING PLATFORM ARCHITECTURE ────────── -->
+<section class="section" id="payment-arch">
+  <div class="reveal">
+    <div class="sec-label">Industry Platforms</div>
+    <h2 class="sec-title">Payment & Banking Platform Architecture</h2>
+    <p class="sec-desc">Mission-critical financial infrastructure — real-time transactions, fraud detection, regulatory compliance, and five-nines availability.</p>
+  </div>
+  <div class="arch-section reveal" style="margin-top:2rem;">
+    <div class="arch-hdr" style="--accent:linear-gradient(90deg,#0ea5e9,#38bdf8,#0284c7);">
+      <div class="arch-icon-wrap" style="background:linear-gradient(135deg,#0ea5e9,#0284c7);">💳</div>
+      <div class="arch-hdr-text">
+        <div class="arch-title">Payment & Banking Platform Architecture</div>
+        <div class="arch-subtitle">Real-time processing · Fraud ML · PCI-DSS · Core banking · Open Banking APIs</div>
+      </div>
+      <div class="arch-badges">
+        <span class="arch-badge">PCI-DSS L1</span>
+        <span class="arch-badge">99.999% SLA</span>
+        <span class="arch-badge">Real-Time</span>
+        <span class="arch-badge">ISO 27001</span>
+      </div>
+    </div>
+    <div class="arch-body">
+      <div class="arch-canvas-col">
+        <canvas id="cvs-payment" data-h="340"></canvas>
+        <div class="arch-canvas-ctrls">
+          <button class="cbtn active" onclick="payMode('txn')">💸 Transaction Flow</button>
+          <button class="cbtn" onclick="payMode('fraud')">🕵️ Fraud Detection</button>
+          <button class="cbtn" onclick="payMode('core')">🏦 Core Banking</button>
+        </div>
+      </div>
+      <div class="arch-info-col">
+        <p class="arch-desc">Payment platforms require <strong>sub-second settlement, deterministic consistency, and absolute auditability</strong>. Every operation is <strong>idempotent</strong> — safe to retry. <strong>Double-entry bookkeeping</strong> ensures no money is created or destroyed. The entire system is designed around the assumption that any node can fail at any time.</p>
+        <div class="arch-features">
+          <div class="arch-feature">
+            <div class="af-icon" style="background:#e0f2fe;">💸</div>
+            <div><div class="af-title">Payment Processing Engine</div><div class="af-desc">Idempotent transaction IDs prevent double-charges. Synchronous card auth in &lt;200ms. Async settlement via ACH/SWIFT/SEPA rails.</div></div>
+          </div>
+          <div class="arch-feature">
+            <div class="af-icon" style="background:#e0f2fe;">🕵️</div>
+            <div><div class="af-title">Real-Time Fraud Detection</div><div class="af-desc">ML scoring on every transaction in &lt;50ms. Feature store with 300+ signals: velocity, geo, device fingerprint, behavioural biometrics.</div></div>
+          </div>
+          <div class="arch-feature">
+            <div class="af-icon" style="background:#e0f2fe;">📒</div>
+            <div><div class="af-title">Immutable Ledger</div><div class="af-desc">Append-only double-entry journal. Each debit matches a credit. Cryptographic hash chaining for tamper evidence. Full audit trail.</div></div>
+          </div>
+          <div class="arch-feature">
+            <div class="af-icon" style="background:#e0f2fe;">🔐</div>
+            <div><div class="af-title">PCI-DSS Vault</div><div class="af-desc">Card data tokenised at ingestion. Raw PANs never touch application servers. HSM-backed key management. Point-to-point encryption.</div></div>
+          </div>
+          <div class="arch-feature">
+            <div class="af-icon" style="background:#e0f2fe;">🌐</div>
+            <div><div class="af-title">Open Banking APIs</div><div class="af-desc">PSD2/FDX compliant REST APIs with OAuth 2.0 PKCE. TPP registry, consent management, and strong customer authentication (SCA).</div></div>
+          </div>
+        </div>
+        <div class="arch-usecases">
+          <span class="arch-usecase">Digital Wallets</span>
+          <span class="arch-usecase">Card Processing</span>
+          <span class="arch-usecase">Core Banking</span>
+          <span class="arch-usecase">Open Banking</span>
+          <span class="arch-usecase">Crypto Exchanges</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Payment domain cards -->
+  <div class="sec-grid reveal" style="padding:0;margin-top:1.5rem;">
+    <div class="sec-card">
+      <div class="sc-icon" style="background:#e0f2fe;">🔒</div>
+      <div class="sc-title">Tokenisation & Encryption</div>
+      <div class="sc-desc">Format-preserving encryption (FPE) for PAN tokenisation. Vault-per-merchant isolation. HSM-backed key lifecycle. P2PE certified terminals.</div>
+      <div class="sc-tags"><span class="sc-tag" style="background:#e0f2fe;color:#075985;">HSM</span><span class="sc-tag" style="background:#e0f2fe;color:#075985;">P2PE</span><span class="sc-tag" style="background:#e0f2fe;color:#075985;">PCI-DSS</span></div>
+    </div>
+    <div class="sec-card">
+      <div class="sc-icon" style="background:#e0f2fe;">⚡</div>
+      <div class="sc-title">Real-Time Payments</div>
+      <div class="sc-desc">ISO 20022 message format. Faster Payments, SEPA Instant, RTP rail integration. Sub-second end-to-end confirmation with idempotency keys.</div>
+      <div class="sc-tags"><span class="sc-tag" style="background:#e0f2fe;color:#075985;">ISO 20022</span><span class="sc-tag" style="background:#e0f2fe;color:#075985;">RTP</span></div>
+    </div>
+    <div class="sec-card">
+      <div class="sc-icon" style="background:#e0f2fe;">🤖</div>
+      <div class="sc-title">Fraud & AML</div>
+      <div class="sc-desc">Graph neural networks detect money-laundering rings. Rule engine + ML ensemble scoring. SAR filing automation. OFAC screening on every transaction.</div>
+      <div class="sc-tags"><span class="sc-tag" style="background:#e0f2fe;color:#075985;">ML</span><span class="sc-tag" style="background:#e0f2fe;color:#075985;">AML</span><span class="sc-tag" style="background:#e0f2fe;color:#075985;">KYC</span></div>
+    </div>
+    <div class="sec-card">
+      <div class="sc-icon" style="background:#e0f2fe;">📒</div>
+      <div class="sc-title">Immutable Ledger</div>
+      <div class="sc-desc">Append-only event store. Every debit has a matching credit. Merkle hash chaining for tamper-evident history. Regulatory reporting from read replicas.</div>
+      <div class="sc-tags"><span class="sc-tag" style="background:#e0f2fe;color:#075985;">CQRS</span><span class="sc-tag" style="background:#e0f2fe;color:#075985;">Event Store</span></div>
+    </div>
+    <div class="sec-card">
+      <div class="sc-icon" style="background:#e0f2fe;">🌐</div>
+      <div class="sc-title">Open Banking APIs</div>
+      <div class="sc-desc">PSD2, CDR, and FDX compliant. Dynamic client registration. Consent management dashboard. SCA with FIDO2/WebAuthn for strong authentication.</div>
+      <div class="sc-tags"><span class="sc-tag" style="background:#e0f2fe;color:#075985;">PSD2</span><span class="sc-tag" style="background:#e0f2fe;color:#075985;">OAuth2</span></div>
+    </div>
+    <div class="sec-card">
+      <div class="sc-icon" style="background:#e0f2fe;">🏛️</div>
+      <div class="sc-title">Regulatory & Compliance</div>
+      <div class="sc-desc">Automated regulatory reporting for SOX, GDPR, DORA, and Basel III. Compliance-as-code with policy guardrails. Immutable audit logs retained 7 years.</div>
+      <div class="sc-tags"><span class="sc-tag" style="background:#e0f2fe;color:#075985;">SOX</span><span class="sc-tag" style="background:#e0f2fe;color:#075985;">DORA</span><span class="sc-tag" style="background:#e0f2fe;color:#075985;">GDPR</span></div>
+    </div>
+  </div>
+</section>
+
+</div><!-- end architecture container -->
+
 <!-- FOOTER -->
 <footer class="footer">
   <div class="footer-inner">
@@ -1635,88 +2795,70 @@ function initBanner(id){
 function animAWSBanner(){
   BANNERS.aws.raf=requestAnimationFrame(animAWSBanner);
   const ctx=BANNERS.aws.ctx;if(!ctx)return;
-  const W=ctx._w,H=ctx._h;
+  const W=ctx._w,H=ctx._h,t=++BANNERS.aws.t;
   ctx.clearRect(0,0,W,H);
-  const t=++BANNERS.aws.t;
-  // Animated cloud infrastructure diagram
-  const svcs=[
-    {x:W*.12,y:H*.35,l:'EC2',c:'#FF9900'},{x:W*.28,y:H*.35,l:'ELB',c:'#FF6B00'},
-    {x:W*.45,y:H*.2,l:'S3',c:'#52aa52'},{x:W*.45,y:H*.5,l:'RDS',c:'#3b82f6'},
-    {x:W*.62,y:H*.35,l:'Lambda',c:'#FF9900'},{x:W*.78,y:H*.35,l:'CloudFront',c:'#FF6B00'},
-  ];
-  const edges=[[0,1],[1,2],[1,3],[1,4],[4,5]];
-  edges.forEach(([a,b])=>{
-    const sa=svcs[a],sb=svcs[b];
-    const p=(Math.sin(t*0.02+a)*.5+.5);
-    arrow(ctx,sa.x,sa.y,sb.x,sb.y,'rgba(255,153,0,0.35)',1);
-    const px=sa.x+(sb.x-sa.x)*p,py=sa.y+(sb.y-sa.y)*p;
-    glow(ctx,px,py,10,'#FF9900');
-    dot(ctx,px,py,3,'#FF9900');
+  // Flowing wave line — AWS orange
+  const c1='#FF9900',c2='#ffb830';
+  for(let wave=0;wave<3;wave++){
+    ctx.beginPath();
+    for(let x=0;x<=W;x+=3){
+      const y=H*(0.35+wave*.22)+Math.sin(x*0.018+t*0.03+wave*1.2)*10;
+      wave===0&&x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+    }
+    ctx.strokeStyle=wave===0?c1+'99':wave===1?c2+'55':c1+'33';
+    ctx.lineWidth=wave===0?1.8:1.2;ctx.stroke();
+  }
+  // Pulsing service dots
+  const pts=[{x:W*.15,c:c1},{x:W*.38,c:c2},{x:W*.6,c:c1},{x:W*.82,c:c2}];
+  pts.forEach((p,i)=>{
+    const py=H*.45+Math.sin(t*0.04+i*1.6)*8;
+    const pulse=0.5+0.5*Math.sin(t*0.05+i);
+    ctx.beginPath();ctx.arc(p.x,py,3+pulse*2,0,Math.PI*2);
+    ctx.fillStyle=p.c+(Math.floor(180+75*pulse).toString(16));ctx.fill();
+    ctx.beginPath();ctx.arc(p.x,py,8+pulse*5,0,Math.PI*2);
+    ctx.fillStyle=p.c+'18';ctx.fill();
   });
-  svcs.forEach((s,i)=>{
-    const pulse=0.7+0.3*Math.sin(t*0.04+i);
-    glow(ctx,s.x,s.y,30,s.c);
-    rr(ctx,s.x-30,s.y-16,60,32,8,'rgba(255,153,0,0.12)',s.c,1.5*pulse);
-    txt(ctx,s.l,s.x,s.y,9.5,s.c,'center',600);
-  });
-  txt(ctx,'AWS Architecture',W*.45,H*.82,10,'rgba(255,153,0,0.5)','center',500);
 }
 function animAZBanner(){
   BANNERS.az.raf=requestAnimationFrame(animAZBanner);
   const ctx=BANNERS.az.ctx;if(!ctx)return;
-  const W=ctx._w,H=ctx._h;
+  const W=ctx._w,H=ctx._h,t=++BANNERS.az.t;
   ctx.clearRect(0,0,W,H);
-  const t=++BANNERS.az.t;
-  const svcs=[
-    {x:W*.12,y:H*.35,l:'VMs',c:'#0078D4'},{x:W*.28,y:H*.35,l:'APIM',c:'#0078D4'},
-    {x:W*.45,y:H*.2,l:'Blob',c:'#00b4d8'},{x:W*.45,y:H*.5,l:'SQL',c:'#4361ee'},
-    {x:W*.62,y:H*.35,l:'Functions',c:'#0078D4'},{x:W*.78,y:H*.35,l:'Azure CDN',c:'#0090d1'},
-  ];
-  const edges=[[0,1],[1,2],[1,3],[1,4],[4,5]];
-  edges.forEach(([a,b])=>{
-    const sa=svcs[a],sb=svcs[b];
-    const p=(Math.sin(t*0.025+a*.8)*.5+.5);
-    arrow(ctx,sa.x,sa.y,sb.x,sb.y,'rgba(0,120,212,0.3)',1);
-    const px=sa.x+(sb.x-sa.x)*p,py=sa.y+(sb.y-sa.y)*p;
-    glow(ctx,px,py,10,'#0078D4');
-    dot(ctx,px,py,3,'#0078D4');
-  });
-  svcs.forEach((s,i)=>{
-    const pulse=0.7+0.3*Math.sin(t*0.035+i);
-    glow(ctx,s.x,s.y,30,s.c);
-    rr(ctx,s.x-30,s.y-16,60,32,8,'rgba(0,120,212,0.12)',s.c,1.5*pulse);
-    txt(ctx,s.l,s.x,s.y,9.5,s.c,'center',600);
-  });
-  txt(ctx,'Azure Architecture',W*.45,H*.82,10,'rgba(0,120,212,0.5)','center',500);
+  const c='#0078D4';
+  // Grid of softly glowing nodes
+  const cols=6,rows=2;
+  for(let r=0;r<rows;r++)for(let c2=0;c2<cols;c2++){
+    const x=(c2+.5)*(W/cols);
+    const y=(r+.5)*(H/rows)+Math.sin(t*0.025+c2*.8+r)*6;
+    const a=0.18+0.12*Math.sin(t*0.04+c2+r*2);
+    if(c2<cols-1){
+      const nx=(c2+1.5)*(W/cols);
+      const ny=(r+.5)*(H/rows)+Math.sin(t*0.025+(c2+1)*.8+r)*6;
+      ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(nx,ny);
+      ctx.strokeStyle=c+'28';ctx.lineWidth=.8;ctx.stroke();
+    }
+    ctx.beginPath();ctx.arc(x,y,2.5,0,Math.PI*2);
+    ctx.fillStyle=c+(Math.floor(a*255).toString(16).padStart(2,'0'));ctx.fill();
+  }
 }
 function animGCPBanner(){
   BANNERS.gcp.raf=requestAnimationFrame(animGCPBanner);
   const ctx=BANNERS.gcp.ctx;if(!ctx)return;
-  const W=ctx._w,H=ctx._h;
+  const W=ctx._w,H=ctx._h,t=++BANNERS.gcp.t;
   ctx.clearRect(0,0,W,H);
-  const t=++BANNERS.gcp.t;
-  const svcs=[
-    {x:W*.12,y:H*.35,l:'GKE',c:'#4285F4'},{x:W*.28,y:H*.35,l:'Cloud LB',c:'#EA4335'},
-    {x:W*.45,y:H*.2,l:'GCS',c:'#34A853'},{x:W*.45,y:H*.5,l:'Spanner',c:'#4285F4'},
-    {x:W*.62,y:H*.35,l:'Cloud Run',c:'#FBBC05'},{x:W*.78,y:H*.35,l:'CDN',c:'#4285F4'},
-  ];
-  const edges=[[0,1],[1,2],[1,3],[1,4],[4,5]];
+  // GCP 4-colour orbiting particles
   const colors=['#4285F4','#EA4335','#FBBC05','#34A853'];
-  edges.forEach(([a,b],ei)=>{
-    const sa=svcs[a],sb=svcs[b];
-    const p=(Math.sin(t*0.02+a*.9)*.5+.5);
-    const ec=colors[ei%4];
-    arrow(ctx,sa.x,sa.y,sb.x,sb.y,ec+'44',1);
-    const px=sa.x+(sb.x-sa.x)*p,py=sa.y+(sb.y-sa.y)*p;
-    glow(ctx,px,py,10,ec);dot(ctx,px,py,3,ec);
-  });
-  svcs.forEach((s,i)=>{
-    const pulse=0.7+0.3*Math.sin(t*0.038+i);
-    glow(ctx,s.x,s.y,30,s.c);
-    rr(ctx,s.x-30,s.y-16,60,32,8,'rgba(66,133,244,0.1)',s.c,1.5*pulse);
-    txt(ctx,s.l,s.x,s.y,9.5,s.c,'center',600);
-  });
-  txt(ctx,'GCP Architecture',W*.45,H*.82,10,'rgba(66,133,244,0.5)','center',500);
+  const cx=W/2,cy=H*.55;
+  for(let i=0;i<20;i++){
+    const angle=t*0.02*(1+i*.04)+i*(Math.PI*2/20);
+    const r=28+i*4.5;
+    const x=cx+Math.cos(angle)*r*(W/320);
+    const y=cy+Math.sin(angle)*r*.38;
+    const col=colors[i%4];
+    const a=0.15+0.15*Math.sin(t*0.05+i);
+    ctx.beginPath();ctx.arc(x,y,1.5+Math.sin(t*0.06+i),0,Math.PI*2);
+    ctx.fillStyle=col+(Math.floor(a*255+128).toString(16).padStart(2,'0'));ctx.fill();
+  }
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -2125,31 +3267,224 @@ function animDevops(){
 // UI INTERACTIONS
 // ═══════════════════════════════════════════════════════════
 function showTab(provider,panel,btn){
-  document.querySelectorAll(`#${provider}-${panel}`).forEach(()=>{});
+  // Hide all panels for this provider
   document.querySelectorAll(`[id^="${provider}-"]`).forEach(p=>{
-    if(p.classList.contains('ps-panel')) p.classList.remove('active');
+    if(p.classList.contains('ps-panel')){
+      p.classList.remove('active','tab-entering');
+    }
   });
+  // Show the target panel
   const el=document.getElementById(`${provider}-${panel}`);
-  if(el) el.classList.add('active');
-  // Update buttons
+  if(el){
+    el.classList.add('active');
+    // Trigger stagger animation for service panels
+    if(panel==='svc'){
+      void el.offsetWidth; // force reflow so animation replays
+      el.classList.add('tab-entering');
+      setTimeout(()=>{if(el) el.classList.remove('tab-entering');}, 900);
+    }
+  }
+  // Update tab buttons
   const providerSection=btn.closest('.ps-section');
   if(providerSection) providerSection.querySelectorAll('.ps-tab').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
-  // Init canvas if needed
+  // Init / reinit canvas when needed
   if(panel==='arch'){
-    if(provider==='aws') setTimeout(initAwsArch,80);
-    else if(provider==='az') setTimeout(initAzArch,80);
-    else if(provider==='gcp') setTimeout(initGcpArch,80);
+    if(provider==='aws') setTimeout(initAwsArch,60);
+    else if(provider==='az') setTimeout(initAzArch,60);
+    else if(provider==='gcp') setTimeout(initGcpArch,60);
   } else if(panel==='devops'){
-    if(provider==='aws') setTimeout(()=>initPipe('aws'),80);
-    else if(provider==='az') setTimeout(()=>initPipe('az'),80);
-    else if(provider==='gcp') setTimeout(()=>initPipe('gcp'),80);
+    if(provider==='aws') setTimeout(()=>initPipe('aws'),60);
+    else if(provider==='az') setTimeout(()=>initPipe('az'),60);
+    else if(provider==='gcp') setTimeout(()=>initPipe('gcp'),60);
   }
 }
 function scrollToSec(id){
   const el=document.getElementById(id);
   if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
 }
+
+// ── E-COMMERCE CANVAS ────────────────────────────────────
+const ECOM={mode:'flow'};
+function ecomMode(m){
+  ECOM.mode=m;
+  document.querySelectorAll('#cvs-ecommerce~.arch-canvas-ctrls .cbtn').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+}
+function drawEcommerce(ctx,t){
+  const W=ctx._w,H=ctx._h;
+  ctx.clearRect(0,0,W,H);rr(ctx,0,0,W,H,0,'#07061a');
+  const OC='#f97316',OL='rgba(249,115,22,';
+  if(ECOM.mode==='flow'){
+    const steps=[
+      {x:W*.06,y:H*.5,l:'👤 User',    s:'Browser',   c:'#fb923c'},
+      {x:W*.2, y:H*.5,l:'🌐 CDN',     s:'Edge Cache', c:OC},
+      {x:W*.35,y:H*.5,l:'🛒 Cart',    s:'Redis',      c:OC},
+      {x:W*.5, y:H*.5,l:'💳 Checkout',s:'Saga',       c:'#fb923c'},
+      {x:W*.65,y:H*.5,l:'💸 Payment', s:'PCI Vault',  c:OC},
+      {x:W*.8, y:H*.5,l:'📦 Fulfil',  s:'Warehouse',  c:'#fb923c'},
+      {x:W*.93,y:H*.78,l:'🔔 Notify', s:'Email/Push', c:'#fed7aa'},
+    ];
+    for(let i=0;i<steps.length-1;i++){
+      const a=steps[i],b=steps[i+1];
+      animLine(ctx,a.x+34,a.y,b.x-34,b.y,OL+'0.45)',t,.016,i>3);
+    }
+    const ab={x:W*.5,y:H*.18,l:'❌ Rollback',s:'Saga Abort',c:'#fca5a5'};
+    rr(ctx,ab.x-38,ab.y-14,76,28,8,'rgba(248,113,113,.15)','#fca5a5',1.2);
+    txt(ctx,ab.l,ab.x,ab.y-3,8.5,'#fca5a5','center',600);
+    txt(ctx,ab.s,ab.x,ab.y+7,7.5,'rgba(252,165,165,.5)','center',400);
+    ctx.setLineDash([3,3]);ctx.beginPath();
+    ctx.moveTo(steps[3].x,steps[3].y-16);ctx.lineTo(ab.x,ab.y+14);
+    ctx.strokeStyle='rgba(252,165,165,.4)';ctx.lineWidth=1;ctx.stroke();ctx.setLineDash([]);
+    steps.forEach((s,i)=>{
+      const p=0.8+0.2*Math.sin(t*0.05+i);
+      glow(ctx,s.x,s.y,22,s.c);
+      rr(ctx,s.x-36,s.y-16,72,32,8,OL+'0.15)',s.c,1.6*p);
+      txt(ctx,s.l,s.x,s.y-3,8.5,s.c,'center',600);
+      txt(ctx,s.s,s.x,s.y+7,7,'rgba(253,186,116,.5)','center',400);
+    });
+    txt(ctx,'E-Commerce Order Flow — Saga Pattern',W/2,H*.08,10,OL+'0.5)','center',700);
+  } else if(ECOM.mode==='infra'){
+    const zones=[{x:W*.15,w:W*.18,l:'Edge/CDN'},{x:W*.5,w:W*.28,l:'App Tier'},{x:W*.85,w:W*.18,l:'Data Tier'}];
+    zones.forEach(({x,w,l})=>{rr(ctx,x-w/2,H*.1,w,H*.8,14,OL+'0.05)',OC,1.3);txt(ctx,l,x,H*.16,9,OC,'center',700);});
+    [{y:H*.32,t:'Static Assets'},{y:H*.5,t:'Image CDN'},{y:H*.68,t:'Edge Fn'}].forEach(({y,t},i)=>{
+      rr(ctx,W*.07,y-12,W*.16,24,6,OL+'0.14)','#fb923c',1.2+0.15*Math.sin(t*0.04+i));
+      txt(ctx,t,W*.15,y,8,'#fed7aa','center',600);
+    });
+    [{y:H*.3,t:'Catalogue'},{y:H*.44,t:'Cart Svc'},{y:H*.58,t:'Order Svc'},{y:H*.72,t:'Payment'}].forEach(({y,t},i)=>{
+      rr(ctx,W*.38,y-12,W*.24,24,6,OL+'0.17)',OC,1.3+0.15*Math.sin(t*0.04+i+2));
+      txt(ctx,t,W*.5,y,8,'#fdba74','center',600);
+    });
+    [{y:H*.3,t:'PostgreSQL'},{y:H*.46,t:'Redis'},{y:H*.62,t:'Elastic'},{y:H*.78,t:'Kafka'}].forEach(({y,t})=>{
+      rr(ctx,W*.78,y-12,W*.14,24,6,'rgba(253,186,116,.13)','#fdba74',1.1);
+      txt(ctx,t,W*.85,y,8,'rgba(253,186,116,.75)','center',600);
+    });
+    animLine(ctx,W*.24,H*.5,W*.36,H*.5,OL+'0.5)',t,.018,false);
+    animLine(ctx,W*.64,H*.5,W*.76,H*.5,OL+'0.4)',t,.018,true);
+  } else {
+    // Peak traffic wave
+    ctx.beginPath();
+    for(let x=0;x<=W;x+=2){
+      const spike=x>W*.35&&x<W*.65?Math.exp(-Math.pow((x-W*.5)/(W*.08),2))*(H*.52):0;
+      const y=H*.72-spike+Math.sin(x*0.025+t*0.02)*6;
+      x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+    }
+    ctx.strokeStyle=OL+'0.7)';ctx.lineWidth=2;ctx.stroke();
+    ctx.lineTo(W,H);ctx.lineTo(0,H);ctx.closePath();ctx.fillStyle=OL+'0.06)';ctx.fill();
+    txt(ctx,'⚡ Flash Sale Peak',W*.5,H*.12,10,'#fb923c','center',700);
+    txt(ctx,'Auto-Scale: 10 → 200 pods in 90s',W*.5,H*.24,8,'rgba(253,186,116,.65)','center',500);
+    const pods=Math.min(20,3+Math.floor(((t*0.012)%1)*18));
+    for(let i=0;i<pods;i++){
+      const px=(i%10)*(W*.088)+W*.06,py=H*.84+Math.floor(i/10)*16;
+      rr(ctx,px,py,W*.072,12,3,OL+'0.18)',OC,1);
+    }
+    txt(ctx,'Pods: '+pods+'/20  |  Cache Hit: '+(88+5*Math.sin(t*.03)).toFixed(0)+'%',W*.5,H*.96,9,OL+'0.5)','center',600);
+  }
+}
+
+// ── PAYMENT & BANKING CANVAS ──────────────────────────────
+const PAY={mode:'txn'};
+function payMode(m){
+  PAY.mode=m;
+  document.querySelectorAll('#cvs-payment~.arch-canvas-ctrls .cbtn').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+}
+function drawPayment(ctx,t){
+  const W=ctx._w,H=ctx._h;
+  ctx.clearRect(0,0,W,H);rr(ctx,0,0,W,H,0,'#07061a');
+  const PC='#0ea5e9',PL='rgba(14,165,233,';
+  if(PAY.mode==='txn'){
+    const steps=[
+      {x:W*.07,y:H*.5,l:'📱 Merchant',s:'POS/Web',   c:'#38bdf8'},
+      {x:W*.22,y:H*.5,l:'🔒 P2PE',    s:'Tokenise',  c:PC},
+      {x:W*.37,y:H*.5,l:'🌐 Gateway', s:'Route',     c:PC},
+      {x:W*.52,y:H*.5,l:'🕵️ Fraud ML',s:'<50ms',     c:'#7dd3fc'},
+      {x:W*.67,y:H*.5,l:'💳 Acquirer',s:'Auth',      c:PC},
+      {x:W*.82,y:H*.5,l:'🏦 Issuer',  s:'Approve',   c:'#38bdf8'},
+      {x:W*.93,y:H*.78,l:'📒 Ledger', s:'CQRS',      c:'#bae6fd'},
+    ];
+    for(let i=0;i<steps.length-1;i++){
+      const a=steps[i],b=steps[i+1];
+      animLine(ctx,a.x+34,a.y,b.x-34,b.y,PL+'0.5)',t,.02,i===3);
+      if(i===4) txt(ctx,'<200ms total',(a.x+b.x)/2,a.y-12,7.5,'rgba(14,165,233,.45)','center',500);
+    }
+    const dec={x:W*.67,y:H*.18,l:'❌ Decline',s:'Issuer Reject',c:'#fca5a5'};
+    rr(ctx,dec.x-36,dec.y-13,72,26,7,'rgba(248,113,113,.15)','#fca5a5',1.2);
+    txt(ctx,dec.l,dec.x,dec.y-2,8.5,'#fca5a5','center',600);
+    txt(ctx,dec.s,dec.x,dec.y+8,7.5,'rgba(252,165,165,.45)','center',400);
+    ctx.setLineDash([3,4]);ctx.beginPath();
+    ctx.moveTo(steps[5].x,steps[5].y-15);ctx.lineTo(dec.x,dec.y+13);
+    ctx.strokeStyle='rgba(252,165,165,.4)';ctx.lineWidth=1;ctx.stroke();ctx.setLineDash([]);
+    steps.forEach((s,i)=>{
+      const p=0.8+0.2*Math.sin(t*0.05+i);
+      glow(ctx,s.x,s.y,20,s.c);
+      rr(ctx,s.x-36,s.y-15,72,30,8,PL+'0.15)',s.c,1.5*p);
+      txt(ctx,s.l,s.x,s.y-2,8.5,s.c,'center',600);
+      txt(ctx,s.s,s.x,s.y+8,7,'rgba(125,211,252,.5)','center',400);
+    });
+    txt(ctx,'Payment Flow — PCI-DSS | P2PE | Idempotent',W/2,H*.08,10,PL+'0.5)','center',700);
+  } else if(PAY.mode==='fraud'){
+    const signals=['Velocity','Geo Distance','Device FP','Behavioural','Merchant Risk','Graph ML'];
+    const cx=W*.55,cy=H*.52;
+    const p=0.7+0.3*Math.sin(t*0.04);
+    ctx.globalAlpha=0.1*p;ctx.beginPath();ctx.arc(cx,cy,62,0,Math.PI*2);ctx.fillStyle=PC;ctx.fill();ctx.globalAlpha=1;
+    rr(ctx,cx-54,cy-22,108,44,10,PL+'0.18)',PC,1.5+0.3*p);
+    txt(ctx,'🤖 ML Scorer',cx,cy-5,10,'#7dd3fc','center',700);
+    txt(ctx,'0–1000 Risk Score',cx,cy+8,7.5,'rgba(125,211,252,.5)','center',400);
+    signals.forEach((s,i)=>{
+      const angle=(i/signals.length)*Math.PI*2-Math.PI/2;
+      const r=W*.3;const sx=cx+Math.cos(angle)*r,sy=cy+Math.sin(angle)*r*.72;
+      const pkt=((t*0.015+i/signals.length)%1);
+      const px=sx+(cx-sx)*pkt,py=sy+(cy-sy)*pkt;
+      ctx.beginPath();ctx.moveTo(sx,sy);ctx.lineTo(cx,cy);ctx.strokeStyle=PL+'0.18)';ctx.lineWidth=1;ctx.stroke();
+      dot(ctx,px,py,3.5,PC);glow(ctx,px,py,12,PC);
+      rr(ctx,sx-30,sy-12,60,24,6,PL+'0.16)',PC,1.2);txt(ctx,s,sx,sy,8,'#7dd3fc','center',600);
+    });
+    [{x:W*.87,y:H*.3,l:'✅ Allow',c:'#4ade80'},{x:W*.87,y:H*.52,l:'🔎 Review',c:'#fbbf24'},{x:W*.87,y:H*.74,l:'🚫 Block',c:'#f87171'}].forEach(({x,y,l,c})=>{
+      rr(ctx,x-32,y-13,64,26,7,'rgba(0,0,0,.2)',c,1.5);txt(ctx,l,x,y,9,c,'center',700);
+      animLine(ctx,cx+54,cy,x-32,y,PL+'0.28)',t,.02,true);
+    });
+    txt(ctx,'Fraud Detection — 300+ Signal Features',W/2,H*.08,10,PL+'0.5)','center',700);
+  } else {
+    // Core banking ledger
+    const ac=[
+      {x:W*.15,y:H*.28,l:'👤 Alice',  bal:'$1,250',c:'#38bdf8'},
+      {x:W*.15,y:H*.68,l:'👤 Bob',    bal:'$840',  c:'#38bdf8'},
+      {x:W*.5, y:H*.48,l:'📒 Ledger', bal:'',       c:PC},
+      {x:W*.85,y:H*.28,l:'🏦 Reserve',bal:'$50k',  c:'#7dd3fc'},
+      {x:W*.85,y:H*.68,l:'🌐 SWIFT',  bal:'ISO20022',c:'#7dd3fc'},
+    ];
+    const pls=0.7+0.3*Math.sin(t*0.04);
+    ctx.globalAlpha=0.08*pls;ctx.beginPath();ctx.arc(W*.5,H*.48,65,0,Math.PI*2);ctx.fillStyle=PC;ctx.fill();ctx.globalAlpha=1;
+    [[0,2],[1,2],[2,3],[2,4]].forEach(([a,b],i)=>{
+      animLine(ctx,ac[a].x+(a<2?36:-36),ac[a].y,ac[b].x+(b===2?-38:36),ac[b].y,PL+'0.4)',t,.02,i>1);
+    });
+    txt(ctx,'DR Alice  -$200',W*.5,H*.4,8,'rgba(248,113,113,.7)','center',600);
+    txt(ctx,'CR Bob    +$200',W*.5,H*.52,8,'rgba(74,222,128,.7)','center',600);
+    ac.forEach((a,i)=>{
+      const p=0.8+0.2*Math.sin(t*0.05+i);
+      glow(ctx,a.x,a.y,22,a.c);
+      rr(ctx,a.x-38,a.y-18,76,36,8,PL+'0.15)',a.c,1.6*p);
+      txt(ctx,a.l,a.x,a.y-4,9,a.c,'center',600);
+      if(a.bal) txt(ctx,a.bal,a.x,a.y+8,7.5,'rgba(186,230,253,.5)','center',400);
+    });
+    txt(ctx,'Core Banking — Double-Entry Bookkeeping',W/2,H*.08,10,PL+'0.5)','center',700);
+  }
+}
+
+// ── REGISTER NEW CANVASES IN OBSERVER ────────────────────
+(function(){
+  if(!window.IntersectionObserver)return;
+  const newMap={
+    'cvs-ecommerce':()=>initArchCanvas('cvs-ecommerce',drawEcommerce),
+    'cvs-payment':  ()=>initArchCanvas('cvs-payment',  drawPayment),
+  };
+  const obs=new IntersectionObserver((e)=>{
+    e.forEach(en=>{if(en.isIntersecting){const fn=newMap[en.target.id];if(fn)setTimeout(fn,60);}});
+  },{threshold:.1});
+  Object.keys(newMap).forEach(id=>{const el=document.getElementById(id);if(el)obs.observe(el);});
+})();
+
 function toggleTheme(){
   const dark=document.documentElement.getAttribute('data-theme')==='dark';
   document.documentElement.setAttribute('data-theme',dark?'light':'dark');
@@ -2225,7 +3560,452 @@ document.addEventListener('click',function(e){
   btn.appendChild(r);setTimeout(()=>r.remove(),520);
 });
 
-// ── Theme restore ─────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════
+// DROPDOWN NAV
+// ═══════════════════════════════════════════════════════════
+function toggleDrop(btn){
+  const dd=btn.closest('.hdr-dropdown');
+  const isOpen=dd.classList.contains('open');
+  document.querySelectorAll('.hdr-dropdown.open').forEach(d=>d.classList.remove('open'));
+  if(!isOpen) dd.classList.add('open');
+}
+function closeDrop(){document.querySelectorAll('.hdr-dropdown.open').forEach(d=>d.classList.remove('open'));}
+document.addEventListener('click',e=>{if(!e.target.closest('.hdr-dropdown')) closeDrop();});
+
+// ═══════════════════════════════════════════════════════════
+// ARCHITECTURE CANVAS HELPERS
+// ═══════════════════════════════════════════════════════════
+const ARCH2={};
+function initArchCanvas(id,animFn){
+  const ctx=setupCvs(id);if(!ctx)return;
+  if(ARCH2[id]) cancelAnimationFrame(ARCH2[id].raf);
+  ARCH2[id]={ctx,t:0,raf:null};
+  const loop=()=>{ARCH2[id].raf=requestAnimationFrame(loop);animFn(ARCH2[id].ctx,++ARCH2[id].t);};
+  loop();
+}
+function archBox(ctx,x,y,w,h,label,sub,bg,border,textCol,t,delay){
+  const pulse=0.85+0.15*Math.sin(t*0.04+delay);
+  rr(ctx,x-w/2,y-h/2,w,h,8,bg,border,1.5*pulse);
+  ctx.globalAlpha=1;
+  txt(ctx,label,x,sub?y-5:y,10,textCol,'center',700);
+  if(sub) txt(ctx,sub,x,y+8,8,'rgba(255,255,255,0.55)','center',400);
+}
+function animLine(ctx,x1,y1,x2,y2,col,t,speed,dash){
+  const p=((t*speed)%100)/100;
+  if(dash){ctx.setLineDash([4,4]);ctx.lineDashOffset=-t*speed*0.5;}
+  else ctx.setLineDash([]);
+  ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);
+  ctx.strokeStyle=col;ctx.lineWidth=1.5;ctx.stroke();
+  ctx.setLineDash([]);
+  const px=x1+(x2-x1)*p,py=y1+(y2-y1)*p;
+  dot(ctx,px,py,4,col);
+  glow(ctx,px,py,14,col);
+}
+
+// ── B2B ──────────────────────────────────────────────────
+const B2B={mode:'api'};
+function b2bMode(m){
+  B2B.mode=m;
+  document.querySelectorAll('#cvs-b2b~.arch-canvas-ctrls .cbtn').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+}
+function drawB2B(ctx,t){
+  const W=ctx._w,H=ctx._h;
+  ctx.clearRect(0,0,W,H);rr(ctx,0,0,W,H,0,'#07061a');
+  if(B2B.mode==='api'){
+    // Partner A → API GW → Microservices → DB
+    const items=[
+      {x:W*.1,y:H*.5,l:'Partner A',s:'External',bg:'rgba(99,102,241,.18)',bc:'#6366f1'},
+      {x:W*.3,y:H*.5,l:'API Gateway',s:'OAuth + mTLS',bg:'rgba(99,102,241,.25)',bc:'#818cf8'},
+      {x:W*.55,y:H*.28,l:'Service A',s:'Orders',bg:'rgba(99,102,241,.2)',bc:'#6366f1'},
+      {x:W*.55,y:H*.5,l:'Service B',s:'Payments',bg:'rgba(99,102,241,.2)',bc:'#6366f1'},
+      {x:W*.55,y:H*.72,l:'Service C',s:'Inventory',bg:'rgba(99,102,241,.2)',bc:'#6366f1'},
+      {x:W*.8,y:H*.5,l:'Data Store',s:'PostgreSQL',bg:'rgba(99,102,241,.18)',bc:'#a5b4fc'},
+    ];
+    [[0,1],[1,2],[1,3],[1,4],[2,5],[3,5],[4,5]].forEach(([a,b],i)=>{
+      animLine(ctx,items[a].x,items[a].y,items[b].x,items[b].y,'#6366f1',t,.015,i>1);
+    });
+    items.forEach((it,i)=>archBox(ctx,it.x,it.y,76,34,it.l,it.s,it.bg,it.bc,'#c7d2fe',t,i));
+    // Security shield overlay
+    const sx=W*.3,sy=H*.5;
+    ctx.globalAlpha=0.12+0.05*Math.sin(t*0.05);
+    ctx.beginPath();ctx.arc(sx,sy,38,0,Math.PI*2);ctx.fillStyle='#818cf8';ctx.fill();
+    ctx.globalAlpha=1;
+    txt(ctx,'🔐',sx+18,sy-18,12,'white');
+  } else if(B2B.mode==='event'){
+    const bus={x:W*.5,y:H*.5,r:50};
+    ctx.globalAlpha=0.12+0.06*Math.sin(t*0.04);
+    ctx.beginPath();ctx.arc(bus.x,bus.y,bus.r,0,Math.PI*2);ctx.fillStyle='#818cf8';ctx.fill();
+    ctx.globalAlpha=0.4+0.1*Math.sin(t*0.04);
+    ctx.beginPath();ctx.arc(bus.x,bus.y,bus.r,0,Math.PI*2);ctx.strokeStyle='#6366f1';ctx.lineWidth=1.5;ctx.stroke();
+    ctx.globalAlpha=1;
+    txt(ctx,'Event Bus',bus.x,bus.y-6,10,'#a5b4fc','center',700);
+    txt(ctx,'Kafka / SNS',bus.x,bus.y+7,8,'rgba(165,180,252,.6)','center',400);
+    const producers=[{x:W*.12,y:H*.2,l:'Producer A'},{x:W*.12,y:H*.5,l:'Producer B'},{x:W*.12,y:H*.8,l:'Producer C'}];
+    const consumers=[{x:W*.88,y:H*.25,l:'Consumer X'},{x:W*.88,y:H*.5,l:'Consumer Y'},{x:W*.88,y:H*.75,l:'Consumer Z'}];
+    producers.forEach((p,i)=>{
+      archBox(ctx,p.x,p.y,72,30,p.l,'','rgba(99,102,241,.2)','#6366f1','#c7d2fe',t,i);
+      animLine(ctx,p.x+36,p.y,bus.x-bus.r,bus.y,'#6366f1',t,.018,false);
+    });
+    consumers.forEach((c,i)=>{
+      archBox(ctx,c.x,c.y,72,30,c.l,'','rgba(167,139,250,.2)','#a78bfa','#ddd6fe',t,i+3);
+      animLine(ctx,bus.x+bus.r,bus.y,c.x-36,c.y,'#a78bfa',t,.018,true);
+    });
+  } else {
+    // EDI flow
+    const items=[
+      {x:W*.1,y:H*.5,l:'EDI Partner',s:'AS2/SFTP'},
+      {x:W*.32,y:H*.5,l:'Translator',s:'X12/EDIFACT'},
+      {x:W*.54,y:H*.35,l:'Order Svc',s:'REST API'},
+      {x:W*.54,y:H*.65,l:'Invoice Svc',s:'REST API'},
+      {x:W*.78,y:H*.5,l:'ERP System',s:'SAP/Oracle'},
+    ];
+    [[0,1],[1,2],[1,3],[2,4],[3,4]].forEach(([a,b],i)=>{
+      animLine(ctx,items[a].x,items[a].y,items[b].x,items[b].y,'#818cf8',t,.016,i>1);
+    });
+    items.forEach((it,i)=>archBox(ctx,it.x,it.y,80,34,it.l,it.s,'rgba(99,102,241,.2)','#818cf8','#c7d2fe',t,i));
+  }
+  txt(ctx,'B2B — '+B2B.mode.toUpperCase(),W/2,H-14,9,'rgba(99,102,241,.45)','center',600);
+}
+
+// ── B2C ──────────────────────────────────────────────────
+const B2C={mode:'cdn'};
+function b2cMode(m){B2C.mode=m;document.querySelectorAll('#cvs-b2c~.arch-canvas-ctrls .cbtn').forEach(b=>b.classList.remove('active'));event.target.classList.add('active');}
+function drawB2C(ctx,t){
+  const W=ctx._w,H=ctx._h;
+  ctx.clearRect(0,0,W,H);rr(ctx,0,0,W,H,0,'#07061a');
+  if(B2C.mode==='cdn'){
+    // Users → CDN → LB → App → DB
+    const users=[{x:W*.07,y:H*.25},{x:W*.07,y:H*.5},{x:W*.07,y:H*.75}];
+    users.forEach((u,i)=>{
+      const pulse=0.8+0.2*Math.sin(t*0.05+i);
+      ctx.globalAlpha=pulse;
+      ctx.beginPath();ctx.arc(u.x,u.y,14,0,Math.PI*2);ctx.fillStyle='rgba(236,72,153,.15)';ctx.fill();
+      ctx.beginPath();ctx.arc(u.x,u.y,14,0,Math.PI*2);ctx.strokeStyle='#ec4899';ctx.lineWidth=1.5;ctx.stroke();
+      txt(ctx,'👤',u.x,u.y,11,'white','center');ctx.globalAlpha=1;
+      animLine(ctx,u.x+14,u.y,W*.28,H*.5,'#ec4899',t,.02,false);
+    });
+    archBox(ctx,W*.3,H*.5,78,34,'CDN Edge','450+ PoPs','rgba(236,72,153,.2)','#ec4899','#fbcfe8',t,0);
+    animLine(ctx,W*.3+39,H*.5,W*.52,H*.5,'#f472b6',t,.018,false);
+    archBox(ctx,W*.54,H*.5,78,34,'Load Balancer','Auto-scaling','rgba(236,72,153,.18)','#f472b6','#fbcfe8',t,1);
+    animLine(ctx,W*.54+39,H*.38,W*.76,H*.38,'#db2777',t,.02,false);
+    animLine(ctx,W*.54+39,H*.62,W*.76,H*.62,'#db2777',t,.02,true);
+    archBox(ctx,W*.78,H*.38,76,30,'App Svc 1','','rgba(219,39,119,.2)','#db2777','#fbcfe8',t,2);
+    archBox(ctx,W*.78,H*.62,76,30,'App Svc 2','','rgba(219,39,119,.2)','#db2777','#fbcfe8',t,3);
+  } else if(B2C.mode==='scale'){
+    // Vertical scaling bars
+    const months=['Jan','Mar','May','Jul','Sep','Nov'];
+    const vals=[0.2,0.35,0.6,0.9,0.5,0.75];
+    const bw=36,gap=18,startX=W*.1;
+    months.forEach((m,i)=>{
+      const bh=(H*.65)*vals[i];
+      const x=startX+i*(bw+gap);const y=H*.85-bh;
+      const pulse=i===3?1+0.04*Math.sin(t*0.1):1;
+      const col=i===3?'#ec4899':'rgba(244,114,182,.7)';
+      rr(ctx,x,y,bw*pulse,bh*pulse,6,col.replace(')',',0.25)').replace('rgba','rgba').replace('rgb','rgba'),col,1.5);
+      txt(ctx,m,x+bw/2,H*.88,8,'rgba(244,114,182,.6)','center',500);
+      txt(ctx,Math.round(vals[i]*100)+'k',x+bw/2,y-10,8,'#fbcfe8','center',600);
+    });
+    txt(ctx,'Traffic Spike — Auto-Scale Response',W/2,H*.07,10,'#f472b6','center',700);
+    // Spike annotation
+    ctx.globalAlpha=0.6;
+    ctx.beginPath();ctx.moveTo(startX+3*(bw+gap)+bw/2,H*.85-H*.65*.9-18);
+    ctx.lineTo(startX+3*(bw+gap)+bw/2,H*.85-H*.65*.9-35);
+    ctx.strokeStyle='#ec4899';ctx.lineWidth=1.5;ctx.stroke();
+    txt(ctx,'⚡ Peak',startX+3*(bw+gap)+bw/2,H*.85-H*.65*.9-48,9,'#f9a8d4','center',700);
+    ctx.globalAlpha=1;
+  } else {
+    // Real-time WebSocket flow
+    const clients=[{x:W*.08,y:H*.3},{x:W*.08,y:H*.7}];
+    const ws={x:W*.35,y:H*.5};const app={x:W*.62,y:H*.5};const db={x:W*.88,y:H*.5};
+    clients.forEach((c,i)=>{
+      ctx.beginPath();ctx.arc(c.x,c.y,14,0,Math.PI*2);ctx.fillStyle='rgba(236,72,153,.15)';ctx.fill();
+      ctx.strokeStyle='#ec4899';ctx.lineWidth=1.5;ctx.stroke();
+      txt(ctx,'📱',c.x,c.y,12,'white','center');
+      animLine(ctx,c.x+14,c.y,ws.x-35,ws.y,'#ec4899',t,.025,false);
+    });
+    archBox(ctx,ws.x,ws.y,80,34,'WebSocket','Bidirectional','rgba(236,72,153,.2)','#ec4899','#fbcfe8',t,0);
+    archBox(ctx,app.x,app.y,80,34,'App Server','Real-time','rgba(219,39,119,.2)','#db2777','#fbcfe8',t,1);
+    archBox(ctx,db.x,db.y,76,34,'Redis Cache','Pub/Sub','rgba(244,114,182,.2)','#f472b6','#fbcfe8',t,2);
+    animLine(ctx,ws.x+40,ws.y,app.x-40,app.y,'#f472b6',t,.02,false);
+    animLine(ctx,app.x+40,app.y,db.x-38,db.y,'#f9a8d4',t,.02,true);
+  }
+  txt(ctx,'B2C — '+B2C.mode.toUpperCase(),W/2,H-14,9,'rgba(236,72,153,.45)','center',600);
+}
+
+// ── TIER ANIMATIONS ──────────────────────────────────────
+const TIERS={};
+function tierMode(tier,m){
+  if(!TIERS[tier])TIERS[tier]={};TIERS[tier].mode=m;
+  const canvas=document.getElementById('cvs-'+tier);
+  if(canvas) canvas.closest('.arch-canvas-col').querySelectorAll('.cbtn').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+}
+
+function draw1Tier(ctx,t){
+  const W=ctx._w,H=ctx._h;
+  ctx.clearRect(0,0,W,H);rr(ctx,0,0,W,H,0,'#07061a');
+  // Single big box with inner layers shown
+  const cx=W/2,cy=H/2,bw=W*.65,bh=H*.7;
+  const mode=(TIERS['1tier']||{mode:'standard'}).mode;
+  rr(ctx,cx-bw/2,cy-bh/2,bw,bh,16,'rgba(245,158,11,.07)','#f59e0b',2);
+  txt(ctx,'Single Application Process',cx,cy-bh/2+18,10,'#fbbf24','center',700);
+  // Inner layers
+  const layers=[
+    {l:'UI Layer',c:'rgba(251,191,36,.25)',bc:'#fbbf24',y:-.28},
+    {l:'Business Logic',c:'rgba(245,158,11,.2)',bc:'#f59e0b',y:0},
+    {l:'Data Access',c:'rgba(217,119,6,.2)',bc:'#d97706',y:.28},
+  ];
+  layers.forEach(({l,c,bc,y},i)=>{
+    const ly=cy+bh*y;
+    const pulse=0.85+0.15*Math.sin(t*0.04+i);
+    rr(ctx,cx-bw*.42,ly-20,bw*.84,40,8,c,bc,1.5*pulse);
+    txt(ctx,l,cx,ly,10,'#fef3c7','center',600);
+  });
+  // Vertical arrows inside
+  [[-.28,0],[0,.28]].forEach(([a,b],i)=>{
+    const y1=cy+bh*a+20,y2=cy+bh*b-20;
+    animLine(ctx,cx,y1,cx,y2,'rgba(251,191,36,.4)',t,.02,false);
+  });
+  if(mode==='desktop') txt(ctx,'📦 Desktop / Embedded App',cx,cy+bh/2-14,9,'rgba(251,191,36,.5)','center',500);
+  else txt(ctx,'📦 Monolith — Everything in one process',cx,cy+bh/2-14,9,'rgba(251,191,36,.5)','center',500);
+}
+
+function draw2Tier(ctx,t){
+  const W=ctx._w,H=ctx._h;
+  ctx.clearRect(0,0,W,H);rr(ctx,0,0,W,H,0,'#07061a');
+  const mode=(TIERS['2tier']||{mode:'standard'}).mode;
+  const t1={x:W*.28,y:H*.5,l:'Client Tier',s:mode==='cloud'?'Browser / App':'Fat Client',c:'rgba(16,185,129,.2)',bc:'#10b981'};
+  const t2={x:W*.72,y:H*.5,l:'Data Tier',s:'Database Server',c:'rgba(16,185,129,.15)',bc:'#6ee7b7'};
+  // Draw tiers
+  [t1,t2].forEach((tier,i)=>{
+    rr(ctx,tier.x-60,tier.y-H*.3,120,H*.6,14,tier.c,tier.bc,1.8);
+    txt(ctx,tier.l,tier.x,tier.y-H*.28+14,10,i===0?'#6ee7b7':'#a7f3d0','center',700);
+    txt(ctx,tier.s,tier.x,tier.y-H*.28+28,8,'rgba(167,243,208,.6)','center',400);
+  });
+  // Components inside client
+  ['🖥️ UI','⚙️ Logic','📋 Forms'].forEach((c,i)=>{
+    const cy=H*.3+i*(H*.14);
+    rr(ctx,t1.x-44,cy-14,88,28,6,'rgba(16,185,129,.18)','#10b981',1);
+    txt(ctx,c,t1.x,cy,9,'#6ee7b7','center',600);
+  });
+  // DB inside server
+  ['🗄️ Tables','📊 Indexes','🔒 Locks'].forEach((c,i)=>{
+    const cy=H*.3+i*(H*.14);
+    rr(ctx,t2.x-44,cy-14,88,28,6,'rgba(16,185,129,.14)','#6ee7b7',1);
+    txt(ctx,c,t2.x,cy,9,'#a7f3d0','center',600);
+  });
+  // Connection
+  animLine(ctx,t1.x+60,t1.y,t2.x-60,t2.y,'#10b981',t,.018,false);
+  txt(ctx,'SQL / JDBC',W*.5,H*.45,8,'rgba(110,231,183,.5)','center',500);
+  txt(ctx,'Two-Tier — Direct DB Connection',W/2,H*.93,9,'rgba(16,185,129,.4)','center',600);
+}
+
+function draw3Tier(ctx,t){
+  const W=ctx._w,H=ctx._h;
+  ctx.clearRect(0,0,W,H);rr(ctx,0,0,W,H,0,'#07061a');
+  const mode=(TIERS['3tier']||{mode:'web'}).mode;
+  const tiers=[
+    {x:W*.17,l:'Presentation',s:mode==='api'?'Mobile/SPA':mode==='cloud'?'CDN/Edge':'Browser',c:'rgba(59,130,246,.2)',bc:'#3b82f6'},
+    {x:W*.5, l:'Application',s:mode==='cloud'?'Containers':'API Server',c:'rgba(59,130,246,.18)',bc:'#60a5fa'},
+    {x:W*.83,l:'Data',s:mode==='cloud'?'Managed DB':'Database',c:'rgba(59,130,246,.15)',bc:'#93c5fd'},
+  ];
+  tiers.forEach((tier,i)=>{
+    rr(ctx,tier.x-55,H*.15,110,H*.7,14,tier.c,tier.bc,1.8);
+    txt(ctx,tier.l,tier.x,H*.22,10,'#93c5fd','center',700);
+    txt(ctx,tier.s,tier.x,H*.3,8,'rgba(147,197,253,.6)','center',400);
+  });
+  // Components
+  const comps=[
+    ['🖥️ HTML','⚛️ React','🎨 CSS'],
+    ['🔧 REST API','⚙️ Business','🔐 Auth'],
+    ['🗄️ PostgreSQL','💾 Redis','🔒 Encrypted'],
+  ];
+  comps.forEach((cs,ti)=>{
+    cs.forEach((c,i)=>{
+      const cy=H*.42+i*(H*.14);
+      rr(ctx,tiers[ti].x-44,cy-14,88,28,6,'rgba(59,130,246,.15)','#3b82f6',1);
+      txt(ctx,c,tiers[ti].x,cy,8.5,'#bfdbfe','center',600);
+    });
+  });
+  // Arrows
+  [[0,1],[1,2]].forEach(([a,b])=>{
+    animLine(ctx,tiers[a].x+55,H*.5,tiers[b].x-55,H*.5,'#3b82f6',t,.018,false);
+  });
+  txt(ctx,'Three-Tier — '+mode.toUpperCase(),W/2,H*.93,9,'rgba(59,130,246,.45)','center',600);
+}
+
+function drawNTier(ctx,t){
+  const W=ctx._w,H=ctx._h;
+  ctx.clearRect(0,0,W,H);rr(ctx,0,0,W,H,0,'#07061a');
+  if(!TIERS.ntier) TIERS.ntier={mode:'mesh'};
+  const mode=TIERS.ntier.mode;
+  if(mode==='mesh'){
+    // Service mesh with bidirectional connections
+    const svcs=[
+      {x:W*.5,y:H*.15,l:'API Gateway',c:'#8b5cf6'},
+      {x:W*.2,y:H*.38,l:'Auth Svc',c:'#7c3aed'},
+      {x:W*.5,y:H*.38,l:'Order Svc',c:'#7c3aed'},
+      {x:W*.8,y:H*.38,l:'Product Svc',c:'#7c3aed'},
+      {x:W*.2,y:H*.62,l:'User Svc',c:'#6d28d9'},
+      {x:W*.5,y:H*.62,l:'Payment Svc',c:'#6d28d9'},
+      {x:W*.8,y:H*.62,l:'Notif Svc',c:'#6d28d9'},
+      {x:W*.5,y:H*.84,l:'Event Bus',c:'#a78bfa'},
+    ];
+    [[0,1],[0,2],[0,3],[1,4],[2,5],[3,6],[4,7],[5,7],[6,7]].forEach(([a,b],i)=>{
+      animLine(ctx,svcs[a].x,svcs[a].y,svcs[b].x,svcs[b].y,'rgba(139,92,246,.5)',t,.012+i*.001,i>5);
+    });
+    svcs.forEach((s,i)=>{
+      const pulse=0.8+0.2*Math.sin(t*0.05+i);
+      glow(ctx,s.x,s.y,22,s.c);
+      rr(ctx,s.x-38,s.y-14,76,28,8,'rgba(139,92,246,.18)',s.c,1.5*pulse);
+      txt(ctx,s.l,s.x,s.y,8.5,'#ddd6fe','center',600);
+    });
+  } else if(mode==='event'){
+    // Event bus hub-and-spoke
+    const bus={x:W*.5,y:H*.5,r:52};
+    ctx.globalAlpha=0.08+0.04*Math.sin(t*0.03);
+    for(let r=1;r<=3;r++){ctx.beginPath();ctx.arc(bus.x,bus.y,bus.r*r*.55,0,Math.PI*2);ctx.strokeStyle='#8b5cf6';ctx.lineWidth=1;ctx.stroke();}
+    ctx.globalAlpha=0.18+0.06*Math.sin(t*0.03);
+    ctx.beginPath();ctx.arc(bus.x,bus.y,bus.r,0,Math.PI*2);ctx.fillStyle='#4c1d95';ctx.fill();
+    ctx.globalAlpha=1;
+    txt(ctx,'Kafka',bus.x,bus.y-5,11,'#c4b5fd','center',700);
+    txt(ctx,'Event Bus',bus.x,bus.y+8,8,'rgba(196,181,253,.6)','center',400);
+    const spokes=[
+      {a:0,l:'Orders'},{a:60,l:'Payments'},{a:120,l:'Shipping'},
+      {a:180,l:'Inventory'},{a:240,l:'Notif'},{a:300,l:'Analytics'},
+    ];
+    spokes.forEach(({a,l},i)=>{
+      const rad=a*Math.PI/180;const d=bus.r+55;
+      const sx=bus.x+Math.cos(rad)*d,sy=bus.y+Math.sin(rad)*d;
+      animLine(ctx,bus.x+Math.cos(rad)*bus.r,bus.y+Math.sin(rad)*bus.r,sx,sy,'#7c3aed',t,.02,i%2===0);
+      rr(ctx,sx-32,sy-13,64,26,7,'rgba(139,92,246,.2)','#8b5cf6',1.5);
+      txt(ctx,l,sx,sy,8,'#ddd6fe','center',600);
+    });
+  } else {
+    // Kubernetes pods
+    const pods=[
+      {x:W*.18,y:H*.28,l:'api-pod',r:2},{x:W*.42,y:H*.28,l:'auth-pod',r:1},
+      {x:W*.66,y:H*.28,l:'svc-pod',r:3},{x:W*.18,y:H*.6,l:'db-pod',r:1},
+      {x:W*.42,y:H*.6,l:'cache-pod',r:2},{x:W*.66,y:H*.6,l:'queue-pod',r:1},
+    ];
+    // Node background
+    rr(ctx,W*.06,H*.15,W*.88,H*.75,12,'rgba(139,92,246,.06)','rgba(139,92,246,.2)',1);
+    txt(ctx,'Kubernetes Cluster',W*.5,H*.1,9,'rgba(167,139,250,.5)','center',600);
+    pods.forEach((p,i)=>{
+      const repl=p.r;
+      for(let r=0;r<repl;r++){
+        const ox=r*8,oy=r*4;
+        rr(ctx,p.x-32+ox,p.y-14+oy,64,28,8,'rgba(109,40,217,.2+)','rgba(139,92,246,.3)',1);
+      }
+      const pulse=0.85+0.15*Math.sin(t*0.05+i);
+      rr(ctx,p.x-32,p.y-14,64,28,8,'rgba(109,40,217,.25)','#8b5cf6',1.5*pulse);
+      txt(ctx,p.l,p.x,p.y,8,'#ddd6fe','center',600);
+      txt(ctx,'×'+repl,p.x+22,p.y-10,7,'rgba(196,181,253,.7)','center',500);
+    });
+    [[0,1],[0,3],[1,2],[1,4],[2,5],[3,4],[4,5]].forEach(([a,b])=>{
+      animLine(ctx,pods[a].x,pods[a].y,pods[b].x,pods[b].y,'rgba(139,92,246,.3)',t,.015,true);
+    });
+  }
+  txt(ctx,'N-Tier — '+((TIERS.ntier||{mode:'mesh'}).mode.toUpperCase()),W/2,H*.97,9,'rgba(139,92,246,.45)','center',600);
+}
+function ntierMode(m){if(!TIERS.ntier)TIERS.ntier={};TIERS.ntier.mode=m;document.querySelectorAll('#cvs-ntier~.arch-canvas-ctrls .cbtn').forEach(b=>b.classList.remove('active'));event.target.classList.add('active');}
+
+// ── SECURITY ─────────────────────────────────────────────
+const SEC={mode:'layers'};
+function secMode(m){SEC.mode=m;document.querySelectorAll('#cvs-security~.arch-canvas-ctrls .cbtn').forEach(b=>b.classList.remove('active'));event.target.classList.add('active');}
+function drawSecurity(ctx,t){
+  const W=ctx._w,H=ctx._h;
+  ctx.clearRect(0,0,W,H);rr(ctx,0,0,W,H,0,'#07061a');
+  if(SEC.mode==='layers'){
+    // Concentric defence rings
+    const cx=W*.5,cy=H*.52;
+    const rings=[
+      {r:H*.36,l:'Perimeter / WAF',c:'#ef4444'},
+      {r:H*.28,l:'Network (VPC)',c:'#f97316'},
+      {r:H*.20,l:'Application (Auth)',c:'#eab308'},
+      {r:H*.12,l:'Data (Encryption)',c:'#22c55e'},
+      {r:H*.055,l:'Core Asset',c:'#3b82f6'},
+    ];
+    rings.forEach(({r,l,c},i)=>{
+      const pulse=0.6+0.15*Math.sin(t*0.04+i);
+      ctx.globalAlpha=0.07+0.03*pulse;
+      ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.fillStyle=c;ctx.fill();
+      ctx.globalAlpha=0.25+0.1*pulse;
+      ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.strokeStyle=c;ctx.lineWidth=1.5;ctx.stroke();
+      ctx.globalAlpha=1;
+      if(i<4) txt(ctx,l,cx,cy-r+10,8,c,'center',600);
+    });
+    txt(ctx,'🔐',cx,cy,16,'white','center');
+    txt(ctx,'Defence-in-Depth',W/2,H*.08,10,'rgba(239,68,68,.6)','center',700);
+  } else if(SEC.mode==='zt'){
+    // Zero trust flow
+    const steps=[
+      {x:W*.1,y:H*.5,l:'User/Device',c:'#f87171'},
+      {x:W*.3,y:H*.5,l:'Identity Verify',c:'#fb923c'},
+      {x:W*.5,y:H*.5,l:'Policy Engine',c:'#facc15'},
+      {x:W*.7,y:H*.5,l:'Least Privilege',c:'#4ade80'},
+      {x:W*.9,y:H*.5,l:'Resource',c:'#60a5fa'},
+    ];
+    steps.forEach((s,i)=>{
+      const pulse=0.8+0.2*Math.sin(t*0.05+i);
+      rr(ctx,s.x-36,s.y-18,72,36,8,'rgba(239,68,68,.15)',s.c,1.8*pulse);
+      txt(ctx,s.l,s.x,s.y,8.5,s.c,'center',600);
+      if(i<4){
+        const nx=steps[i+1].x;
+        const allow=(i<3);
+        animLine(ctx,s.x+36,s.y,nx-36,s.y,allow?'rgba(74,222,128,.7)':'rgba(248,113,113,.7)',t,.025,!allow);
+        txt(ctx,allow?'✓ Allow':'',s.x+55,s.y-10,8,'rgba(74,222,128,.7)','center',600);
+      }
+    });
+    txt(ctx,'Never Trust — Always Verify',W/2,H*.15,10,'rgba(248,113,113,.6)','center',700);
+    // Denied path
+    rr(ctx,W*.1-36,H*.75-15,72,30,8,'rgba(239,68,68,.15)','#ef4444',1.5);
+    txt(ctx,'🚫 Denied',W*.1,H*.75,9,'#f87171','center',600);
+    animLine(ctx,W*.3,H*.5+18,W*.1,H*.75-15,'rgba(239,68,68,.5)',t,.03,true);
+  } else {
+    // Threat detection flow
+    const items=[
+      {x:W*.12,y:H*.3,l:'API Calls',c:'#f87171'},
+      {x:W*.12,y:H*.55,l:'Data Access',c:'#f87171'},
+      {x:W*.12,y:H*.8,l:'Login Events',c:'#f87171'},
+      {x:W*.4,y:H*.55,l:'SIEM / Log\nAggregation',c:'#fb923c'},
+      {x:W*.65,y:H*.35,l:'ML Anomaly\nDetection',c:'#facc15'},
+      {x:W*.65,y:H*.7,l:'Rules Engine',c:'#fb923c'},
+      {x:W*.88,y:H*.35,l:'🚨 Alert',c:'#ef4444'},
+      {x:W*.88,y:H*.7,l:'🔧 SOAR',c:'#4ade80'},
+    ];
+    [[0,3],[1,3],[2,3],[3,4],[3,5],[4,6],[5,7]].forEach(([a,b],i)=>{
+      animLine(ctx,items[a].x,items[a].y,items[b].x,items[b].y,'rgba(239,68,68,.4)',t,.015,i>2);
+    });
+    items.forEach((it,i)=>{
+      const pulse=0.85+0.15*Math.sin(t*0.04+i);
+      rr(ctx,it.x-36,it.y-16,72,32,8,'rgba(239,68,68,.15)',it.c,1.5*pulse);
+      txt(ctx,it.l.split('\n')[0],it.x,it.l.includes('\n')?it.y-4:it.y,8.5,it.c,'center',600);
+      if(it.l.includes('\n')) txt(ctx,it.l.split('\n')[1],it.x,it.y+7,8,it.c,'center',400);
+    });
+    txt(ctx,'Threat Detection Pipeline',W/2,H*.1,10,'rgba(239,68,68,.6)','center',700);
+  }
+}
+
+// ── INTERSECTION OBSERVER FOR ARCH CANVASES ──────────────
+(function(){
+  if(!window.IntersectionObserver)return;
+  const map={
+    'cvs-b2b':   ()=>initArchCanvas('cvs-b2b',   drawB2B),
+    'cvs-b2c':   ()=>initArchCanvas('cvs-b2c',   drawB2C),
+    'cvs-1tier': ()=>initArchCanvas('cvs-1tier',  draw1Tier),
+    'cvs-2tier': ()=>initArchCanvas('cvs-2tier',  draw2Tier),
+    'cvs-3tier': ()=>initArchCanvas('cvs-3tier',  draw3Tier),
+    'cvs-ntier': ()=>initArchCanvas('cvs-ntier',  drawNTier),
+    'cvs-security':()=>initArchCanvas('cvs-security',drawSecurity),
+  };
+  const obs=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{if(e.isIntersecting){const fn=map[e.target.id];if(fn)setTimeout(fn,60);}});
+  },{threshold:.1});
+  Object.keys(map).forEach(id=>{const el=document.getElementById(id);if(el)obs.observe(el);});
+})();
+
 (function(){
   const saved=localStorage.getItem('ceh-theme');
   const dark=saved?saved==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -2239,11 +4019,34 @@ window.addEventListener('load',function(){
   const style=document.createElement('style');
   style.textContent='@keyframes ripple{to{transform:scale(4);opacity:0;}}';
   document.head.appendChild(style);
+  // Trigger initial svc-card stagger for all active panels
+  ['aws-svc','az-svc','gcp-svc'].forEach(id=>{
+    const panel=document.getElementById(id);
+    if(panel && panel.classList.contains('active')){
+      void panel.offsetWidth;
+      panel.classList.add('tab-entering');
+      setTimeout(()=>{if(panel) panel.classList.remove('tab-entering');},900);
+    }
+  });
 });
 
 // ═══════════════════════════════════════════════════════════
-// LEARNING RESOURCES — PROVIDER FILTER
+// SERVICE GRID — CATEGORY FILTER
 // ═══════════════════════════════════════════════════════════
+function filterSvc(btn, provider) {
+  const cat = btn.dataset.cat;
+  // Update active button
+  btn.closest('.svc-filter-bar').querySelectorAll('.svc-filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  // Filter cards
+  const grid = document.getElementById('svc-grid-' + provider);
+  if (!grid) return;
+  grid.querySelectorAll('.svc-card').forEach(card => {
+    const match = cat === 'all' || card.dataset.cat === cat;
+    card.classList.toggle('svc-hidden', !match);
+  });
+}
+
 function filterLearn(btn) {
   const filter = btn.dataset.filter;
   // Update active tab
