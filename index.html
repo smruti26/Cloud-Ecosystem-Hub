@@ -4,12 +4,15 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Cloud Ecosystem Hub — Visual Guide to Modern Cloud</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
 <meta name="google-site-verification" content="v5Tohd9LCUhNxLN6C_Xnv_Wj_NnHCejfhLBIZ0E7ZQU" />
 <meta name="description"
 content="Interactive map of the Cloud ecosystem guide">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%236341cc'/%3E%3Cpath d='M8 20a4 4 0 01-.5-7.95A6 6 0 0119.5 11a4 4 0 01.5 7.95' stroke='white' stroke-width='1.8' stroke-linecap='round' fill='none'/%3E%3Cpath d='M11 20h10' stroke='white' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E"/>
+<link rel="shortcut icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%236341cc'/%3E%3Cpath d='M8 20a4 4 0 01-.5-7.95A6 6 0 0119.5 11a4 4 0 01.5 7.95' stroke='white' stroke-width='1.8' stroke-linecap='round' fill='none'/%3E%3Cpath d='M11 20h10' stroke='white' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
 <style>
 /* ══ RESET ═══════════════════════════════════════════ */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -40,7 +43,7 @@ content="Interactive map of the Cloud ecosystem guide">
   --gcp-bg:#001030;--gcp-b:#182860;
 }
 html{scroll-behavior:smooth;}
-body{font-family:'DM Sans',sans-serif;font-size:15px;background:var(--bg);color:var(--t1);min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s;}
+body{font-family:'Inter',sans-serif;font-size:15px;background:var(--bg);color:var(--t1);min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
 body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background-image:radial-gradient(circle,rgba(99,65,204,.09) 1.3px,transparent 1.3px);background-size:22px 22px;}
 
 /* ══ PROGRESS ═════════════════════════════════════════ */
@@ -55,10 +58,10 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .logo{display:flex;align-items:center;gap:10px;cursor:pointer;text-decoration:none;}
 .logo-mark{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--p600),#1d4ed8);display:flex;align-items:center;justify-content:center;box-shadow:0 3px 14px rgba(99,65,204,.35);transition:transform .3s cubic-bezier(.34,1.56,.64,1),box-shadow .3s;flex-shrink:0;}
 .logo:hover .logo-mark{transform:scale(1.12) rotate(6deg);box-shadow:0 5px 22px rgba(99,65,204,.5);}
-.logo-text{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--t1);letter-spacing:-.02em;line-height:1;}
-.logo-sub{font-family:'DM Sans',sans-serif;font-size:11px;color:var(--t3);font-weight:400;letter-spacing:.02em;}
+.logo-text{font-family:'Outfit',sans-serif;font-size:15px;font-weight:700;color:var(--t1);letter-spacing:-.02em;line-height:1;}
+.logo-sub{font-family:'Inter',sans-serif;font-size:11px;color:var(--t3);font-weight:400;letter-spacing:.02em;}
 .hdr-nav{display:flex;align-items:center;gap:2px;}
-.hdr-btn{background:none;border:none;padding:5px 10px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:var(--t2);cursor:pointer;transition:all .2s;white-space:nowrap;position:relative;}
+.hdr-btn{background:none;border:none;padding:5px 10px;border-radius:8px;font-family:'Inter',sans-serif;font-size:13px;font-weight:500;color:var(--t2);cursor:pointer;transition:all .2s;white-space:nowrap;position:relative;}
 .hdr-btn::after{content:'';position:absolute;bottom:2px;left:50%;transform:translateX(-50%) scaleX(0);width:70%;height:2px;border-radius:2px;background:linear-gradient(90deg,var(--p500),#1d4ed8);transition:transform .22s ease;}
 .hdr-btn:hover{color:var(--p600);}
 .hdr-btn:hover::after,.hdr-btn.active::after{transform:translateX(-50%) scaleX(1);}
@@ -72,19 +75,19 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 [data-theme="dark"] .hdr-btn.btn-aws{color:#ffa720!important;}
 [data-theme="dark"] .hdr-btn.btn-az{color:#4ea8ff!important;}
 [data-theme="dark"] .hdr-btn.btn-gcp{color:#7ab0ff!important;}
-.theme-btn{background:none;border:1px solid var(--border2);border-radius:8px;padding:5px 11px;font-size:12.5px;color:var(--t2);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;display:flex;align-items:center;gap:5px;}
+.theme-btn{background:none;border:1px solid var(--border2);border-radius:8px;padding:5px 11px;font-size:12.5px;color:var(--t2);cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s;display:flex;align-items:center;gap:5px;}
 .theme-btn:hover{background:var(--p50);border-color:var(--p400);color:var(--p600);}
 
 /* ══ HERO ══════════════════════════════════════════════ */
 .hero{position:relative;overflow:hidden;padding:5.5rem 1.5rem 4.5rem;text-align:center;}
 #hero-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;}
 .hero-content{position:relative;z-index:1;max-width:820px;margin:0 auto;}
-.hero-eyebrow{display:inline-flex;align-items:center;gap:7px;background:var(--p50);border:1px solid var(--p200);border-radius:20px;padding:5px 16px 5px 10px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:var(--p600);margin-bottom:1.6rem;animation:fadeUp .6s ease both;}
-.hero-title{font-family:'Syne',sans-serif;font-size:clamp(2.4rem,6vw,4.2rem);font-weight:800;line-height:1.06;letter-spacing:-.04em;color:var(--t1);margin-bottom:1.2rem;animation:fadeUp .6s .1s ease both;}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:7px;background:var(--p50);border:1px solid var(--p200);border-radius:20px;padding:5px 16px 5px 10px;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;color:var(--p600);margin-bottom:1.6rem;animation:fadeUp .6s ease both;}
+.hero-title{font-family:'Outfit',sans-serif;font-size:clamp(2.4rem,6vw,4.2rem);font-weight:800;line-height:1.06;letter-spacing:-.04em;color:var(--t1);margin-bottom:1.2rem;animation:fadeUp .6s .1s ease both;}
 .hero-title .grad{background:linear-gradient(135deg,var(--p500) 0%,#1d4ed8 50%,var(--gcp) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.hero-sub{font-family:'DM Sans',sans-serif;font-size:1.1rem;color:var(--t2);line-height:1.7;max-width:580px;margin:0 auto 2.2rem;animation:fadeUp .6s .2s ease both;}
+.hero-sub{font-family:'Inter',sans-serif;font-size:1.1rem;color:var(--t2);line-height:1.7;max-width:580px;margin:0 auto 2.2rem;animation:fadeUp .6s .2s ease both;}
 .hero-providers{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:2.8rem;animation:fadeUp .6s .3s ease both;}
-.provider-chip{display:inline-flex;align-items:center;gap:7px;padding:8px 18px;border-radius:22px;font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;border:1.5px solid;cursor:pointer;transition:transform .2s,box-shadow .2s;text-decoration:none;}
+.provider-chip{display:inline-flex;align-items:center;gap:7px;padding:8px 18px;border-radius:22px;font-family:'Inter',sans-serif;font-size:13.5px;font-weight:600;border:1.5px solid;cursor:pointer;transition:transform .2s,box-shadow .2s;text-decoration:none;}
 .provider-chip:hover{transform:translateY(-3px);}
 .chip-aws{background:var(--aws-bg);border-color:var(--aws-b);color:#a16500;}
 .chip-aws:hover{box-shadow:0 6px 20px rgba(255,153,0,.25);}
@@ -96,15 +99,15 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 [data-theme="dark"] .chip-az{color:#4ea8ff;}
 [data-theme="dark"] .chip-gcp{color:#7ab0ff;}
 .hero-stats{display:flex;justify-content:center;gap:2.5rem;flex-wrap:wrap;animation:fadeUp .6s .4s ease both;}
-.stat-num{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:var(--p500);line-height:1;}
-.stat-lbl{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--t3);font-weight:500;margin-top:3px;letter-spacing:.01em;}
+.stat-num{font-family:'Outfit',sans-serif;font-size:2rem;font-weight:800;color:var(--p500);line-height:1;}
+.stat-lbl{font-family:'Inter',sans-serif;font-size:12px;color:var(--t3);font-weight:500;margin-top:3px;letter-spacing:.01em;}
 
 /* ══ LAYOUT ════════════════════════════════════════════ */
 .container{max-width:1380px;margin:0 auto;padding:0 1.5rem;position:relative;z-index:1;}
 .section{padding:4rem 0;}
 .sec-label{display:inline-flex;align-items:center;gap:7px;font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--p500);margin-bottom:.7rem;}
 .sec-label::before{content:'';width:18px;height:2px;background:var(--p400);border-radius:2px;}
-.sec-title{font-family:'Syne',sans-serif;font-size:clamp(1.6rem,3vw,2.3rem);font-weight:800;letter-spacing:-.03em;color:var(--t1);line-height:1.12;}
+.sec-title{font-family:'Outfit',sans-serif;font-size:clamp(1.6rem,3vw,2.3rem);font-weight:800;letter-spacing:-.03em;color:var(--t1);line-height:1.12;}
 .sec-desc{font-size:15px;color:var(--t2);margin-top:.5rem;line-height:1.65;}
 
 /* ══ PROVIDER BANNERS ══════════════════════════════════ */
@@ -123,16 +126,16 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .pb-logo-aws{background:linear-gradient(135deg,#ff9900,#e68900);}
 .pb-logo-az{background:linear-gradient(135deg,#0078D4,#005ea3);}
 .pb-logo-gcp{background:linear-gradient(135deg,#4285F4,#2563d0);}
-.pb-name{font-family:'Syne',sans-serif;font-size:1.25rem;font-weight:800;letter-spacing:-.02em;margin-bottom:.3rem;}
+.pb-name{font-family:'Outfit',sans-serif;font-size:1.25rem;font-weight:800;letter-spacing:-.02em;margin-bottom:.3rem;}
 .pb-aws .pb-name{color:#a16500;}
 .pb-az .pb-name{color:var(--az2);}
 .pb-gcp .pb-name{color:var(--gcp2);}
 [data-theme="dark"] .pb-aws .pb-name{color:#ffa720;}
 [data-theme="dark"] .pb-az .pb-name{color:#4ea8ff;}
 [data-theme="dark"] .pb-gcp .pb-name{color:#7ab0ff;}
-.pb-tagline{font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--t2);margin-bottom:1.2rem;line-height:1.6;}
+.pb-tagline{font-family:'Inter',sans-serif;font-size:13.5px;color:var(--t2);margin-bottom:1.2rem;line-height:1.6;}
 .pb-chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.4rem;}
-.pb-chip{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;padding:3px 10px;border-radius:10px;border:1px solid;}
+.pb-chip{font-family:'Inter',sans-serif;font-size:11px;font-weight:600;padding:3px 10px;border-radius:10px;border:1px solid;}
 .pbc-aws{background:rgba(255,153,0,.1);border-color:rgba(255,153,0,.3);color:#a16500;}
 .pbc-az{background:rgba(0,120,212,.08);border-color:rgba(0,120,212,.25);color:var(--az2);}
 .pbc-gcp{background:rgba(66,133,244,.08);border-color:rgba(66,133,244,.25);color:var(--gcp2);}
@@ -148,7 +151,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .pb-svc-icon{font-size:18px;line-height:1;margin-bottom:3px;}
 .pb-svc-name{font-size:11px;font-weight:700;color:var(--t1);}
 .pb-svc-lbl{font-size:10px;color:var(--t3);}
-.pb-cta{display:inline-flex;align-items:center;gap:6px;padding:9px 20px;border-radius:22px;font-size:13px;font-weight:600;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:transform .2s,box-shadow .2s;}
+.pb-cta{display:inline-flex;align-items:center;gap:6px;padding:9px 20px;border-radius:22px;font-size:13px;font-weight:600;border:none;cursor:pointer;font-family:'Inter',sans-serif;transition:transform .2s,box-shadow .2s;}
 .pb-cta:hover{transform:translateY(-2px);}
 .cta-aws{background:linear-gradient(135deg,var(--aws),var(--aws2));color:white;box-shadow:0 4px 16px rgba(255,153,0,.35);}
 .cta-aws:hover{box-shadow:0 7px 24px rgba(255,153,0,.5);}
@@ -171,10 +174,10 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .ps-az .ps-hdr{border-color:var(--az-b);}
 .ps-gcp .ps-hdr{border-color:var(--gcp-b);}
 .ps-logo{width:54px;height:54px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;box-shadow:var(--shadow-sm);}
-.ps-name{font-family:'Syne',sans-serif;font-size:1.55rem;font-weight:800;letter-spacing:-.03em;}
-.ps-sub{font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--t2);margin-top:3px;}
+.ps-name{font-family:'Outfit',sans-serif;font-size:1.55rem;font-weight:800;letter-spacing:-.03em;}
+.ps-sub{font-family:'Inter',sans-serif;font-size:13.5px;color:var(--t2);margin-top:3px;}
 .ps-badges{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap;}
-.ps-badge{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;padding:4px 11px;border-radius:10px;border:1px solid;}
+.ps-badge{font-family:'Inter',sans-serif;font-size:11px;font-weight:600;padding:4px 11px;border-radius:10px;border:1px solid;}
 .pb-aws-b{background:rgba(255,153,0,.1);border-color:rgba(255,153,0,.3);color:#a16500;}
 .pb-az-b{background:rgba(0,120,212,.08);border-color:rgba(0,120,212,.25);color:var(--az2);}
 .pb-gcp-b{background:rgba(66,133,244,.08);border-color:rgba(66,133,244,.25);color:var(--gcp2);}
@@ -182,7 +185,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 [data-theme="dark"] .pb-az-b{color:#4ea8ff;}
 [data-theme="dark"] .pb-gcp-b{color:#7ab0ff;}
 .ps-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.8rem;}
-.ps-tab{background:none;border:1.5px solid var(--border);padding:7px 16px;border-radius:20px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:var(--t2);cursor:pointer;transition:all .18s;white-space:nowrap;}
+.ps-tab{background:none;border:1.5px solid var(--border);padding:7px 16px;border-radius:20px;font-family:'Inter',sans-serif;font-size:13px;font-weight:500;color:var(--t2);cursor:pointer;transition:all .18s;white-space:nowrap;}
 .ps-tab:hover,.ps-tab.active{background:var(--surface);border-color:var(--border2);color:var(--t1);box-shadow:var(--shadow-sm);}
 .ps-tab.active{font-weight:600;background:var(--surface);}
 .pt-aws.active{border-color:var(--aws)!important;color:#a16500!important;background:var(--aws-bg)!important;}
@@ -207,13 +210,37 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .cvs-wrap{background:#0c0a1e;border-radius:14px;overflow:hidden;border:1px solid var(--border2);}
 .cvs-wrap canvas{display:block;width:100%;}
 .cvs-ctrls{display:flex;gap:7px;padding:9px 12px;background:rgba(255,255,255,.03);border-top:1px solid rgba(255,255,255,.06);flex-wrap:wrap;}
-.cbtn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.8);font-family:'DM Sans',sans-serif;font-size:12.5px;font-weight:500;padding:6px 14px;border-radius:6px;cursor:pointer;transition:all .15s;}
+.cbtn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.8);font-family:'Inter',sans-serif;font-size:12.5px;font-weight:500;padding:6px 14px;border-radius:6px;cursor:pointer;transition:all .15s;}
 .cbtn:hover,.cbtn.active{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.25);color:#fff;}
 
 /* ══ INFO GRID ═════════════════════════════════════════ */
-.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;}
+/* Redesigned DevOps stage cards */
+.devops-stage-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:all .25s cubic-bezier(.4,0,.2,1);}
+.devops-stage-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);border-color:var(--border2);}
+.dsc-header{padding:1rem 1.25rem .8rem;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border);}
+.dsc-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
+.dsc-title{font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;color:var(--t1);letter-spacing:-.01em;}
+.dsc-subtitle{font-size:11px;color:var(--t3);font-weight:500;margin-top:1px;}
+.dsc-body{padding:.9rem 1.25rem 1.1rem;}
+.dsc-steps{display:flex;flex-direction:column;gap:0;}
+.dsc-step{display:flex;align-items:flex-start;gap:10px;padding:.5rem 0;position:relative;}
+.dsc-step:not(:last-child)::after{content:'';position:absolute;left:11px;top:26px;bottom:-4px;width:1.5px;background:var(--border);z-index:0;}
+.dsc-step-num{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Outfit',sans-serif;font-size:10px;font-weight:800;flex-shrink:0;position:relative;z-index:1;}
+.dsc-step-text{display:flex;flex-direction:column;padding-top:2px;}
+.dsc-step-name{font-size:12.5px;font-weight:600;color:var(--t1);line-height:1.3;}
+.dsc-step-desc{font-size:11.5px;color:var(--t3);line-height:1.45;margin-top:1px;}
+/* Tool chips grid */
+.dsc-tools{display:grid;grid-template-columns:1fr 1fr;gap:.55rem;padding:.9rem 1.25rem 1.1rem;}
+.dsc-tool{display:flex;align-items:center;gap:9px;padding:.6rem .8rem;border-radius:10px;border:1px solid var(--border);background:var(--bg);transition:all .18s;cursor:default;}
+.dsc-tool:hover{border-color:var(--border2);background:var(--surface);transform:translateX(2px);}
+.dsc-tool-icon{font-size:1.1rem;flex-shrink:0;line-height:1;}
+.dsc-tool-info{}
+.dsc-tool-name{font-size:12px;font-weight:600;color:var(--t1);line-height:1.2;}
+.dsc-tool-tag{font-size:10.5px;color:var(--t3);font-weight:500;margin-top:1px;}
+/* Legacy info-card fallback */
 .info-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.2rem;}
-.info-title{font-size:13px;font-weight:700;color:var(--t1);margin-bottom:.7rem;display:flex;align-items:center;gap:6px;}
+.info-title{font-size:13.5px;font-weight:700;color:var(--t1);margin-bottom:.8rem;display:flex;align-items:center;gap:6px;}
 .info-list{list-style:none;display:flex;flex-direction:column;gap:6px;}
 .info-list li{font-size:13px;color:var(--t2);display:flex;align-items:flex-start;gap:7px;line-height:1.5;}
 .info-list li::before{content:'';width:5px;height:5px;border-radius:50%;flex-shrink:0;margin-top:5px;}
@@ -221,8 +248,67 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .il-az li::before{background:var(--az);}
 .il-gcp li::before{background:var(--gcp);}
 
+/* ══ LEARNING RESOURCES ════════════════════════════════ */
+/* Provider tab switcher */
+.learn-tabs{display:flex;gap:8px;margin-bottom:2rem;flex-wrap:wrap;}
+.learn-tab{display:inline-flex;align-items:center;gap:8px;padding:9px 20px;border-radius:24px;border:1.5px solid var(--border);background:var(--surface);font-family:'Inter',sans-serif;font-size:13px;font-weight:600;color:var(--t2);cursor:pointer;transition:all .2s;}
+.learn-tab:hover{border-color:var(--border2);color:var(--t1);}
+.learn-tab.lt-aws.active{background:var(--aws-bg);border-color:var(--aws-b);color:#a16500;}
+.learn-tab.lt-az.active{background:var(--az-bg);border-color:var(--az-b);color:var(--az2);}
+.learn-tab.lt-gcp.active{background:var(--gcp-bg);border-color:var(--gcp-b);color:var(--gcp2);}
+.learn-tab.lt-all.active{background:var(--p50);border-color:var(--p200);color:var(--p600);}
+[data-theme="dark"] .learn-tab.lt-aws.active{color:#ffa720;}
+[data-theme="dark"] .learn-tab.lt-az.active{color:#4ea8ff;}
+[data-theme="dark"] .learn-tab.lt-gcp.active{color:#7ab0ff;}
+.learn-tab-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.learn-tab-dot-aws{background:var(--aws);}
+.learn-tab-dot-az{background:var(--az);}
+.learn-tab-dot-gcp{background:var(--gcp);}
+.learn-tab-dot-all{background:linear-gradient(135deg,var(--aws),var(--az),var(--gcp));}
+
+/* Resource cards grid */
+.res-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;}
+.res-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:0;transition:all .25s cubic-bezier(.4,0,.2,1);cursor:pointer;text-decoration:none;display:flex;flex-direction:column;overflow:hidden;position:relative;}
+.res-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:var(--border2);}
+.res-card[data-provider="aws"]:hover{border-color:var(--aws-b);box-shadow:0 16px 48px rgba(255,153,0,.12);}
+.res-card[data-provider="az"]:hover{border-color:var(--az-b);box-shadow:0 16px 48px rgba(0,120,212,.12);}
+.res-card[data-provider="gcp"]:hover{border-color:var(--gcp-b);box-shadow:0 16px 48px rgba(66,133,244,.12);}
+/* Top color bar */
+.res-card::before{content:'';display:block;height:3px;width:100%;}
+.res-card[data-provider="aws"]::before{background:linear-gradient(90deg,var(--aws),var(--aws2));}
+.res-card[data-provider="az"]::before{background:linear-gradient(90deg,var(--az),var(--az2));}
+.res-card[data-provider="gcp"]::before{background:linear-gradient(90deg,var(--gcp),var(--gcp2));}
+.res-body{padding:1.4rem 1.4rem 1rem;flex:1;display:flex;flex-direction:column;}
+.res-meta{display:flex;align-items:center;gap:8px;margin-bottom:.9rem;}
+.res-provider-badge{width:26px;height:26px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.rpb-aws{background:linear-gradient(135deg,#ff9900,#e68900);}
+.rpb-az{background:linear-gradient(135deg,#0078D4,#005ea3);}
+.rpb-gcp{background:linear-gradient(135deg,#4285F4,#2563d0);}
+.res-type{font-family:'Inter',sans-serif;font-size:10.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:3px 8px;border-radius:6px;}
+.rt-aws{background:var(--aws-bg);color:#a16500;border:1px solid var(--aws-b);}
+.rt-az{background:var(--az-bg);color:var(--az2);border:1px solid var(--az-b);}
+.rt-gcp{background:var(--gcp-bg);color:var(--gcp2);border:1px solid var(--gcp-b);}
+[data-theme="dark"] .rt-aws{color:#ffa720;}
+[data-theme="dark"] .rt-az{color:#4ea8ff;}
+[data-theme="dark"] .rt-gcp{color:#7ab0ff;}
+.res-title{font-family:'Outfit',sans-serif;font-size:15px;font-weight:700;color:var(--t1);margin-bottom:.5rem;line-height:1.35;letter-spacing:-.01em;}
+.res-desc{font-size:13px;color:var(--t2);line-height:1.6;flex:1;}
+.res-footer{padding:.9rem 1.4rem 1.1rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;margin-top:.5rem;}
+.res-link-label{font-size:12px;font-weight:600;color:var(--t3);display:flex;align-items:center;gap:5px;transition:color .18s;}
+.res-card:hover .res-link-label{color:var(--p600);}
+.res-card[data-provider="aws"]:hover .res-link-label{color:#a16500;}
+.res-card[data-provider="az"]:hover .res-link-label{color:var(--az2);}
+.res-card[data-provider="gcp"]:hover .res-link-label{color:var(--gcp2);}
+[data-theme="dark"] .res-card[data-provider="aws"]:hover .res-link-label{color:#ffa720;}
+[data-theme="dark"] .res-card[data-provider="az"]:hover .res-link-label{color:#4ea8ff;}
+[data-theme="dark"] .res-card[data-provider="gcp"]:hover .res-link-label{color:#7ab0ff;}
+.res-arrow{font-size:14px;transition:transform .2s;}
+.res-card:hover .res-arrow{transform:translateX(4px);}
+/* hidden when filtered */
+.res-card.res-hidden{display:none !important;}
+
 /* ══ CODE SNIPPET ══════════════════════════════════════ */
-.code-block{background:#0c0a1e;border:1px solid #2a2450;border-radius:10px;padding:1.1rem;font-family:'JetBrains Mono','Fira Code',monospace;font-size:12.5px;line-height:1.75;color:#c8b8ff;overflow-x:auto;border-left:3px solid var(--p500);}
+.code-block{background:#0c0a1e;border:1px solid #2a2450;border-radius:10px;padding:1.1rem;font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.75;color:#c8b8ff;overflow-x:auto;border-left:3px solid var(--p500);}
 .ck{color:#9d8df5;}.cs{color:#86efac;}.cc{color:#4a4570;font-style:italic;}.cf{color:#60a5fa;}.cn{color:#fbbf24;}.cv{color:#f472b6;}
 
 /* ══ BEST PRACTICES ════════════════════════════════════ */
@@ -234,62 +320,134 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .bp-desc{font-size:13px;color:var(--t2);line-height:1.6;}
 
 /* ══ COMPARISON TABLE ══════════════════════════════════ */
-.cmp-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;overflow-x:auto;}
-.cmp-table{width:100%;border-collapse:collapse;font-size:14px;}
-.cmp-table th,.cmp-table td{padding:.85rem 1.1rem;text-align:left;border-bottom:1px solid var(--border);}
-.cmp-table thead tr{background:var(--p50);}
-[data-theme="dark"] .cmp-table thead tr{background:var(--p100);}
-.cmp-table thead th{font-family:'Syne',sans-serif;font-size:12px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--t1);position:sticky;top:58px;z-index:10;background:var(--p50);box-shadow:0 1px 0 var(--border2),0 3px 8px rgba(99,65,204,.08);}
+.cmp-wrap{background:var(--surface);border:1px solid var(--border);border-radius:20px;overflow:hidden;overflow-x:auto;box-shadow:var(--shadow-sm);}
+
+/* Search bar */
+.cmp-search-bar{display:flex;align-items:center;gap:10px;padding:1rem 1.2rem;border-bottom:1px solid var(--border);background:var(--surface);}
+.cmp-search-icon{color:var(--t3);flex-shrink:0;}
+.cmp-search{flex:1;border:none;background:transparent;font-family:'Inter',sans-serif;font-size:13.5px;color:var(--t1);outline:none;}
+.cmp-search::placeholder{color:var(--t3);}
+.cmp-row-count{font-family:'Inter',sans-serif;font-size:11.5px;color:var(--t3);white-space:nowrap;font-weight:500;}
+
+/* Column toggle pills */
+.cmp-toggles{display:flex;gap:8px;padding:.75rem 1.2rem;border-bottom:1px solid var(--border);background:var(--p50);flex-wrap:wrap;align-items:center;}
+[data-theme="dark"] .cmp-toggles{background:var(--p100);}
+.cmp-toggle-label{font-family:'Inter',sans-serif;font-size:11px;font-weight:600;color:var(--t3);letter-spacing:.06em;text-transform:uppercase;margin-right:4px;}
+.cmp-toggle{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:20px;border:1.5px solid;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all .18s;background:var(--surface);}
+.cmp-toggle.t-aws{border-color:var(--aws-b);color:#a16500;}
+.cmp-toggle.t-aws.on{background:var(--aws-bg);}
+.cmp-toggle.t-az{border-color:var(--az-b);color:var(--az2);}
+.cmp-toggle.t-az.on{background:var(--az-bg);}
+.cmp-toggle.t-gcp{border-color:var(--gcp-b);color:var(--gcp2);}
+.cmp-toggle.t-gcp.on{background:var(--gcp-bg);}
+.cmp-toggle:hover{opacity:.8;transform:translateY(-1px);}
+[data-theme="dark"] .cmp-toggle.t-aws{color:#ffa720;}
+[data-theme="dark"] .cmp-toggle.t-az{color:#4ea8ff;}
+[data-theme="dark"] .cmp-toggle.t-gcp{color:#7ab0ff;}
+
+/* Table itself */
+.cmp-table{width:100%;border-collapse:separate;border-spacing:0;font-size:14px;table-layout:fixed;}
+.cmp-table th,.cmp-table td{padding:.85rem 1.2rem;text-align:left;border-bottom:1px solid var(--border);}
+.cmp-table tbody tr:last-child td{border-bottom:none;}
+
+/* Header row */
+.cmp-table thead th{
+  font-family:'Outfit',sans-serif;font-size:11.5px;font-weight:800;
+  letter-spacing:.06em;text-transform:uppercase;
+  position:sticky;top:58px;z-index:10;
+  background:var(--p50);
+  box-shadow:0 2px 0 var(--border2);
+  padding:.9rem 1.2rem;
+}
 [data-theme="dark"] .cmp-table thead th{background:var(--p100);}
-.cmp-table thead th:first-child{color:var(--t2);}
-.cmp-table thead th.col-aws{border-top:3px solid var(--aws);}
-.cmp-table thead th.col-az{border-top:3px solid var(--az);}
-.cmp-table thead th.col-gcp{border-top:3px solid var(--gcp);}
-.cmp-table tbody tr{background:var(--surface);transition:background .15s;}
-.cmp-table tbody tr:nth-child(even){background:rgba(99,65,204,.025);}
+.cmp-table thead th:first-child{color:var(--t3);width:22%;}
+
+/* Provider header cells */
+.th-aws{color:#a16500 !important;border-top:3px solid var(--aws) !important;background:rgba(255,153,0,.04) !important;}
+.th-az {color:var(--az2) !important;border-top:3px solid var(--az) !important;background:rgba(0,120,212,.04) !important;}
+.th-gcp{color:var(--gcp2) !important;border-top:3px solid var(--gcp) !important;background:rgba(66,133,244,.04) !important;}
+[data-theme="dark"] .th-aws{color:#ffa720 !important;background:rgba(255,153,0,.06) !important;}
+[data-theme="dark"] .th-az {color:#4ea8ff !important;background:rgba(0,120,212,.06) !important;}
+[data-theme="dark"] .th-gcp{color:#7ab0ff !important;background:rgba(66,133,244,.06) !important;}
+
+/* Provider header inner layout */
+.th-inner{display:flex;align-items:center;gap:8px;}
+.th-badge{width:22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.th-badge-aws{background:linear-gradient(135deg,#ff9900,#e68900);}
+.th-badge-az {background:linear-gradient(135deg,#0078D4,#005ea3);}
+.th-badge-gcp{background:linear-gradient(135deg,#4285F4,#2563d0);}
+
+/* Body rows */
+.cmp-table tbody tr{background:var(--surface);transition:background .15s,box-shadow .15s;}
+.cmp-table tbody tr:nth-child(even){background:rgba(99,65,204,.018);}
 [data-theme="dark"] .cmp-table tbody tr:nth-child(even){background:rgba(99,65,204,.04);}
-.cmp-table tbody tr:hover{background:var(--p50);}
+.cmp-table tbody tr:hover{background:var(--p50);box-shadow:inset 3px 0 0 var(--p400);}
 [data-theme="dark"] .cmp-table tbody tr:hover{background:var(--p100);}
+
+/* Category cell */
 .cmp-table td:first-child{font-weight:600;color:var(--t1);font-size:13.5px;}
-.col-aws{color:#a16500!important;font-weight:500;}
-.col-az{color:var(--az2)!important;font-weight:500;}
-.col-gcp{color:var(--gcp2)!important;font-weight:500;}
-[data-theme="dark"] .col-aws{color:#ffa720!important;}
-[data-theme="dark"] .col-az{color:#4ea8ff!important;}
-[data-theme="dark"] .col-gcp{color:#7ab0ff!important;}
+
+/* Provider value cells — subtle column tinting */
+.col-aws{color:#a16500 !important;font-weight:500;background:rgba(255,153,0,.018);}
+.col-az {color:var(--az2) !important;font-weight:500;background:rgba(0,120,212,.018);}
+.col-gcp{color:var(--gcp2) !important;font-weight:500;background:rgba(66,133,244,.018);}
+[data-theme="dark"] .col-aws{color:#ffa720 !important;background:rgba(255,153,0,.03);}
+[data-theme="dark"] .col-az {color:#4ea8ff !important;background:rgba(0,120,212,.03);}
+[data-theme="dark"] .col-gcp{color:#7ab0ff !important;background:rgba(66,133,244,.03);}
+
+/* Hidden row when filtered */
+.cmp-table tbody tr.cmp-hidden{display:none;}
+
+/* No results message */
+.cmp-empty{display:none;padding:2.5rem;text-align:center;font-family:'Inter',sans-serif;font-size:13.5px;color:var(--t3);}
+.cmp-empty.show{display:block;}
+
+/* Column visibility */
+.col-hide-aws{} /* visible by default */
+.col-hide-az {}
+.col-hide-gcp{}
+.hide-aws .col-hide-aws{display:none;}
+.hide-az  .col-hide-az {display:none;}
+.hide-gcp .col-hide-gcp{display:none;}
 
 /* ══ DEVOPS PIPELINE ═══════════════════════════════════ */
 .pipe-wrap{background:#0c0a1e;border:1px solid var(--border2);border-radius:16px;overflow:hidden;margin-top:1.5rem;}
 .pipe-wrap canvas{display:block;width:100%;}
 
 /* ══ RESOURCES ══════════════════════════════════════════ */
-.res-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;}
-.res-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.2rem;transition:all .2s;cursor:pointer;text-decoration:none;display:block;}
-.res-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:var(--border2);}
-.res-type{font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:10px;display:inline-block;margin-bottom:.5rem;}
-.res-title{font-size:14px;font-weight:600;color:var(--t1);margin-bottom:.3rem;line-height:1.4;}
-.res-desc{font-size:12.5px;color:var(--t2);line-height:1.55;}
-
 /* ══ FOOTER ════════════════════════════════════════════ */
-.footer{background:var(--surface);border-top:1px solid var(--border);padding:2rem 1.5rem;margin-top:4rem;position:relative;overflow:hidden;}
-.footer::before{content:'';position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(circle,rgba(99,65,204,.08) 1.2px,transparent 1.2px);background-size:20px 20px;}
+.footer{background:var(--surface);border-top:1px solid var(--border);padding:3rem 1.5rem 2rem;margin-top:4rem;position:relative;overflow:hidden;}
+.footer::before{content:'';position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(circle,rgba(99,65,204,.07) 1.2px,transparent 1.2px);background-size:22px 22px;}
 .footer-inner{max-width:1380px;margin:0 auto;position:relative;z-index:1;}
-.footer-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:1.5rem;margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border);}
-.footer-brand{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--t1);}
-.footer-brand-sub{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--t3);margin-top:3px;}
-.footer-links{display:flex;gap:6px;flex-wrap:wrap;}
-.footer-link{background:none;border:1px solid var(--border);border-radius:6px;padding:5px 12px;font-size:12.5px;font-weight:500;color:var(--t2);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;}
+
+/* Top row: brand left, nav links right */
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:2rem;padding-bottom:2rem;border-bottom:1px solid var(--border);}
+.footer-brand-block{display:flex;flex-direction:column;gap:0;}
+.footer-brand-row{display:flex;align-items:center;gap:10px;margin-bottom:6px;}
+.footer-brand-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--p600),#1d4ed8);border-radius:9px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 10px rgba(99,65,204,.3);flex-shrink:0;}
+.footer-brand{font-family:'Outfit',sans-serif;font-size:16px;font-weight:700;color:var(--t1);letter-spacing:-.01em;}
+.footer-brand-sub{font-family:'Inter',sans-serif;font-size:12.5px;color:var(--t3);line-height:1.5;max-width:340px;}
+.footer-nav{display:flex;gap:6px;flex-wrap:wrap;align-items:flex-start;}
+.footer-link{background:none;border:1px solid var(--border);border-radius:6px;padding:6px 13px;font-size:12.5px;font-weight:500;color:var(--t2);cursor:pointer;font-family:'Inter',sans-serif;transition:all .15s;white-space:nowrap;}
 .footer-link:hover{border-color:var(--p400);color:var(--p600);background:var(--p50);}
-.footer-credit{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:1rem;padding:.7rem 1.2rem;border-radius:10px;}
-.fc-icon{width:28px;height:28px;border-radius:7px;background:linear-gradient(135deg,var(--p600),#1d4ed8);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.fc-name{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:var(--t1);}
+
+/* Credit row */
+.footer-credit{display:flex;align-items:center;gap:12px;padding:1.25rem 0;border-bottom:1px solid var(--border);}
+.fc-icon{width:36px;height:36px;border-radius:9px;background:linear-gradient(135deg,var(--p600),#1d4ed8);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 10px rgba(99,65,204,.25);}
+.fc-text{display:flex;flex-direction:column;gap:3px;}
+.fc-name{font-family:'Inter',sans-serif;font-size:13.5px;font-weight:600;color:var(--t1);line-height:1.3;}
 .fc-name span{color:var(--p500);}
-.fc-role{font-family:'DM Sans',sans-serif;font-size:11.5px;color:var(--t2);margin-top:1px;}
-.footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;}
-.footer-copy{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--t3);}
+.fc-role{font-family:'Inter',sans-serif;font-size:12px;color:var(--t3);line-height:1.4;display:flex;align-items:center;gap:0;flex-wrap:wrap;}
+.fc-role-sep{margin:0 6px;opacity:.4;}
+
+/* Bottom row */
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.75rem;padding-top:1.25rem;}
+.footer-copy{font-family:'Inter',sans-serif;font-size:12px;color:var(--t3);display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.footer-copy-sep{opacity:.35;}
 .socials{display:flex;gap:6px;}
-.social-btn{width:28px;height:28px;border-radius:7px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--t2);transition:all .15s;text-decoration:none;}
+.social-btn{width:30px;height:30px;border-radius:8px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--t2);transition:all .15s;text-decoration:none;}
 .social-btn:hover{border-color:var(--p400);color:var(--p600);background:var(--p50);}
+@media(max-width:640px){.footer-top{flex-direction:column;gap:1.5rem;}.footer-credit{flex-wrap:wrap;}.footer-bottom{flex-direction:column;align-items:flex-start;}}
 
 /* ══ SCROLL TOP ════════════════════════════════════════ */
 #scroll-top{position:fixed;bottom:1.5rem;right:1.5rem;z-index:500;width:40px;height:40px;border-radius:12px;background:var(--surface);border:1px solid var(--border2);color:var(--p600);cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-md);opacity:0;transform:translateY(12px) scale(.9);transition:opacity .3s,transform .3s,box-shadow .2s;pointer-events:none;}
@@ -317,8 +475,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .cmp-table tbody tr{transition:background .15s,border-left .15s;}
 .cmp-table tbody td{border-left:3px solid transparent;transition:border-left-color .15s;}
 .cmp-table tbody tr:hover td:first-child{border-left-color:var(--p400);}
-/* Resource type tags font-family */
-.res-type{font-family:'DM Sans',sans-serif;}
 /* Canvas controls wrap nicely */
 .cvs-ctrls{display:flex;gap:7px;padding:10px 14px;background:rgba(255,255,255,.03);border-top:1px solid rgba(255,255,255,.06);flex-wrap:wrap;align-items:center;}
 /* Smooth provider banner entry */
@@ -326,7 +482,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 /* Better svc-grid min size on wide screens */
 .svc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:.9rem;}
 /* Info card title larger */
-.info-title{font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:700;color:var(--t1);margin-bottom:.8rem;display:flex;align-items:center;gap:6px;}
+.info-title{font-family:'Inter',sans-serif;font-size:13.5px;font-weight:700;color:var(--t1);margin-bottom:.8rem;display:flex;align-items:center;gap:6px;}
 /* Provider section panel transition */
 .ps-panel{display:none;animation:fadeIn .3s ease;}
 .ps-panel.active{display:block;}
@@ -341,7 +497,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 </style>
 </head>
 <body>
-<a href="#providers" style="position:fixed;top:-100px;left:1rem;z-index:9999;padding:8px 16px;background:var(--p600);color:white;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;text-decoration:none;transition:top .2s;" onfocus="this.style.top='1rem'" onblur="this.style.top='-100px'">Skip to main content</a>
+<a href="#providers" style="position:fixed;top:-100px;left:1rem;z-index:9999;padding:8px 16px;background:var(--p600);color:white;border-radius:8px;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;text-decoration:none;transition:top .2s;" onfocus="this.style.top='1rem'" onblur="this.style.top='-100px'">Skip to main content</a>
 <div id="progress"></div>
 
 <!-- HEADER -->
@@ -914,26 +1070,85 @@ db = firestore.<span class="cf">Client</span>()
     <h2 class="sec-title">AWS vs Azure vs GCP</h2>
     <p class="sec-desc">Compare the three major cloud providers across key service categories.</p>
   </div>
+
   <div class="cmp-wrap reveal" style="margin-top:1.8rem;">
-    <table class="cmp-table">
-      <thead><tr><th>Category</th><th class="col-aws">AWS</th><th class="col-az">Azure</th><th class="col-gcp">GCP</th></tr></thead>
+
+    <!-- Search bar -->
+    <div class="cmp-search-bar">
+      <svg class="cmp-search-icon" viewBox="0 0 20 20" width="16" height="16" fill="none">
+        <circle cx="8.5" cy="8.5" r="5.5" stroke="currentColor" stroke-width="1.6"/>
+        <path d="M13 13l3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+      <input class="cmp-search" id="cmp-search-input" type="text" placeholder="Search services, categories…" autocomplete="off"/>
+      <span class="cmp-row-count" id="cmp-row-count">14 categories</span>
+    </div>
+
+    <!-- Column toggles -->
+    <div class="cmp-toggles">
+      <span class="cmp-toggle-label">Show:</span>
+      <button class="cmp-toggle t-aws on" data-col="aws" onclick="toggleCol(this)">
+        <svg viewBox="0 0 18 11" width="22" height="14"><text x="0" y="10" font-family="sans-serif" font-size="10" font-weight="900" fill="currentColor">AWS</text></svg>
+        Amazon Web Services
+      </button>
+      <button class="cmp-toggle t-az on" data-col="az" onclick="toggleCol(this)">
+        <svg viewBox="0 0 14 14" width="12" height="12" fill="currentColor"><path d="M3 1.5h5l-3 5h4l-6 7 1.5-5H1z"/></svg>
+        Microsoft Azure
+      </button>
+      <button class="cmp-toggle t-gcp on" data-col="gcp" onclick="toggleCol(this)">
+        <svg viewBox="0 0 14 14" width="12" height="12"><circle cx="7" cy="7" r="2.5" fill="currentColor"/><path d="M7 1v2M7 11v2M1 7h2M11 7h2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Google Cloud
+      </button>
+    </div>
+
+    <!-- Table -->
+    <table class="cmp-table" id="cmp-table">
+      <thead>
+        <tr>
+          <th>Category</th>
+          <th class="th-aws col-hide-aws">
+            <div class="th-inner">
+              <div class="th-badge th-badge-aws">
+                <svg viewBox="0 0 18 11" width="18" height="11"><text x="0" y="10" font-family="sans-serif" font-size="10" font-weight="900" fill="white">AWS</text></svg>
+              </div>
+              AWS
+            </div>
+          </th>
+          <th class="th-az col-hide-az">
+            <div class="th-inner">
+              <div class="th-badge th-badge-az">
+                <svg viewBox="0 0 14 14" width="11" height="11" fill="white"><path d="M3 1.5h5l-3 5h4l-6 7 1.5-5H1z"/></svg>
+              </div>
+              Azure
+            </div>
+          </th>
+          <th class="th-gcp col-hide-gcp">
+            <div class="th-inner">
+              <div class="th-badge th-badge-gcp">
+                <svg viewBox="0 0 14 14" width="11" height="11"><circle cx="7" cy="7" r="2.5" fill="white"/><path d="M7 1v2M7 11v2M1 7h2M11 7h2" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </div>
+              GCP
+            </div>
+          </th>
+        </tr>
+      </thead>
       <tbody>
-        <tr><td>Virtual Machines</td><td class="col-aws">EC2</td><td class="col-az">Virtual Machines</td><td class="col-gcp">Compute Engine</td></tr>
-        <tr><td>Managed Kubernetes</td><td class="col-aws">EKS</td><td class="col-az">AKS</td><td class="col-gcp">GKE (Autopilot)</td></tr>
-        <tr><td>Serverless Functions</td><td class="col-aws">Lambda</td><td class="col-az">Azure Functions</td><td class="col-gcp">Cloud Run / Functions</td></tr>
-        <tr><td>Object Storage</td><td class="col-aws">S3</td><td class="col-az">Blob Storage</td><td class="col-gcp">Cloud Storage</td></tr>
-        <tr><td>Managed SQL</td><td class="col-aws">RDS / Aurora</td><td class="col-az">Azure SQL Database</td><td class="col-gcp">Cloud SQL / Spanner</td></tr>
-        <tr><td>NoSQL Database</td><td class="col-aws">DynamoDB</td><td class="col-az">Cosmos DB</td><td class="col-gcp">Firestore / Bigtable</td></tr>
-        <tr><td>Data Warehouse</td><td class="col-aws">Redshift</td><td class="col-az">Synapse Analytics</td><td class="col-gcp">BigQuery</td></tr>
-        <tr><td>AI / ML Platform</td><td class="col-aws">SageMaker</td><td class="col-az">Azure ML / OpenAI</td><td class="col-gcp">Vertex AI / Gemini</td></tr>
-        <tr><td>CDN</td><td class="col-aws">CloudFront</td><td class="col-az">Azure CDN / Front Door</td><td class="col-gcp">Cloud CDN</td></tr>
-        <tr><td>IaC</td><td class="col-aws">CDK / CloudFormation</td><td class="col-az">Bicep / ARM</td><td class="col-gcp">Deployment Manager / TF</td></tr>
-        <tr><td>CI/CD Native</td><td class="col-aws">CodePipeline</td><td class="col-az">Azure DevOps Pipelines</td><td class="col-gcp">Cloud Build + Deploy</td></tr>
-        <tr><td>Identity & Access</td><td class="col-aws">IAM + Cognito</td><td class="col-az">Azure AD / Entra</td><td class="col-gcp">IAM + Identity Platform</td></tr>
-        <tr><td>Market Share (2024)</td><td class="col-aws">~33%</td><td class="col-az">~22%</td><td class="col-gcp">~11%</td></tr>
-        <tr><td>Regions (approx)</td><td class="col-aws">32 regions, 102 AZs</td><td class="col-az">60+ regions</td><td class="col-gcp">40+ regions</td></tr>
+        <tr><td>🖥️&nbsp; Virtual Machines</td><td class="col-aws col-hide-aws">EC2</td><td class="col-az col-hide-az">Virtual Machines</td><td class="col-gcp col-hide-gcp">Compute Engine</td></tr>
+        <tr><td>☸️&nbsp; Managed Kubernetes</td><td class="col-aws col-hide-aws">EKS</td><td class="col-az col-hide-az">AKS</td><td class="col-gcp col-hide-gcp">GKE (Autopilot)</td></tr>
+        <tr><td>⚡&nbsp; Serverless Functions</td><td class="col-aws col-hide-aws">Lambda</td><td class="col-az col-hide-az">Azure Functions</td><td class="col-gcp col-hide-gcp">Cloud Run / Functions</td></tr>
+        <tr><td>🗄️&nbsp; Object Storage</td><td class="col-aws col-hide-aws">S3</td><td class="col-az col-hide-az">Blob Storage</td><td class="col-gcp col-hide-gcp">Cloud Storage</td></tr>
+        <tr><td>🗃️&nbsp; Managed SQL</td><td class="col-aws col-hide-aws">RDS / Aurora</td><td class="col-az col-hide-az">Azure SQL Database</td><td class="col-gcp col-hide-gcp">Cloud SQL / Spanner</td></tr>
+        <tr><td>⚡&nbsp; NoSQL Database</td><td class="col-aws col-hide-aws">DynamoDB</td><td class="col-az col-hide-az">Cosmos DB</td><td class="col-gcp col-hide-gcp">Firestore / Bigtable</td></tr>
+        <tr><td>📊&nbsp; Data Warehouse</td><td class="col-aws col-hide-aws">Redshift</td><td class="col-az col-hide-az">Synapse Analytics</td><td class="col-gcp col-hide-gcp">BigQuery</td></tr>
+        <tr><td>🤖&nbsp; AI / ML Platform</td><td class="col-aws col-hide-aws">SageMaker</td><td class="col-az col-hide-az">Azure ML / OpenAI</td><td class="col-gcp col-hide-gcp">Vertex AI / Gemini</td></tr>
+        <tr><td>🌐&nbsp; CDN</td><td class="col-aws col-hide-aws">CloudFront</td><td class="col-az col-hide-az">Azure CDN / Front Door</td><td class="col-gcp col-hide-gcp">Cloud CDN</td></tr>
+        <tr><td>🏗️&nbsp; IaC</td><td class="col-aws col-hide-aws">CDK / CloudFormation</td><td class="col-az col-hide-az">Bicep / ARM</td><td class="col-gcp col-hide-gcp">Deployment Manager / TF</td></tr>
+        <tr><td>🔄&nbsp; CI/CD Native</td><td class="col-aws col-hide-aws">CodePipeline</td><td class="col-az col-hide-az">Azure DevOps Pipelines</td><td class="col-gcp col-hide-gcp">Cloud Build + Deploy</td></tr>
+        <tr><td>🔐&nbsp; Identity &amp; Access</td><td class="col-aws col-hide-aws">IAM + Cognito</td><td class="col-az col-hide-az">Azure AD / Entra</td><td class="col-gcp col-hide-gcp">IAM + Identity Platform</td></tr>
+        <tr><td>📈&nbsp; Market Share (2024)</td><td class="col-aws col-hide-aws">~33%</td><td class="col-az col-hide-az">~22%</td><td class="col-gcp col-hide-gcp">~11%</td></tr>
+        <tr><td>🗺️&nbsp; Regions (approx)</td><td class="col-aws col-hide-aws">32 regions, 102 AZs</td><td class="col-az col-hide-az">60+ regions</td><td class="col-gcp col-hide-gcp">40+ regions</td></tr>
       </tbody>
     </table>
+    <div class="cmp-empty" id="cmp-empty">No matching categories found.</div>
   </div>
 </section>
 
@@ -954,28 +1169,119 @@ db = firestore.<span class="cf">Client</span>()
     </div>
   </div>
   <div class="info-grid reveal" style="margin-top:1.5rem;">
-    <div class="info-card">
-      <div class="info-title">Common DevOps Stages</div>
-      <ul class="info-list il-gcp">
-        <li>Source Control — Git with branch protection and PR reviews</li>
-        <li>Build — compile, test, lint, and create artifacts</li>
-        <li>Container — build Docker image and push to registry</li>
-        <li>Test — unit, integration, security scanning</li>
-        <li>Deploy — blue/green or canary to staging and production</li>
-        <li>Monitor — observe metrics, logs, traces, and alerts</li>
-      </ul>
+
+    <!-- Card 1: Pipeline stages as numbered steps -->
+    <div class="devops-stage-card">
+      <div class="dsc-header">
+        <div class="dsc-icon" style="background:linear-gradient(135deg,#1e1b4b,#3730a3);">🔁</div>
+        <div>
+          <div class="dsc-title">Universal CI/CD Pipeline</div>
+          <div class="dsc-subtitle">6 stages every cloud team runs</div>
+        </div>
+      </div>
+      <div class="dsc-body">
+        <div class="dsc-steps">
+          <div class="dsc-step">
+            <div class="dsc-step-num" style="background:#f0ecff;color:#6341cc;">1</div>
+            <div class="dsc-step-text">
+              <span class="dsc-step-name">Source Control</span>
+              <span class="dsc-step-desc">Git + branch protection &amp; PR reviews</span>
+            </div>
+          </div>
+          <div class="dsc-step">
+            <div class="dsc-step-num" style="background:#fff8ee;color:#a16500;">2</div>
+            <div class="dsc-step-text">
+              <span class="dsc-step-name">Build</span>
+              <span class="dsc-step-desc">Compile, test, lint, create artifacts</span>
+            </div>
+          </div>
+          <div class="dsc-step">
+            <div class="dsc-step-num" style="background:#eef6ff;color:#005ea3;">3</div>
+            <div class="dsc-step-text">
+              <span class="dsc-step-name">Containerise</span>
+              <span class="dsc-step-desc">Docker build &amp; push to registry</span>
+            </div>
+          </div>
+          <div class="dsc-step">
+            <div class="dsc-step-num" style="background:#eef3ff;color:#2563d0;">4</div>
+            <div class="dsc-step-text">
+              <span class="dsc-step-name">Test</span>
+              <span class="dsc-step-desc">Unit, integration &amp; security scanning</span>
+            </div>
+          </div>
+          <div class="dsc-step">
+            <div class="dsc-step-num" style="background:#f0fdf4;color:#16a34a;">5</div>
+            <div class="dsc-step-text">
+              <span class="dsc-step-name">Deploy</span>
+              <span class="dsc-step-desc">Blue/green or canary to staging → prod</span>
+            </div>
+          </div>
+          <div class="dsc-step">
+            <div class="dsc-step-num" style="background:#fdf4ff;color:#9333ea;">6</div>
+            <div class="dsc-step-text">
+              <span class="dsc-step-name">Monitor</span>
+              <span class="dsc-step-desc">Metrics, logs, traces &amp; alerts</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="info-card">
-      <div class="info-title">Third-Party Tools That Work on All</div>
-      <ul class="info-list il-az">
-        <li>GitHub Actions — most popular CI/CD, native cloud integration</li>
-        <li>Terraform — consistent IaC across all three providers</li>
-        <li>Kubernetes — portable container orchestration everywhere</li>
-        <li>Helm — package manager for Kubernetes deployments</li>
-        <li>Prometheus + Grafana — open-source monitoring stack</li>
-        <li>Datadog / New Relic — unified observability across clouds</li>
-      </ul>
+
+    <!-- Card 2: Third-party tools as chip grid -->
+    <div class="devops-stage-card">
+      <div class="dsc-header">
+        <div class="dsc-icon" style="background:linear-gradient(135deg,#0f172a,#1e3a5f);">🛠️</div>
+        <div>
+          <div class="dsc-title">Third-Party Tools</div>
+          <div class="dsc-subtitle">Work seamlessly on AWS, Azure &amp; GCP</div>
+        </div>
+      </div>
+      <div class="dsc-tools">
+        <div class="dsc-tool">
+          <div class="dsc-tool-icon">⚙️</div>
+          <div class="dsc-tool-info">
+            <div class="dsc-tool-name">GitHub Actions</div>
+            <div class="dsc-tool-tag">CI/CD · Native cloud</div>
+          </div>
+        </div>
+        <div class="dsc-tool">
+          <div class="dsc-tool-icon">🏗️</div>
+          <div class="dsc-tool-info">
+            <div class="dsc-tool-name">Terraform</div>
+            <div class="dsc-tool-tag">IaC · Multi-cloud</div>
+          </div>
+        </div>
+        <div class="dsc-tool">
+          <div class="dsc-tool-icon">☸️</div>
+          <div class="dsc-tool-info">
+            <div class="dsc-tool-name">Kubernetes</div>
+            <div class="dsc-tool-tag">Orchestration</div>
+          </div>
+        </div>
+        <div class="dsc-tool">
+          <div class="dsc-tool-icon">⛵</div>
+          <div class="dsc-tool-info">
+            <div class="dsc-tool-name">Helm</div>
+            <div class="dsc-tool-tag">K8s packages</div>
+          </div>
+        </div>
+        <div class="dsc-tool">
+          <div class="dsc-tool-icon">📊</div>
+          <div class="dsc-tool-info">
+            <div class="dsc-tool-name">Prometheus + Grafana</div>
+            <div class="dsc-tool-tag">Monitoring · Open source</div>
+          </div>
+        </div>
+        <div class="dsc-tool">
+          <div class="dsc-tool-icon">🐕</div>
+          <div class="dsc-tool-info">
+            <div class="dsc-tool-name">Datadog / New Relic</div>
+            <div class="dsc-tool-tag">Observability · SaaS</div>
+          </div>
+        </div>
+      </div>
     </div>
+
   </div>
 </section>
 
@@ -986,37 +1292,127 @@ db = firestore.<span class="cf">Client</span>()
     <h2 class="sec-title">Start Your Cloud Journey</h2>
     <p class="sec-desc">Curated certifications, documentation, and hands-on labs for each provider.</p>
   </div>
-  <div class="res-grid reveal" style="margin-top:1.8rem;">
-    <a class="res-card" href="https://aws.amazon.com/certification/" target="_blank" rel="noopener">
-      <div class="res-type" style="background:var(--aws-bg);color:#a16500;">AWS · Certification</div>
-      <div class="res-title">AWS Certified Solutions Architect</div>
-      <div class="res-desc">Associate and Professional tracks. Most in-demand cloud certification globally. Validates design expertise.</div>
+
+  <!-- Provider filter tabs -->
+  <div class="learn-tabs reveal" style="margin-top:1.8rem;">
+    <button class="learn-tab lt-all active" data-filter="all" onclick="filterLearn(this)">
+      <span class="learn-tab-dot learn-tab-dot-all"></span> All Providers
+    </button>
+    <button class="learn-tab lt-aws" data-filter="aws" onclick="filterLearn(this)">
+      <span class="learn-tab-dot learn-tab-dot-aws"></span> AWS
+    </button>
+    <button class="learn-tab lt-az" data-filter="az" onclick="filterLearn(this)">
+      <span class="learn-tab-dot learn-tab-dot-az"></span> Azure
+    </button>
+    <button class="learn-tab lt-gcp" data-filter="gcp" onclick="filterLearn(this)">
+      <span class="learn-tab-dot learn-tab-dot-gcp"></span> Google Cloud
+    </button>
+  </div>
+
+  <div class="res-grid reveal" id="res-grid">
+
+    <a class="res-card" data-provider="aws" href="https://aws.amazon.com/certification/" target="_blank" rel="noopener">
+      <div class="res-body">
+        <div class="res-meta">
+          <div class="res-provider-badge rpb-aws">
+            <svg viewBox="0 0 18 11" width="18" height="11"><text x="0" y="10" font-family="sans-serif" font-size="10" font-weight="900" fill="white">AWS</text></svg>
+          </div>
+          <span class="res-type rt-aws">Certification</span>
+        </div>
+        <div class="res-title">AWS Certified Solutions Architect</div>
+        <div class="res-desc">Associate and Professional tracks. Most in-demand cloud certification globally — validates architecture design expertise at scale.</div>
+      </div>
+      <div class="res-footer">
+        <span class="res-link-label">aws.amazon.com <span class="res-arrow">→</span></span>
+        <span style="font-size:11px;color:var(--t3);font-weight:500;">SAA-C03</span>
+      </div>
     </a>
-    <a class="res-card" href="https://learn.microsoft.com/azure" target="_blank" rel="noopener">
-      <div class="res-type" style="background:var(--az-bg);color:var(--az2);">Azure · Official Docs</div>
-      <div class="res-title">Microsoft Learn — Azure Fundamentals</div>
-      <div class="res-desc">Free structured learning paths from AZ-900 to advanced architect certifications with hands-on sandboxes.</div>
+
+    <a class="res-card" data-provider="az" href="https://learn.microsoft.com/azure" target="_blank" rel="noopener">
+      <div class="res-body">
+        <div class="res-meta">
+          <div class="res-provider-badge rpb-az">
+            <svg viewBox="0 0 14 14" width="12" height="12" fill="white"><path d="M3 1.5h5l-3 5h4l-6 7 1.5-5H1z"/></svg>
+          </div>
+          <span class="res-type rt-az">Official Docs</span>
+        </div>
+        <div class="res-title">Microsoft Learn — Azure Fundamentals</div>
+        <div class="res-desc">Free structured learning from AZ-900 to advanced architect certifications, with interactive hands-on sandboxes.</div>
+      </div>
+      <div class="res-footer">
+        <span class="res-link-label">learn.microsoft.com <span class="res-arrow">→</span></span>
+        <span style="font-size:11px;color:var(--t3);font-weight:500;">AZ-900 → AZ-305</span>
+      </div>
     </a>
-    <a class="res-card" href="https://cloud.google.com/learn" target="_blank" rel="noopener">
-      <div class="res-type" style="background:var(--gcp-bg);color:var(--gcp2);">GCP · Learning</div>
-      <div class="res-title">Google Cloud Skills Boost</div>
-      <div class="res-desc">Qwiklabs-powered labs with real GCP environments. Earn skill badges and prepare for Professional certifications.</div>
+
+    <a class="res-card" data-provider="gcp" href="https://cloud.google.com/learn" target="_blank" rel="noopener">
+      <div class="res-body">
+        <div class="res-meta">
+          <div class="res-provider-badge rpb-gcp">
+            <svg viewBox="0 0 14 14" width="12" height="12"><circle cx="7" cy="7" r="2.5" fill="white"/><path d="M7 1v2M7 11v2M1 7h2M11 7h2" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <span class="res-type rt-gcp">Learning</span>
+        </div>
+        <div class="res-title">Google Cloud Skills Boost</div>
+        <div class="res-desc">Qwiklabs-powered labs with real GCP environments. Earn skill badges and prepare for Professional Cloud Architect certification.</div>
+      </div>
+      <div class="res-footer">
+        <span class="res-link-label">cloud.google.com <span class="res-arrow">→</span></span>
+        <span style="font-size:11px;color:var(--t3);font-weight:500;">Labs + Badges</span>
+      </div>
     </a>
-    <a class="res-card" href="https://docs.aws.amazon.com/" target="_blank" rel="noopener">
-      <div class="res-type" style="background:var(--aws-bg);color:#a16500;">AWS · Docs</div>
-      <div class="res-title">AWS Documentation</div>
-      <div class="res-desc">Comprehensive technical reference for all 200+ services with getting started guides and API references.</div>
+
+    <a class="res-card" data-provider="aws" href="https://docs.aws.amazon.com/" target="_blank" rel="noopener">
+      <div class="res-body">
+        <div class="res-meta">
+          <div class="res-provider-badge rpb-aws">
+            <svg viewBox="0 0 18 11" width="18" height="11"><text x="0" y="10" font-family="sans-serif" font-size="10" font-weight="900" fill="white">AWS</text></svg>
+          </div>
+          <span class="res-type rt-aws">Docs</span>
+        </div>
+        <div class="res-title">AWS Official Documentation</div>
+        <div class="res-desc">Comprehensive technical reference for all 200+ services with getting-started guides, API references, and architecture patterns.</div>
+      </div>
+      <div class="res-footer">
+        <span class="res-link-label">docs.aws.amazon.com <span class="res-arrow">→</span></span>
+        <span style="font-size:11px;color:var(--t3);font-weight:500;">200+ Services</span>
+      </div>
     </a>
-    <a class="res-card" href="https://azure.microsoft.com/en-us/blog/" target="_blank" rel="noopener">
-      <div class="res-type" style="background:var(--az-bg);color:var(--az2);">Azure · Blog</div>
-      <div class="res-title">Azure Architecture Center</div>
-      <div class="res-desc">Reference architectures, design patterns, and best practice guides for building on Azure.</div>
+
+    <a class="res-card" data-provider="az" href="https://learn.microsoft.com/azure/architecture/" target="_blank" rel="noopener">
+      <div class="res-body">
+        <div class="res-meta">
+          <div class="res-provider-badge rpb-az">
+            <svg viewBox="0 0 14 14" width="12" height="12" fill="white"><path d="M3 1.5h5l-3 5h4l-6 7 1.5-5H1z"/></svg>
+          </div>
+          <span class="res-type rt-az">Architecture</span>
+        </div>
+        <div class="res-title">Azure Architecture Center</div>
+        <div class="res-desc">Reference architectures, proven design patterns, and best practice guides for building production-ready solutions on Azure.</div>
+      </div>
+      <div class="res-footer">
+        <span class="res-link-label">learn.microsoft.com <span class="res-arrow">→</span></span>
+        <span style="font-size:11px;color:var(--t3);font-weight:500;">Design Patterns</span>
+      </div>
     </a>
-    <a class="res-card" href="https://cloud.google.com/architecture" target="_blank" rel="noopener">
-      <div class="res-type" style="background:var(--gcp-bg);color:var(--gcp2);">GCP · Architecture</div>
-      <div class="res-title">Google Cloud Architecture Center</div>
-      <div class="res-desc">Reference architectures, solution guides, and whitepapers for building on Google Cloud.</div>
+
+    <a class="res-card" data-provider="gcp" href="https://cloud.google.com/architecture" target="_blank" rel="noopener">
+      <div class="res-body">
+        <div class="res-meta">
+          <div class="res-provider-badge rpb-gcp">
+            <svg viewBox="0 0 14 14" width="12" height="12"><circle cx="7" cy="7" r="2.5" fill="white"/><path d="M7 1v2M7 11v2M1 7h2M11 7h2" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <span class="res-type rt-gcp">Architecture</span>
+        </div>
+        <div class="res-title">Google Cloud Architecture Center</div>
+        <div class="res-desc">Reference architectures, solution guides, and whitepapers for designing scalable and reliable systems on Google Cloud.</div>
+      </div>
+      <div class="res-footer">
+        <span class="res-link-label">cloud.google.com <span class="res-arrow">→</span></span>
+        <span style="font-size:11px;color:var(--t3);font-weight:500;">Whitepapers</span>
+      </div>
     </a>
+
   </div>
 </section>
 </div><!-- end container -->
@@ -1024,40 +1420,67 @@ db = firestore.<span class="cf">Client</span>()
 <!-- FOOTER -->
 <footer class="footer">
   <div class="footer-inner">
+
+    <!-- Top: Brand + Nav -->
     <div class="footer-top">
-      <div>
-        <div style="display:flex;align-items:center;gap:9px;margin-bottom:4px;">
-          <div style="width:28px;height:28px;background:linear-gradient(135deg,var(--p600),#1d4ed8);border-radius:7px;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-sm);">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none"><path d="M3 9l9-6 9 6v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" stroke="white" stroke-width="1.8"/></svg>
+      <div class="footer-brand-block">
+        <div class="footer-brand-row">
+          <div class="footer-brand-icon">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none"><path d="M3 9l9-6 9 6v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" stroke="white" stroke-width="1.8"/><path d="M9 20V12h6v8" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg>
           </div>
-          <div class="footer-brand">Cloud Ecosystem Hub</div>
+          <span class="footer-brand">Cloud Ecosystem Hub</span>
         </div>
         <div class="footer-brand-sub">A Complete Visual Guide to the Modern Cloud Technology Ecosystem</div>
       </div>
-      <div class="footer-links">
+      <nav class="footer-nav">
         <button class="footer-link" onclick="scrollToSec('providers')">Providers</button>
         <button class="footer-link" onclick="scrollToSec('aws')">AWS</button>
         <button class="footer-link" onclick="scrollToSec('azure')">Azure</button>
         <button class="footer-link" onclick="scrollToSec('gcp')">GCP</button>
         <button class="footer-link" onclick="scrollToSec('compare')">Compare</button>
         <button class="footer-link" onclick="scrollToSec('learn')">Learn</button>
-      </div>
+      </nav>
     </div>
+
+    <!-- Credit -->
     <div class="footer-credit">
-      <div class="fc-icon"><svg viewBox="0 0 24 24" width="13" height="13" fill="white" opacity=".9"><path d="M12 3L4 7v5c0 4.5 3.3 8.7 8 9.9C16.7 20.7 20 16.5 20 12V7L12 3z"/></svg></div>
-      <div>
+      <div class="fc-icon">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="white" opacity=".9"><path d="M12 3L4 7v5c0 4.5 3.3 8.7 8 9.9C16.7 20.7 20 16.5 20 12V7L12 3z"/></svg>
+      </div>
+      <div class="fc-text">
         <div class="fc-name">&copy; All copyright reserved by <span>Smruti Ranjan Behera</span></div>
-        <div class="fc-role">Principal Enterprise Architect &ndash; UI/UX &nbsp;&middot;&nbsp; Enterprise Frontend Platforms &nbsp;&middot;&nbsp; React Ecosystem</div>
+        <div class="fc-role">
+          Principal Enterprise Architect &ndash; UI/UX
+          <span class="fc-role-sep">&middot;</span>
+          Enterprise Frontend Platforms
+          <span class="fc-role-sep">&middot;</span>
+          React Ecosystem
+        </div>
       </div>
     </div>
+
+    <!-- Bottom: tagline + socials -->
     <div class="footer-bottom">
-      <div class="footer-copy">Built for cloud engineers &middot; Interactive diagrams &amp; animations &middot; Open source</div>
+      <div class="footer-copy">
+        <span>Built for cloud engineers</span>
+        <span class="footer-copy-sep">&middot;</span>
+        <span>Interactive diagrams &amp; animations</span>
+        <span class="footer-copy-sep">&middot;</span>
+        <span>Open source</span>
+      </div>
       <div class="socials">
-        <a class="social-btn" href="https://github.com" target="_blank" title="GitHub"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg></a>
-        <a class="social-btn" href="https://linkedin.com" target="_blank" title="LinkedIn"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
-        <a class="social-btn" href="https://twitter.com" target="_blank" title="Twitter"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+        <a class="social-btn" href="https://github.com" target="_blank" rel="noopener" title="GitHub">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+        </a>
+        <a class="social-btn" href="https://linkedin.com" target="_blank" rel="noopener" title="LinkedIn">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </a>
+        <a class="social-btn" href="https://twitter.com" target="_blank" rel="noopener" title="X / Twitter">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
       </div>
     </div>
+
   </div>
 </footer>
 <button id="scroll-top" onclick="scrollTo({top:0,behavior:'smooth'})" title="Back to top">
@@ -1103,7 +1526,7 @@ function rr(ctx,x,y,w,h,r,fill,stroke,sw){
   if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=sw||1;ctx.stroke();}
 }
 function txt(ctx,t,x,y,size,color,align,weight){
-  ctx.font=`${weight||400} ${size}px 'DM Sans',sans-serif`;
+  ctx.font=`${weight||400} ${size}px 'Inter',sans-serif`;
   ctx.fillStyle=color;ctx.textAlign=align||'center';ctx.textBaseline='middle';
   ctx.fillText(t,x,y);
 }
@@ -1176,7 +1599,7 @@ function animHero(){
     ctx.beginPath();ctx.arc(n.x,fy,28,0,PI2);
     ctx.fillStyle=n.c;ctx.fill();
     ctx.globalAlpha=alpha*1.4;
-    ctx.font='600 9px DM Sans,sans-serif';
+    ctx.font='600 9px Inter,sans-serif';
     ctx.fillStyle=n.c;ctx.textAlign='center';ctx.textBaseline='middle';
     ctx.fillText(n.l,n.x,fy);
     ctx.globalAlpha=1;
@@ -1817,6 +2240,57 @@ window.addEventListener('load',function(){
   style.textContent='@keyframes ripple{to{transform:scale(4);opacity:0;}}';
   document.head.appendChild(style);
 });
+
+// ═══════════════════════════════════════════════════════════
+// LEARNING RESOURCES — PROVIDER FILTER
+// ═══════════════════════════════════════════════════════════
+function filterLearn(btn) {
+  const filter = btn.dataset.filter;
+  // Update active tab
+  btn.closest('.learn-tabs').querySelectorAll('.learn-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  // Show/hide cards
+  document.querySelectorAll('#res-grid .res-card').forEach(card => {
+    const match = filter === 'all' || card.dataset.provider === filter;
+    card.classList.toggle('res-hidden', !match);
+  });
+}
+
+(function(){
+  const input   = document.getElementById('cmp-search-input');
+  const counter = document.getElementById('cmp-row-count');
+  const empty   = document.getElementById('cmp-empty');
+  const table   = document.getElementById('cmp-table');
+  if(!input || !table) return;
+
+  const allRows = Array.from(table.querySelectorAll('tbody tr'));
+  const total   = allRows.length;
+
+  function updateCount(){
+    const vis = allRows.filter(r=>!r.classList.contains('cmp-hidden')).length;
+    counter.textContent = vis === total ? `${total} categories` : `${vis} of ${total}`;
+    empty.classList.toggle('show', vis === 0);
+  }
+
+  // Live search
+  input.addEventListener('input', function(){
+    const q = this.value.trim().toLowerCase();
+    allRows.forEach(row=>{
+      const text = row.textContent.toLowerCase();
+      row.classList.toggle('cmp-hidden', q.length > 0 && !text.includes(q));
+    });
+    updateCount();
+  });
+
+  // Column toggles
+  window.toggleCol = function(btn){
+    const col = btn.dataset.col;
+    btn.classList.toggle('on');
+    table.classList.toggle('hide-' + col, !btn.classList.contains('on'));
+  };
+
+  updateCount();
+})();
 </script>
 </body>
 </html>
