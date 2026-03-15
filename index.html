@@ -1,0 +1,1819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Cloud Ecosystem Hub — Visual Guide to Modern Cloud</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+/* ══ RESET ═══════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --white:#ffffff;--bg:#f5f3ff;--surface:#ffffff;
+  --border:#e8e2f8;--border2:#d4ccf4;
+  --p50:#f0ecff;--p100:#e4daff;--p200:#c8b4ff;
+  --p400:#9b7ff5;--p500:#7c5ce8;--p600:#6341cc;
+  --p700:#4e2ea8;--p800:#391e80;
+  --t1:#1a1435;--t2:#5a5278;--t3:#9890b8;
+  --aws:#FF9900;--aws2:#e68900;--aws-bg:#fff8ee;--aws-b:#ffd699;
+  --az:#0078D4;--az2:#005ea3;--az-bg:#eef6ff;--az-b:#99ccff;
+  --gcp:#4285F4;--gcp2:#2563d0;--gcp-bg:#eef3ff;--gcp-b:#99bbff;
+  --gcp-red:#EA4335;--gcp-yellow:#FBBC05;--gcp-green:#34A853;
+  --shadow-sm:0 2px 12px rgba(99,65,204,.10);
+  --shadow-md:0 6px 28px rgba(99,65,204,.14);
+  --shadow-lg:0 16px 56px rgba(99,65,204,.18);
+  --r:14px;
+}
+[data-theme="dark"]{
+  --white:#13112a;--bg:#0d0b1e;--surface:#13112a;
+  --border:#22204a;--border2:#322e60;
+  --p50:#1a1638;--p100:#221e48;--p200:#2c2860;
+  --p400:#8b7ae8;--p500:#9d8df5;--p600:#b0a2ff;
+  --t1:#e8e4ff;--t2:#9490c0;--t3:#565080;
+  --aws-bg:#1e1200;--aws-b:#4a2e00;
+  --az-bg:#001428;--az-b:#003060;
+  --gcp-bg:#001030;--gcp-b:#182860;
+}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;font-size:15px;background:var(--bg);color:var(--t1);min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s;}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background-image:radial-gradient(circle,rgba(99,65,204,.09) 1.3px,transparent 1.3px);background-size:22px 22px;}
+
+/* ══ PROGRESS ═════════════════════════════════════════ */
+#progress{position:fixed;top:0;left:0;z-index:9999;height:3px;width:0%;background:linear-gradient(90deg,var(--p500),var(--aws),var(--az),var(--gcp));transition:width .1s linear;border-radius:0 2px 2px 0;}
+
+/* ══ HEADER ═══════════════════════════════════════════ */
+.header{position:sticky;top:0;z-index:200;background:rgba(245,243,255,.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);transition:all .3s;}
+[data-theme="dark"] .header{background:rgba(13,11,30,.90);}
+.header.scrolled{box-shadow:var(--shadow-sm);}
+.header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--p400),var(--az),var(--p400),transparent);opacity:.4;}
+.hdr-inner{max-width:1380px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:58px;padding:0 1.5rem;gap:1rem;}
+.logo{display:flex;align-items:center;gap:10px;cursor:pointer;text-decoration:none;}
+.logo-mark{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--p600),#1d4ed8);display:flex;align-items:center;justify-content:center;box-shadow:0 3px 14px rgba(99,65,204,.35);transition:transform .3s cubic-bezier(.34,1.56,.64,1),box-shadow .3s;flex-shrink:0;}
+.logo:hover .logo-mark{transform:scale(1.12) rotate(6deg);box-shadow:0 5px 22px rgba(99,65,204,.5);}
+.logo-text{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--t1);letter-spacing:-.02em;line-height:1;}
+.logo-sub{font-family:'DM Sans',sans-serif;font-size:11px;color:var(--t3);font-weight:400;letter-spacing:.02em;}
+.hdr-nav{display:flex;align-items:center;gap:2px;}
+.hdr-btn{background:none;border:none;padding:5px 10px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:var(--t2);cursor:pointer;transition:all .2s;white-space:nowrap;position:relative;}
+.hdr-btn::after{content:'';position:absolute;bottom:2px;left:50%;transform:translateX(-50%) scaleX(0);width:70%;height:2px;border-radius:2px;background:linear-gradient(90deg,var(--p500),#1d4ed8);transition:transform .22s ease;}
+.hdr-btn:hover{color:var(--p600);}
+.hdr-btn:hover::after,.hdr-btn.active::after{transform:translateX(-50%) scaleX(1);}
+.hdr-btn.active{color:var(--p600);font-weight:600;}
+.hdr-btn.btn-aws{color:#a16500!important;}
+.hdr-btn.btn-aws::after{background:var(--aws)!important;}
+.hdr-btn.btn-az{color:var(--az2)!important;}
+.hdr-btn.btn-az::after{background:var(--az)!important;}
+.hdr-btn.btn-gcp{color:var(--gcp2)!important;}
+.hdr-btn.btn-gcp::after{background:var(--gcp)!important;}
+[data-theme="dark"] .hdr-btn.btn-aws{color:#ffa720!important;}
+[data-theme="dark"] .hdr-btn.btn-az{color:#4ea8ff!important;}
+[data-theme="dark"] .hdr-btn.btn-gcp{color:#7ab0ff!important;}
+.theme-btn{background:none;border:1px solid var(--border2);border-radius:8px;padding:5px 11px;font-size:12.5px;color:var(--t2);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;display:flex;align-items:center;gap:5px;}
+.theme-btn:hover{background:var(--p50);border-color:var(--p400);color:var(--p600);}
+
+/* ══ HERO ══════════════════════════════════════════════ */
+.hero{position:relative;overflow:hidden;padding:5.5rem 1.5rem 4.5rem;text-align:center;}
+#hero-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;}
+.hero-content{position:relative;z-index:1;max-width:820px;margin:0 auto;}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:7px;background:var(--p50);border:1px solid var(--p200);border-radius:20px;padding:5px 16px 5px 10px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:var(--p600);margin-bottom:1.6rem;animation:fadeUp .6s ease both;}
+.hero-title{font-family:'Syne',sans-serif;font-size:clamp(2.4rem,6vw,4.2rem);font-weight:800;line-height:1.06;letter-spacing:-.04em;color:var(--t1);margin-bottom:1.2rem;animation:fadeUp .6s .1s ease both;}
+.hero-title .grad{background:linear-gradient(135deg,var(--p500) 0%,#1d4ed8 50%,var(--gcp) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero-sub{font-family:'DM Sans',sans-serif;font-size:1.1rem;color:var(--t2);line-height:1.7;max-width:580px;margin:0 auto 2.2rem;animation:fadeUp .6s .2s ease both;}
+.hero-providers{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:2.8rem;animation:fadeUp .6s .3s ease both;}
+.provider-chip{display:inline-flex;align-items:center;gap:7px;padding:8px 18px;border-radius:22px;font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;border:1.5px solid;cursor:pointer;transition:transform .2s,box-shadow .2s;text-decoration:none;}
+.provider-chip:hover{transform:translateY(-3px);}
+.chip-aws{background:var(--aws-bg);border-color:var(--aws-b);color:#a16500;}
+.chip-aws:hover{box-shadow:0 6px 20px rgba(255,153,0,.25);}
+.chip-az{background:var(--az-bg);border-color:var(--az-b);color:var(--az2);}
+.chip-az:hover{box-shadow:0 6px 20px rgba(0,120,212,.25);}
+.chip-gcp{background:var(--gcp-bg);border-color:var(--gcp-b);color:var(--gcp2);}
+.chip-gcp:hover{box-shadow:0 6px 20px rgba(66,133,244,.25);}
+[data-theme="dark"] .chip-aws{color:#ffa720;}
+[data-theme="dark"] .chip-az{color:#4ea8ff;}
+[data-theme="dark"] .chip-gcp{color:#7ab0ff;}
+.hero-stats{display:flex;justify-content:center;gap:2.5rem;flex-wrap:wrap;animation:fadeUp .6s .4s ease both;}
+.stat-num{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:var(--p500);line-height:1;}
+.stat-lbl{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--t3);font-weight:500;margin-top:3px;letter-spacing:.01em;}
+
+/* ══ LAYOUT ════════════════════════════════════════════ */
+.container{max-width:1380px;margin:0 auto;padding:0 1.5rem;position:relative;z-index:1;}
+.section{padding:4rem 0;}
+.sec-label{display:inline-flex;align-items:center;gap:7px;font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--p500);margin-bottom:.7rem;}
+.sec-label::before{content:'';width:18px;height:2px;background:var(--p400);border-radius:2px;}
+.sec-title{font-family:'Syne',sans-serif;font-size:clamp(1.6rem,3vw,2.3rem);font-weight:800;letter-spacing:-.03em;color:var(--t1);line-height:1.12;}
+.sec-desc{font-size:15px;color:var(--t2);margin-top:.5rem;line-height:1.65;}
+
+/* ══ PROVIDER BANNERS ══════════════════════════════════ */
+.providers-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:2.5rem;}
+.pvdr-banner{border-radius:20px;padding:2rem;border:1.5px solid;position:relative;overflow:hidden;cursor:pointer;transition:transform .25s cubic-bezier(.4,0,.2,1),box-shadow .25s;}
+.pvdr-banner:hover{transform:translateY(-6px);}
+.pvdr-banner canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;}
+.pvdr-content{position:relative;z-index:1;}
+.pb-aws{background:var(--aws-bg);border-color:var(--aws-b);}
+.pb-aws:hover{box-shadow:0 16px 48px rgba(255,153,0,.2);}
+.pb-az{background:var(--az-bg);border-color:var(--az-b);}
+.pb-az:hover{box-shadow:0 16px 48px rgba(0,120,212,.2);}
+.pb-gcp{background:var(--gcp-bg);border-color:var(--gcp-b);}
+.pb-gcp:hover{box-shadow:0 16px 48px rgba(66,133,244,.2);}
+.pb-logo{width:50px;height:50px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;box-shadow:var(--shadow-sm);font-size:1.5rem;}
+.pb-logo-aws{background:linear-gradient(135deg,#ff9900,#e68900);}
+.pb-logo-az{background:linear-gradient(135deg,#0078D4,#005ea3);}
+.pb-logo-gcp{background:linear-gradient(135deg,#4285F4,#2563d0);}
+.pb-name{font-family:'Syne',sans-serif;font-size:1.25rem;font-weight:800;letter-spacing:-.02em;margin-bottom:.3rem;}
+.pb-aws .pb-name{color:#a16500;}
+.pb-az .pb-name{color:var(--az2);}
+.pb-gcp .pb-name{color:var(--gcp2);}
+[data-theme="dark"] .pb-aws .pb-name{color:#ffa720;}
+[data-theme="dark"] .pb-az .pb-name{color:#4ea8ff;}
+[data-theme="dark"] .pb-gcp .pb-name{color:#7ab0ff;}
+.pb-tagline{font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--t2);margin-bottom:1.2rem;line-height:1.6;}
+.pb-chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.4rem;}
+.pb-chip{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;padding:3px 10px;border-radius:10px;border:1px solid;}
+.pbc-aws{background:rgba(255,153,0,.1);border-color:rgba(255,153,0,.3);color:#a16500;}
+.pbc-az{background:rgba(0,120,212,.08);border-color:rgba(0,120,212,.25);color:var(--az2);}
+.pbc-gcp{background:rgba(66,133,244,.08);border-color:rgba(66,133,244,.25);color:var(--gcp2);}
+[data-theme="dark"] .pbc-aws{color:#ffa720;}
+[data-theme="dark"] .pbc-az{color:#4ea8ff;}
+[data-theme="dark"] .pbc-gcp{color:#7ab0ff;}
+.pb-svcs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:1.5rem;}
+.pb-svc{padding:8px 5px;border-radius:10px;text-align:center;border:1px solid;transition:transform .15s;}
+.pb-svc:hover{transform:scale(1.05);}
+.ps-aws{background:rgba(255,153,0,.07);border-color:rgba(255,153,0,.2);}
+.ps-az{background:rgba(0,120,212,.06);border-color:rgba(0,120,212,.18);}
+.ps-gcp{background:rgba(66,133,244,.06);border-color:rgba(66,133,244,.18);}
+.pb-svc-icon{font-size:18px;line-height:1;margin-bottom:3px;}
+.pb-svc-name{font-size:11px;font-weight:700;color:var(--t1);}
+.pb-svc-lbl{font-size:10px;color:var(--t3);}
+.pb-cta{display:inline-flex;align-items:center;gap:6px;padding:9px 20px;border-radius:22px;font-size:13px;font-weight:600;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:transform .2s,box-shadow .2s;}
+.pb-cta:hover{transform:translateY(-2px);}
+.cta-aws{background:linear-gradient(135deg,var(--aws),var(--aws2));color:white;box-shadow:0 4px 16px rgba(255,153,0,.35);}
+.cta-aws:hover{box-shadow:0 7px 24px rgba(255,153,0,.5);}
+.cta-az{background:linear-gradient(135deg,var(--az),var(--az2));color:white;box-shadow:0 4px 16px rgba(0,120,212,.35);}
+.cta-az:hover{box-shadow:0 7px 24px rgba(0,120,212,.5);}
+.cta-gcp{background:linear-gradient(135deg,var(--gcp),var(--gcp2));color:white;box-shadow:0 4px 16px rgba(66,133,244,.35);}
+.cta-gcp:hover{box-shadow:0 7px 24px rgba(66,133,244,.5);}
+
+/* ══ CARD ══════════════════════════════════════════════ */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem;box-shadow:0 1px 4px rgba(99,65,204,.06);transition:transform .25s,box-shadow .25s,border-color .25s;}
+.card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:var(--border2);}
+
+/* ══ PROVIDER DETAIL SECTIONS ══════════════════════════ */
+.ps-section{border-radius:22px;padding:2.5rem;margin-bottom:3rem;border:1.5px solid;position:relative;overflow:hidden;}
+.ps-aws{background:var(--aws-bg);border-color:var(--aws-b);}
+.ps-az{background:var(--az-bg);border-color:var(--az-b);}
+.ps-gcp{background:var(--gcp-bg);border-color:var(--gcp-b);}
+.ps-hdr{display:flex;align-items:center;gap:14px;margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid;}
+.ps-aws .ps-hdr{border-color:var(--aws-b);}
+.ps-az .ps-hdr{border-color:var(--az-b);}
+.ps-gcp .ps-hdr{border-color:var(--gcp-b);}
+.ps-logo{width:54px;height:54px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;box-shadow:var(--shadow-sm);}
+.ps-name{font-family:'Syne',sans-serif;font-size:1.55rem;font-weight:800;letter-spacing:-.03em;}
+.ps-sub{font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--t2);margin-top:3px;}
+.ps-badges{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap;}
+.ps-badge{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;padding:4px 11px;border-radius:10px;border:1px solid;}
+.pb-aws-b{background:rgba(255,153,0,.1);border-color:rgba(255,153,0,.3);color:#a16500;}
+.pb-az-b{background:rgba(0,120,212,.08);border-color:rgba(0,120,212,.25);color:var(--az2);}
+.pb-gcp-b{background:rgba(66,133,244,.08);border-color:rgba(66,133,244,.25);color:var(--gcp2);}
+[data-theme="dark"] .pb-aws-b{color:#ffa720;}
+[data-theme="dark"] .pb-az-b{color:#4ea8ff;}
+[data-theme="dark"] .pb-gcp-b{color:#7ab0ff;}
+.ps-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.8rem;}
+.ps-tab{background:none;border:1.5px solid var(--border);padding:7px 16px;border-radius:20px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:var(--t2);cursor:pointer;transition:all .18s;white-space:nowrap;}
+.ps-tab:hover,.ps-tab.active{background:var(--surface);border-color:var(--border2);color:var(--t1);box-shadow:var(--shadow-sm);}
+.ps-tab.active{font-weight:600;background:var(--surface);}
+.pt-aws.active{border-color:var(--aws)!important;color:#a16500!important;background:var(--aws-bg)!important;}
+.pt-az.active{border-color:var(--az)!important;color:var(--az2)!important;background:var(--az-bg)!important;}
+.pt-gcp.active{border-color:var(--gcp)!important;color:var(--gcp2)!important;background:var(--gcp-bg)!important;}
+[data-theme="dark"] .pt-aws.active{color:#ffa720!important;}
+[data-theme="dark"] .pt-az.active{color:#4ea8ff!important;}
+[data-theme="dark"] .pt-gcp.active{color:#7ab0ff!important;}
+.ps-panel{display:none;animation:fadeIn .25s ease;}
+.ps-panel.active{display:block;}
+
+/* ══ SERVICE GRID ══════════════════════════════════════ */
+.svc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:.8rem;}
+.svc-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem;transition:all .2s;cursor:default;}
+.svc-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-sm);}
+.svc-icon{font-size:24px;margin-bottom:.5rem;line-height:1;}
+.svc-name{font-size:13px;font-weight:700;color:var(--t1);margin-bottom:2px;}
+.svc-cat{font-size:11px;color:var(--t3);font-weight:600;letter-spacing:.04em;text-transform:uppercase;}
+.svc-desc{font-size:12.5px;color:var(--t2);margin-top:5px;line-height:1.55;}
+
+/* ══ CANVAS CARDS ══════════════════════════════════════ */
+.cvs-wrap{background:#0c0a1e;border-radius:14px;overflow:hidden;border:1px solid var(--border2);}
+.cvs-wrap canvas{display:block;width:100%;}
+.cvs-ctrls{display:flex;gap:7px;padding:9px 12px;background:rgba(255,255,255,.03);border-top:1px solid rgba(255,255,255,.06);flex-wrap:wrap;}
+.cbtn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.8);font-family:'DM Sans',sans-serif;font-size:12.5px;font-weight:500;padding:6px 14px;border-radius:6px;cursor:pointer;transition:all .15s;}
+.cbtn:hover,.cbtn.active{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.25);color:#fff;}
+
+/* ══ INFO GRID ═════════════════════════════════════════ */
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.info-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.2rem;}
+.info-title{font-size:13px;font-weight:700;color:var(--t1);margin-bottom:.7rem;display:flex;align-items:center;gap:6px;}
+.info-list{list-style:none;display:flex;flex-direction:column;gap:6px;}
+.info-list li{font-size:13px;color:var(--t2);display:flex;align-items:flex-start;gap:7px;line-height:1.5;}
+.info-list li::before{content:'';width:5px;height:5px;border-radius:50%;flex-shrink:0;margin-top:5px;}
+.il-aws li::before{background:var(--aws);}
+.il-az li::before{background:var(--az);}
+.il-gcp li::before{background:var(--gcp);}
+
+/* ══ CODE SNIPPET ══════════════════════════════════════ */
+.code-block{background:#0c0a1e;border:1px solid #2a2450;border-radius:10px;padding:1.1rem;font-family:'JetBrains Mono','Fira Code',monospace;font-size:12.5px;line-height:1.75;color:#c8b8ff;overflow-x:auto;border-left:3px solid var(--p500);}
+.ck{color:#9d8df5;}.cs{color:#86efac;}.cc{color:#4a4570;font-style:italic;}.cf{color:#60a5fa;}.cn{color:#fbbf24;}.cv{color:#f472b6;}
+
+/* ══ BEST PRACTICES ════════════════════════════════════ */
+.bp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem;}
+.bp-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.2rem;display:flex;gap:12px;transition:all .2s;}
+.bp-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-sm);border-color:var(--border2);}
+.bp-icon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.bp-title{font-size:14px;font-weight:600;color:var(--t1);margin-bottom:4px;}
+.bp-desc{font-size:13px;color:var(--t2);line-height:1.6;}
+
+/* ══ COMPARISON TABLE ══════════════════════════════════ */
+.cmp-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;overflow-x:auto;}
+.cmp-table{width:100%;border-collapse:collapse;font-size:14px;}
+.cmp-table th,.cmp-table td{padding:.85rem 1.1rem;text-align:left;border-bottom:1px solid var(--border);}
+.cmp-table thead tr{background:var(--p50);}
+[data-theme="dark"] .cmp-table thead tr{background:var(--p100);}
+.cmp-table thead th{font-family:'Syne',sans-serif;font-size:12px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--t1);position:sticky;top:58px;z-index:10;background:var(--p50);box-shadow:0 1px 0 var(--border2),0 3px 8px rgba(99,65,204,.08);}
+[data-theme="dark"] .cmp-table thead th{background:var(--p100);}
+.cmp-table thead th:first-child{color:var(--t2);}
+.cmp-table thead th.col-aws{border-top:3px solid var(--aws);}
+.cmp-table thead th.col-az{border-top:3px solid var(--az);}
+.cmp-table thead th.col-gcp{border-top:3px solid var(--gcp);}
+.cmp-table tbody tr{background:var(--surface);transition:background .15s;}
+.cmp-table tbody tr:nth-child(even){background:rgba(99,65,204,.025);}
+[data-theme="dark"] .cmp-table tbody tr:nth-child(even){background:rgba(99,65,204,.04);}
+.cmp-table tbody tr:hover{background:var(--p50);}
+[data-theme="dark"] .cmp-table tbody tr:hover{background:var(--p100);}
+.cmp-table td:first-child{font-weight:600;color:var(--t1);font-size:13.5px;}
+.col-aws{color:#a16500!important;font-weight:500;}
+.col-az{color:var(--az2)!important;font-weight:500;}
+.col-gcp{color:var(--gcp2)!important;font-weight:500;}
+[data-theme="dark"] .col-aws{color:#ffa720!important;}
+[data-theme="dark"] .col-az{color:#4ea8ff!important;}
+[data-theme="dark"] .col-gcp{color:#7ab0ff!important;}
+
+/* ══ DEVOPS PIPELINE ═══════════════════════════════════ */
+.pipe-wrap{background:#0c0a1e;border:1px solid var(--border2);border-radius:16px;overflow:hidden;margin-top:1.5rem;}
+.pipe-wrap canvas{display:block;width:100%;}
+
+/* ══ RESOURCES ══════════════════════════════════════════ */
+.res-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;}
+.res-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.2rem;transition:all .2s;cursor:pointer;text-decoration:none;display:block;}
+.res-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:var(--border2);}
+.res-type{font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:10px;display:inline-block;margin-bottom:.5rem;}
+.res-title{font-size:14px;font-weight:600;color:var(--t1);margin-bottom:.3rem;line-height:1.4;}
+.res-desc{font-size:12.5px;color:var(--t2);line-height:1.55;}
+
+/* ══ FOOTER ════════════════════════════════════════════ */
+.footer{background:var(--surface);border-top:1px solid var(--border);padding:2rem 1.5rem;margin-top:4rem;position:relative;overflow:hidden;}
+.footer::before{content:'';position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(circle,rgba(99,65,204,.08) 1.2px,transparent 1.2px);background-size:20px 20px;}
+.footer-inner{max-width:1380px;margin:0 auto;position:relative;z-index:1;}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:1.5rem;margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border);}
+.footer-brand{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--t1);}
+.footer-brand-sub{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--t3);margin-top:3px;}
+.footer-links{display:flex;gap:6px;flex-wrap:wrap;}
+.footer-link{background:none;border:1px solid var(--border);border-radius:6px;padding:5px 12px;font-size:12.5px;font-weight:500;color:var(--t2);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;}
+.footer-link:hover{border-color:var(--p400);color:var(--p600);background:var(--p50);}
+.footer-credit{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:1rem;padding:.7rem 1.2rem;border-radius:10px;}
+.fc-icon{width:28px;height:28px;border-radius:7px;background:linear-gradient(135deg,var(--p600),#1d4ed8);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.fc-name{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:var(--t1);}
+.fc-name span{color:var(--p500);}
+.fc-role{font-family:'DM Sans',sans-serif;font-size:11.5px;color:var(--t2);margin-top:1px;}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;}
+.footer-copy{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--t3);}
+.socials{display:flex;gap:6px;}
+.social-btn{width:28px;height:28px;border-radius:7px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--t2);transition:all .15s;text-decoration:none;}
+.social-btn:hover{border-color:var(--p400);color:var(--p600);background:var(--p50);}
+
+/* ══ SCROLL TOP ════════════════════════════════════════ */
+#scroll-top{position:fixed;bottom:1.5rem;right:1.5rem;z-index:500;width:40px;height:40px;border-radius:12px;background:var(--surface);border:1px solid var(--border2);color:var(--p600);cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-md);opacity:0;transform:translateY(12px) scale(.9);transition:opacity .3s,transform .3s,box-shadow .2s;pointer-events:none;}
+#scroll-top.vis{opacity:1;transform:none;pointer-events:auto;}
+#scroll-top:hover{box-shadow:0 8px 28px rgba(99,65,204,.4);transform:translateY(-3px) scale(1.08);}
+
+/* ══ ANIMATIONS ════════════════════════════════════════ */
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:none;}}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .5s ease,transform .5s ease;}
+.reveal.visible{opacity:1;transform:none;}
+
+/* ══ UX ENHANCEMENTS ════════════════════════════════════ */
+/* Keyboard focus visibility */
+:focus-visible{outline:2px solid var(--p500);outline-offset:3px;border-radius:4px;}
+/* Text selection */
+::selection{background:var(--p200);color:var(--p800);}
+/* Custom scrollbar */
+::-webkit-scrollbar{width:6px;height:6px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:10px;}
+::-webkit-scrollbar-thumb:hover{background:var(--p400);}
+/* Table left accent on row hover */
+.cmp-table tbody tr{transition:background .15s,border-left .15s;}
+.cmp-table tbody td{border-left:3px solid transparent;transition:border-left-color .15s;}
+.cmp-table tbody tr:hover td:first-child{border-left-color:var(--p400);}
+/* Resource type tags font-family */
+.res-type{font-family:'DM Sans',sans-serif;}
+/* Canvas controls wrap nicely */
+.cvs-ctrls{display:flex;gap:7px;padding:10px 14px;background:rgba(255,255,255,.03);border-top:1px solid rgba(255,255,255,.06);flex-wrap:wrap;align-items:center;}
+/* Smooth provider banner entry */
+.pvdr-banner{transform:translateY(0);transition:transform .28s cubic-bezier(.4,0,.2,1),box-shadow .28s;}
+/* Better svc-grid min size on wide screens */
+.svc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:.9rem;}
+/* Info card title larger */
+.info-title{font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:700;color:var(--t1);margin-bottom:.8rem;display:flex;align-items:center;gap:6px;}
+/* Provider section panel transition */
+.ps-panel{display:none;animation:fadeIn .3s ease;}
+.ps-panel.active{display:block;}
+/* Hero stats divider */
+.hero-stats{display:flex;justify-content:center;gap:0;flex-wrap:wrap;animation:fadeUp .6s .4s ease both;border-top:1px solid var(--border2);margin-top:2rem;padding-top:2rem;}
+.hero-stats>div{padding:0 2.5rem;border-right:1px solid var(--border);}
+.hero-stats>div:last-child{border-right:none;}
+@media(max-width:600px){.hero-stats>div{border-right:none;padding:.6rem 1.2rem;}}
+
+@media(max-width:960px){.providers-grid{grid-template-columns:1fr;}.info-grid{grid-template-columns:1fr;}.res-grid{grid-template-columns:1fr 1fr;}.hdr-nav{display:none;}}
+@media(max-width:600px){.res-grid{grid-template-columns:1fr;}.hero-stats{gap:1.2rem;}}
+</style>
+</head>
+<body>
+<a href="#providers" style="position:fixed;top:-100px;left:1rem;z-index:9999;padding:8px 16px;background:var(--p600);color:white;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;text-decoration:none;transition:top .2s;" onfocus="this.style.top='1rem'" onblur="this.style.top='-100px'">Skip to main content</a>
+<div id="progress"></div>
+
+<!-- HEADER -->
+<div class="header" id="hdr">
+  <div class="hdr-inner">
+    <div class="logo" onclick="scrollTo({top:0,behavior:'smooth'})">
+      <div class="logo-mark">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none"><path d="M3 9l9-6 9 6v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" stroke="white" stroke-width="1.8"/><path d="M9 20V12h6v8" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </div>
+      <div>
+        <div class="logo-text">Cloud Ecosystem Hub</div>
+        <div class="logo-sub">Visual Guide to Modern Cloud</div>
+      </div>
+    </div>
+    <nav class="hdr-nav">
+      <button class="hdr-btn" onclick="scrollToSec('providers')">Providers</button>
+      <button class="hdr-btn btn-aws" onclick="scrollToSec('aws')">AWS</button>
+      <button class="hdr-btn btn-az" onclick="scrollToSec('azure')">Azure</button>
+      <button class="hdr-btn btn-gcp" onclick="scrollToSec('gcp')">GCP</button>
+      <button class="hdr-btn" onclick="scrollToSec('compare')">Compare</button>
+      <button class="hdr-btn" onclick="scrollToSec('devops')">DevOps</button>
+      <button class="hdr-btn" onclick="scrollToSec('learn')">Learn</button>
+    </nav>
+    <button class="theme-btn" id="theme-btn" onclick="toggleTheme()">
+      <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+      <span id="theme-lbl">Dark</span>
+    </button>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <svg viewBox="0 0 24 24" width="13" height="13" fill="none"><path d="M3 9l9-6 9 6v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" stroke="currentColor" stroke-width="1.8"/></svg>
+      Cloud Ecosystem Hub
+    </div>
+    <h1 class="hero-title">Your Complete Visual Guide to<br/><span class="grad">Modern Cloud Platforms</span></h1>
+    <p class="hero-sub">Explore AWS, Azure, and Google Cloud through interactive diagrams, architecture patterns, and hands-on learning resources — all in one place.</p>
+    <div class="hero-providers">
+      <a class="provider-chip chip-aws" href="#aws">
+        <svg viewBox="0 0 32 20" width="22" height="14" fill="none"><text x="0" y="15" font-family="sans-serif" font-size="11" font-weight="900" fill="#FF9900">AWS</text></svg>
+        Amazon Web Services
+      </a>
+      <a class="provider-chip chip-az" href="#azure">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="#0078D4"><path d="M5.5 3h6l-4 7h5l-7 11 2-7H4z"/></svg>
+        Microsoft Azure
+      </a>
+      <a class="provider-chip chip-gcp" href="#gcp">
+        <svg viewBox="0 0 24 24" width="14" height="14"><circle cx="12" cy="12" r="3.5" fill="#4285F4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3" stroke="#4285F4" stroke-width="2" stroke-linecap="round"/></svg>
+        Google Cloud Platform
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div><div class="stat-num">3</div><div class="stat-lbl">Cloud Providers</div></div>
+      <div><div class="stat-num">60+</div><div class="stat-lbl">Core Services</div></div>
+      <div><div class="stat-num">12</div><div class="stat-lbl">Architecture Patterns</div></div>
+      <div><div class="stat-num">∞</div><div class="stat-lbl">Learning Resources</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROVIDERS OVERVIEW -->
+<div class="container">
+<section class="section" id="providers">
+  <div class="reveal">
+    <div class="sec-label">Cloud Providers</div>
+    <h2 class="sec-title">Choose Your Cloud Platform</h2>
+    <p class="sec-desc">Explore each provider's ecosystem, services, and architecture patterns with interactive visual guides.</p>
+  </div>
+  <div class="providers-grid">
+    <!-- AWS -->
+    <div class="pvdr-banner pb-aws reveal" onclick="scrollToSec('aws')">
+      <canvas id="cvs-aws-banner" data-h="300"></canvas>
+      <div class="pvdr-content">
+        <div class="pb-logo pb-logo-aws">☁️</div>
+        <div class="pb-name">Amazon Web Services</div>
+        <div class="pb-tagline">The world's most comprehensive cloud platform with 200+ services and global infrastructure.</div>
+        <div class="pb-chips">
+          <span class="pb-chip pbc-aws">Compute</span><span class="pb-chip pbc-aws">Storage</span><span class="pb-chip pbc-aws">Serverless</span><span class="pb-chip pbc-aws">ML/AI</span>
+        </div>
+        <div class="pb-svcs">
+          <div class="pb-svc ps-aws"><div class="pb-svc-icon">⚡</div><div class="pb-svc-name">EC2</div><div class="pb-svc-lbl">Compute</div></div>
+          <div class="pb-svc ps-aws"><div class="pb-svc-icon">🗄️</div><div class="pb-svc-name">S3</div><div class="pb-svc-lbl">Storage</div></div>
+          <div class="pb-svc ps-aws"><div class="pb-svc-icon">⚙️</div><div class="pb-svc-name">Lambda</div><div class="pb-svc-lbl">Serverless</div></div>
+          <div class="pb-svc ps-aws"><div class="pb-svc-icon">🗃️</div><div class="pb-svc-name">RDS</div><div class="pb-svc-lbl">Database</div></div>
+          <div class="pb-svc ps-aws"><div class="pb-svc-icon">🌐</div><div class="pb-svc-name">CloudFront</div><div class="pb-svc-lbl">CDN</div></div>
+          <div class="pb-svc ps-aws"><div class="pb-svc-icon">🔐</div><div class="pb-svc-name">IAM</div><div class="pb-svc-lbl">Security</div></div>
+        </div>
+        <button class="pb-cta cta-aws">Explore AWS ›</button>
+      </div>
+    </div>
+    <!-- AZURE -->
+    <div class="pvdr-banner pb-az reveal" onclick="scrollToSec('azure')">
+      <canvas id="cvs-az-banner" data-h="300"></canvas>
+      <div class="pvdr-content">
+        <div class="pb-logo pb-logo-az">
+          <svg viewBox="0 0 24 24" width="26" height="26" fill="white"><path d="M5.5 3h6l-4 7h5l-7 11 2-7H4z"/></svg>
+        </div>
+        <div class="pb-name">Microsoft Azure</div>
+        <div class="pb-tagline">Enterprise-grade hybrid cloud for complex workloads, AI, and deep Microsoft ecosystem integration.</div>
+        <div class="pb-chips">
+          <span class="pb-chip pbc-az">Hybrid</span><span class="pb-chip pbc-az">Enterprise</span><span class="pb-chip pbc-az">AI/ML</span><span class="pb-chip pbc-az">DevOps</span>
+        </div>
+        <div class="pb-svcs">
+          <div class="pb-svc ps-az"><div class="pb-svc-icon">💻</div><div class="pb-svc-name">VMs</div><div class="pb-svc-lbl">Compute</div></div>
+          <div class="pb-svc ps-az"><div class="pb-svc-icon">📦</div><div class="pb-svc-name">Blob</div><div class="pb-svc-lbl">Storage</div></div>
+          <div class="pb-svc ps-az"><div class="pb-svc-icon">⚡</div><div class="pb-svc-name">Functions</div><div class="pb-svc-lbl">Serverless</div></div>
+          <div class="pb-svc ps-az"><div class="pb-svc-icon">🗃️</div><div class="pb-svc-name">SQL DB</div><div class="pb-svc-lbl">Database</div></div>
+          <div class="pb-svc ps-az"><div class="pb-svc-icon">☸️</div><div class="pb-svc-name">AKS</div><div class="pb-svc-lbl">Kubernetes</div></div>
+          <div class="pb-svc ps-az"><div class="pb-svc-icon">🤖</div><div class="pb-svc-name">OpenAI</div><div class="pb-svc-lbl">AI</div></div>
+        </div>
+        <button class="pb-cta cta-az">Explore Azure ›</button>
+      </div>
+    </div>
+    <!-- GCP -->
+    <div class="pvdr-banner pb-gcp reveal" onclick="scrollToSec('gcp')">
+      <canvas id="cvs-gcp-banner" data-h="300"></canvas>
+      <div class="pvdr-content">
+        <div class="pb-logo pb-logo-gcp">
+          <svg viewBox="0 0 24 24" width="26" height="26"><circle cx="12" cy="12" r="3.5" fill="white"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4" stroke="white" stroke-width="2" stroke-linecap="round"/><path d="M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M18.4 5.6l-2.8 2.8M8.4 15.6l-2.8 2.8" stroke="white" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </div>
+        <div class="pb-name">Google Cloud Platform</div>
+        <div class="pb-tagline">Data-first cloud built on Google's global infrastructure — leading in Kubernetes, BigQuery & AI.</div>
+        <div class="pb-chips">
+          <span class="pb-chip pbc-gcp">Big Data</span><span class="pb-chip pbc-gcp">Kubernetes</span><span class="pb-chip pbc-gcp">ML/AI</span><span class="pb-chip pbc-gcp">Analytics</span>
+        </div>
+        <div class="pb-svcs">
+          <div class="pb-svc ps-gcp"><div class="pb-svc-icon">🖥️</div><div class="pb-svc-name">Compute</div><div class="pb-svc-lbl">VMs</div></div>
+          <div class="pb-svc ps-gcp"><div class="pb-svc-icon">📊</div><div class="pb-svc-name">BigQuery</div><div class="pb-svc-lbl">Analytics</div></div>
+          <div class="pb-svc ps-gcp"><div class="pb-svc-icon">☸️</div><div class="pb-svc-name">GKE</div><div class="pb-svc-lbl">Kubernetes</div></div>
+          <div class="pb-svc ps-gcp"><div class="pb-svc-icon">🔥</div><div class="pb-svc-name">Firebase</div><div class="pb-svc-lbl">App Dev</div></div>
+          <div class="pb-svc ps-gcp"><div class="pb-svc-icon">🤖</div><div class="pb-svc-name">Vertex AI</div><div class="pb-svc-lbl">ML/AI</div></div>
+          <div class="pb-svc ps-gcp"><div class="pb-svc-icon">📡</div><div class="pb-svc-name">Pub/Sub</div><div class="pb-svc-lbl">Messaging</div></div>
+        </div>
+        <button class="pb-cta cta-gcp">Explore GCP ›</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AWS DEEP DIVE -->
+<section class="section" id="aws">
+  <div class="ps-section ps-aws reveal">
+    <div class="ps-hdr">
+      <div class="ps-logo pb-logo-aws" style="font-size:22px;">☁️</div>
+      <div>
+        <div class="ps-name" style="color:#a16500;">Amazon Web Services</div>
+        <div class="ps-sub">200+ cloud services · 33 global regions · Market leader since 2006</div>
+      </div>
+      <div class="ps-badges">
+        <span class="ps-badge pb-aws-b">33% Market Share</span>
+        <span class="ps-badge pb-aws-b">32 Regions</span>
+        <span class="ps-badge pb-aws-b">102 AZs</span>
+      </div>
+    </div>
+    <div class="ps-tabs">
+      <button class="ps-tab pt-aws active" onclick="showTab('aws','svc',this)">Core Services</button>
+      <button class="ps-tab pt-aws" onclick="showTab('aws','arch',this)">Architecture</button>
+      <button class="ps-tab pt-aws" onclick="showTab('aws','devops',this)">DevOps</button>
+      <button class="ps-tab pt-aws" onclick="showTab('aws','best',this)">Best Practices</button>
+      <button class="ps-tab pt-aws" onclick="showTab('aws','code',this)">Code Examples</button>
+    </div>
+    <div id="aws-svc" class="ps-panel active">
+      <div class="svc-grid">
+        <div class="svc-card"><div class="svc-icon">⚡</div><div class="svc-name">EC2</div><div class="svc-cat">Compute</div><div class="svc-desc">Scalable VMs with 750+ instance types across CPU, GPU, and memory optimized families.</div></div>
+        <div class="svc-card"><div class="svc-icon">⚙️</div><div class="svc-name">Lambda</div><div class="svc-cat">Serverless</div><div class="svc-desc">Run code without managing servers. Pay only per invocation. Supports 15+ runtimes.</div></div>
+        <div class="svc-card"><div class="svc-icon">☸️</div><div class="svc-name">EKS</div><div class="svc-cat">Containers</div><div class="svc-desc">Managed Kubernetes with native AWS integrations for IAM, VPC, and load balancing.</div></div>
+        <div class="svc-card"><div class="svc-icon">🗄️</div><div class="svc-name">S3</div><div class="svc-cat">Storage</div><div class="svc-desc">Object storage with 11 9s durability. Supports versioning, lifecycle, and replication.</div></div>
+        <div class="svc-card"><div class="svc-icon">🗃️</div><div class="svc-name">RDS</div><div class="svc-cat">Database</div><div class="svc-desc">Managed relational DB supporting PostgreSQL, MySQL, MariaDB, Oracle, and SQL Server.</div></div>
+        <div class="svc-card"><div class="svc-icon">⚡</div><div class="svc-name">DynamoDB</div><div class="svc-cat">NoSQL</div><div class="svc-desc">Fully managed key-value and document DB with single-digit millisecond performance.</div></div>
+        <div class="svc-card"><div class="svc-icon">🌐</div><div class="svc-name">CloudFront</div><div class="svc-cat">CDN</div><div class="svc-desc">Global CDN with 450+ edge locations for low-latency static and dynamic content delivery.</div></div>
+        <div class="svc-card"><div class="svc-icon">🔐</div><div class="svc-name">IAM</div><div class="svc-cat">Security</div><div class="svc-desc">Fine-grained access control. Manage users, roles, and policies for all AWS services.</div></div>
+        <div class="svc-card"><div class="svc-icon">📊</div><div class="svc-name">CloudWatch</div><div class="svc-cat">Monitoring</div><div class="svc-desc">Unified observability for logs, metrics, traces, and automated alarms.</div></div>
+        <div class="svc-card"><div class="svc-icon">🔔</div><div class="svc-name">SNS / SQS</div><div class="svc-cat">Messaging</div><div class="svc-desc">Managed pub/sub notifications and decoupled message queuing at any scale.</div></div>
+        <div class="svc-card"><div class="svc-icon">🤖</div><div class="svc-name">SageMaker</div><div class="svc-cat">ML/AI</div><div class="svc-desc">End-to-end ML platform for building, training, and deploying models at scale.</div></div>
+        <div class="svc-card"><div class="svc-icon">🏗️</div><div class="svc-name">CloudFormation</div><div class="svc-cat">IaC</div><div class="svc-desc">Infrastructure as code using JSON/YAML templates for repeatable provisioning.</div></div>
+      </div>
+    </div>
+    <div id="aws-arch" class="ps-panel">
+      <div class="cvs-wrap" style="margin-bottom:1.2rem;">
+        <canvas id="cvs-aws-arch" data-h="280"></canvas>
+        <div class="cvs-ctrls">
+          <button class="cbtn active" onclick="awsArchMode('vpc')">🌐 VPC Architecture</button>
+          <button class="cbtn" onclick="awsArchMode('serverless')">⚡ Serverless</button>
+          <button class="cbtn" onclick="awsArchMode('microservices')">🔧 Microservices</button>
+        </div>
+      </div>
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="info-title">Well-Architected Pillars</div>
+          <ul class="info-list il-aws">
+            <li>Operational Excellence — automate and iterate</li>
+            <li>Security — protect data, systems, and assets</li>
+            <li>Reliability — recover from failures automatically</li>
+            <li>Performance Efficiency — use resources efficiently</li>
+            <li>Cost Optimization — eliminate unnecessary spend</li>
+            <li>Sustainability — minimize environmental impact</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <div class="info-title">Architecture Patterns</div>
+          <ul class="info-list il-aws">
+            <li>Multi-AZ deployments for high availability</li>
+            <li>VPC with public/private subnets + NAT Gateway</li>
+            <li>Auto Scaling Groups behind Application Load Balancer</li>
+            <li>Serverless: API Gateway + Lambda + DynamoDB</li>
+            <li>Event-driven with SNS, SQS, EventBridge</li>
+            <li>Blue/green via CodeDeploy for zero-downtime deploys</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div id="aws-devops" class="ps-panel">
+      <div class="info-grid" style="margin-bottom:1.2rem;">
+        <div class="info-card">
+          <div class="info-title">CI/CD (AWS Native)</div>
+          <ul class="info-list il-aws">
+            <li>CodeCommit — Git-based source control</li>
+            <li>CodeBuild — managed build and test service</li>
+            <li>CodeDeploy — automated EC2/Lambda/ECS deployments</li>
+            <li>CodePipeline — full CI/CD orchestration</li>
+            <li>ECR — container image registry</li>
+            <li>CloudFormation / CDK — infrastructure as code</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <div class="info-title">Monitoring & Observability</div>
+          <ul class="info-list il-aws">
+            <li>CloudWatch Metrics — resource dashboards</li>
+            <li>CloudWatch Logs — centralized log aggregation</li>
+            <li>X-Ray — distributed request tracing</li>
+            <li>AWS Config — compliance and config history</li>
+            <li>GuardDuty — intelligent threat detection</li>
+            <li>Security Hub — unified security findings</li>
+          </ul>
+        </div>
+      </div>
+      <div class="pipe-wrap"><canvas id="cvs-aws-pipe" data-h="180"></canvas></div>
+    </div>
+    <div id="aws-best" class="ps-panel">
+      <div class="bp-grid">
+        <div class="bp-card"><div class="bp-icon" style="background:#fff8ee;">🔐</div><div><div class="bp-title">Least Privilege IAM</div><div class="bp-desc">Grant only minimum required permissions. Use IAM roles for EC2/Lambda. Never embed credentials in code.</div></div></div>
+        <div class="bp-card"><div class="bp-icon" style="background:#fff8ee;">🌍</div><div><div class="bp-title">Multi-Region Design</div><div class="bp-desc">Design for failure across AZs and regions. Use Route 53 health checks for automatic failover.</div></div></div>
+        <div class="bp-card"><div class="bp-icon" style="background:#fff8ee;">💰</div><div><div class="bp-title">Cost Optimization</div><div class="bp-desc">Use Reserved Instances for predictable loads, Spot for batch. Enable Cost Explorer and billing alerts.</div></div></div>
+        <div class="bp-card"><div class="bp-icon" style="background:#fff8ee;">📈</div><div><div class="bp-title">Auto Scaling</div><div class="bp-desc">Configure target tracking policies. Scale on real metrics. Use predictive scaling for known patterns.</div></div></div>
+        <div class="bp-card"><div class="bp-icon" style="background:#fff8ee;">🏗️</div><div><div class="bp-title">Infrastructure as Code</div><div class="bp-desc">Use AWS CDK for type-safe IaC. Avoid console changes in production. Version all CloudFormation stacks.</div></div></div>
+        <div class="bp-card"><div class="bp-icon" style="background:#fff8ee;">🔒</div><div><div class="bp-title">Encrypt Everything</div><div class="bp-desc">Encrypt at rest with KMS and in transit with TLS. Enable S3 default encryption. Use Secrets Manager.</div></div></div>
+      </div>
+    </div>
+    <div id="aws-code" class="ps-panel">
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="info-title">Lambda Handler (Node.js)</div>
+          <div class="code-block"><span class="cc">// AWS Lambda — Node.js 20</span>
+<span class="ck">export const</span> handler = <span class="ck">async</span> (event) => {
+  <span class="ck">const</span> { id } = event.pathParameters;
+  <span class="ck">const</span> item = <span class="ck">await</span> dynamoDB
+    .get({ <span class="cs">TableName</span>: <span class="cs">'users'</span>, Key: { id } })
+    .promise();
+  <span class="ck">return</span> { statusCode: <span class="cn">200</span>,
+    body: JSON.stringify(item.Item) };
+};</div>
+        </div>
+        <div class="info-card">
+          <div class="info-title">CDK Infrastructure (TypeScript)</div>
+          <div class="code-block"><span class="cc">// AWS CDK — TypeScript</span>
+<span class="ck">const</span> bucket = <span class="ck">new</span> <span class="cf">Bucket</span>(this, <span class="cs">'Assets'</span>, {
+  versioned: <span class="ck">true</span>,
+  encryption: BucketEncryption.<span class="cv">KMS</span>,
+  removalPolicy: RemovalPolicy.<span class="cv">RETAIN</span>
+});
+<span class="ck">const</span> fn = <span class="ck">new</span> <span class="cf">Function</span>(this, <span class="cs">'API'</span>, {
+  runtime: Runtime.<span class="cv">NODEJS_20_X</span>,
+  environment: { BUCKET: bucket.bucketName }
+});</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AZURE DEEP DIVE -->
+<section class="section" id="azure">
+  <div class="ps-section ps-az reveal">
+    <div class="ps-hdr">
+      <div class="ps-logo pb-logo-az"><svg viewBox="0 0 24 24" width="26" height="26" fill="white"><path d="M5.5 3h6l-4 7h5l-7 11 2-7H4z"/></svg></div>
+      <div>
+        <div class="ps-name" style="color:var(--az2);">Microsoft Azure</div>
+        <div class="ps-sub">Enterprise hybrid cloud · 60+ regions · Deep Microsoft 365 integration</div>
+      </div>
+      <div class="ps-badges">
+        <span class="ps-badge pb-az-b">22% Market Share</span>
+        <span class="ps-badge pb-az-b">60+ Regions</span>
+        <span class="ps-badge pb-az-b">Hybrid Cloud</span>
+      </div>
+    </div>
+    <div class="ps-tabs">
+      <button class="ps-tab pt-az active" onclick="showTab('az','svc',this)">Core Services</button>
+      <button class="ps-tab pt-az" onclick="showTab('az','arch',this)">Architecture</button>
+      <button class="ps-tab pt-az" onclick="showTab('az','devops',this)">DevOps</button>
+      <button class="ps-tab pt-az" onclick="showTab('az','best',this)">Best Practices</button>
+      <button class="ps-tab pt-az" onclick="showTab('az','code',this)">Code Examples</button>
+    </div>
+    <div id="az-svc" class="ps-panel active">
+      <div class="svc-grid">
+        <div class="svc-card"><div class="svc-icon">💻</div><div class="svc-name">Virtual Machines</div><div class="svc-cat">Compute</div><div class="svc-desc">Windows and Linux VMs with up to 96 vCPUs, GPU instances, and spot pricing.</div></div>
+        <div class="svc-card"><div class="svc-icon">🔧</div><div class="svc-name">App Service</div><div class="svc-cat">PaaS</div><div class="svc-desc">Fully managed platform for web apps, REST APIs, and mobile backends.</div></div>
+        <div class="svc-card"><div class="svc-icon">⚡</div><div class="svc-name">Functions</div><div class="svc-cat">Serverless</div><div class="svc-desc">Event-driven serverless compute with 60-min timeout and Durable Functions support.</div></div>
+        <div class="svc-card"><div class="svc-icon">☸️</div><div class="svc-name">AKS</div><div class="svc-cat">Kubernetes</div><div class="svc-desc">Managed Kubernetes with built-in Azure DevOps, ACR, and monitoring integration.</div></div>
+        <div class="svc-card"><div class="svc-icon">📦</div><div class="svc-name">Blob Storage</div><div class="svc-cat">Storage</div><div class="svc-desc">Massively scalable object storage for unstructured data, backups, and archives.</div></div>
+        <div class="svc-card"><div class="svc-icon">🗃️</div><div class="svc-name">Azure SQL</div><div class="svc-cat">Database</div><div class="svc-desc">Fully managed SQL with built-in intelligence, auto-tuning, and serverless tier.</div></div>
+        <div class="svc-card"><div class="svc-icon">🤖</div><div class="svc-name">Azure OpenAI</div><div class="svc-cat">AI</div><div class="svc-desc">GPT-4, DALL-E and Embeddings with enterprise security, compliance, and SLAs.</div></div>
+        <div class="svc-card"><div class="svc-icon">🔗</div><div class="svc-name">Service Bus</div><div class="svc-cat">Messaging</div><div class="svc-desc">Enterprise messaging with queues, topics, and sessions for decoupled architectures.</div></div>
+        <div class="svc-card"><div class="svc-icon">🌐</div><div class="svc-name">Azure CDN</div><div class="svc-cat">CDN</div><div class="svc-desc">Global content delivery with 118 PoPs and DDoS protection built-in.</div></div>
+        <div class="svc-card"><div class="svc-icon">🔐</div><div class="svc-name">Azure AD</div><div class="svc-cat">Identity</div><div class="svc-desc">Cloud identity with SSO, MFA, conditional access, and B2B/B2C support.</div></div>
+        <div class="svc-card"><div class="svc-icon">📊</div><div class="svc-name">Azure Monitor</div><div class="svc-cat">Monitoring</div><div class="svc-desc">Full-stack monitoring with Application Insights and Log Analytics workspaces.</div></div>
+        <div class="svc-card"><div class="svc-icon">🔄</div><div class="svc-name">Azure DevOps</div><div class="svc-cat">DevOps</div><div class="svc-desc">Complete DevOps toolchain: Boards, Repos, Pipelines, Artifacts, and Test Plans.</div></div>
+      </div>
+    </div>
+    <div id="az-arch" class="ps-panel">
+      <div class="cvs-wrap" style="margin-bottom:1.2rem;">
+        <canvas id="cvs-az-arch" data-h="280"></canvas>
+        <div class="cvs-ctrls">
+          <button class="cbtn active" onclick="azArchMode('hub-spoke')">🌐 Hub-Spoke</button>
+          <button class="cbtn" onclick="azArchMode('hybrid')">🔗 Hybrid Cloud</button>
+          <button class="cbtn" onclick="azArchMode('aks')">☸️ AKS Cluster</button>
+        </div>
+      </div>
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="info-title">Azure Well-Architected Framework</div>
+          <ul class="info-list il-az">
+            <li>Reliability — design for failure with redundancy</li>
+            <li>Security — zero trust network access model</li>
+            <li>Cost Optimization — right-size and auto-scale</li>
+            <li>Operational Excellence — DevOps and automation</li>
+            <li>Performance Efficiency — scale horizontally</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <div class="info-title">Common Architecture Patterns</div>
+          <ul class="info-list il-az">
+            <li>Hub-spoke topology with Azure Firewall</li>
+            <li>Hybrid connectivity via ExpressRoute or VPN</li>
+            <li>AKS with Azure Container Registry pipeline</li>
+            <li>Event-driven with Event Grid and Service Bus</li>
+            <li>CQRS pattern with Cosmos DB and Functions</li>
+            <li>API Management gateway in front of microservices</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div id="az-devops" class="ps-panel">
+      <div class="info-grid" style="margin-bottom:1.2rem;">
+        <div class="info-card">
+          <div class="info-title">Azure DevOps Pipeline</div>
+          <ul class="info-list il-az">
+            <li>Azure Repos — Git with branch policies</li>
+            <li>Azure Pipelines — YAML CI/CD for any platform</li>
+            <li>Azure Artifacts — package management (npm, NuGet)</li>
+            <li>Azure Container Registry — private container images</li>
+            <li>Helm charts + AKS for Kubernetes deployments</li>
+            <li>Bicep or ARM templates for IaC</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <div class="info-title">Monitoring Stack</div>
+          <ul class="info-list il-az">
+            <li>Application Insights — APM and user analytics</li>
+            <li>Log Analytics — Kusto query over all logs</li>
+            <li>Azure Monitor Alerts — metric-based triggers</li>
+            <li>Azure Sentinel — SIEM and SOAR platform</li>
+            <li>Defender for Cloud — security posture management</li>
+          </ul>
+        </div>
+      </div>
+      <div class="pipe-wrap"><canvas id="cvs-az-pipe" data-h="180"></canvas></div>
+    </div>
+    <div id="az-best" class="ps-panel">
+      <div class="bp-grid">
+        <div class="bp-card"><div class="bp-icon" style="background:#eef6ff;">🔑</div><div><div class="bp-title">Zero Trust Security</div><div class="bp-desc">Verify explicitly, use least privilege access, and assume breach. Apply Conditional Access policies everywhere.</div></div></div>
+        <div class="bp-card"><div class="bp-icon" style="background:#eef6ff;">🏗️</div><div><div class="bp-title">Infrastructure as Code</div><div class="bp-desc">Use Bicep for type-safe, concise ARM template authoring. Store in Azure Repos and deploy via Pipelines.</div></div></div>
+        <div class="bp-card"><div class="bp-icon" style="background:#eef6ff;">📈</div><div><div class="bp-title">Autoscale Everything</div><div class="bp-desc">Configure VMSS and AKS HPA. Use Azure Load Testing to validate scale targets before production.</div></div></div>
+        <div class="bp-card"><div class="bp-icon" style="background:#eef6ff;">🌍</div><div><div class="bp-title">Geo-Redundancy</div><div class="bp-desc">Pair regions for disaster recovery. Use Azure Traffic Manager for global load balancing and failover.</div></div></div>
+        <div class="bp-card"><div class="bp-icon" style="background:#eef6ff;">💰</div><div><div class="bp-title">Cost Management</div><div class="bp-desc">Use Azure Advisor recommendations. Apply resource tagging for showback. Set budgets and alerts in Cost Management.</div></div></div>
+        <div class="bp-card"><div class="bp-icon" style="background:#eef6ff;">🔒</div><div><div class="bp-title">Key Vault Everywhere</div><div class="bp-desc">Never hardcode secrets. Use Managed Identity to access Key Vault from any Azure service without credentials.</div></div></div>
+      </div>
+    </div>
+    <div id="az-code" class="ps-panel">
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="info-title">Azure Functions (C#)</div>
+          <div class="code-block"><span class="cc">// Azure Function — Isolated Worker</span>
+[<span class="cf">Function</span>(<span class="cs">"HttpTrigger"</span>)]
+<span class="ck">public async</span> Task&lt;<span class="cv">HttpResponseData</span>&gt; <span class="cf">Run</span>(
+  [HttpTrigger(AuthorizationLevel.Function,
+    <span class="cs">"post"</span>)] <span class="cv">HttpRequestData</span> req) {
+  <span class="ck">var</span> body = <span class="ck">await</span> req.<span class="cf">ReadFromJsonAsync</span>&lt;<span class="cv">UserDto</span>&gt;();
+  <span class="ck">await</span> _repo.<span class="cf">SaveAsync</span>(body);
+  <span class="ck">return</span> req.<span class="cf">CreateResponse</span>(HttpStatusCode.Created);
+}</div>
+        </div>
+        <div class="info-card">
+          <div class="info-title">Bicep Infrastructure</div>
+          <div class="code-block"><span class="cc">// Azure Bicep — Storage Account</span>
+<span class="ck">resource</span> sa <span class="cs">'Microsoft.Storage/storageAccounts@2023-01-01'</span> = {
+  name: storageAccountName
+  location: location
+  sku: { name: <span class="cs">'Standard_LRS'</span> }
+  kind: <span class="cs">'StorageV2'</span>
+  properties: {
+    minimumTlsVersion: <span class="cs">'TLS1_2'</span>
+    supportsHttpsTrafficOnly: <span class="ck">true</span>
+  }
+}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GCP DEEP DIVE -->
+<section class="section" id="gcp">
+  <div class="ps-section ps-gcp reveal">
+    <div class="ps-hdr">
+      <div class="ps-logo pb-logo-gcp"><svg viewBox="0 0 24 24" width="26" height="26"><circle cx="12" cy="12" r="3.5" fill="white"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
+      <div>
+        <div class="ps-name" style="color:var(--gcp2);">Google Cloud Platform</div>
+        <div class="ps-sub">Data-first cloud · Kubernetes birthplace · Leading ML/AI infrastructure</div>
+      </div>
+      <div class="ps-badges">
+        <span class="ps-badge pb-gcp-b">11% Market Share</span>
+        <span class="ps-badge pb-gcp-b">40+ Regions</span>
+        <span class="ps-badge pb-gcp-b">BigQuery Leader</span>
+      </div>
+    </div>
+    <div class="ps-tabs">
+      <button class="ps-tab pt-gcp active" onclick="showTab('gcp','svc',this)">Core Services</button>
+      <button class="ps-tab pt-gcp" onclick="showTab('gcp','arch',this)">Architecture</button>
+      <button class="ps-tab pt-gcp" onclick="showTab('gcp','devops',this)">DevOps</button>
+      <button class="ps-tab pt-gcp" onclick="showTab('gcp','best',this)">Best Practices</button>
+      <button class="ps-tab pt-gcp" onclick="showTab('gcp','code',this)">Code Examples</button>
+    </div>
+    <div id="gcp-svc" class="ps-panel active">
+      <div class="svc-grid">
+        <div class="svc-card"><div class="svc-icon">🖥️</div><div class="svc-name">Compute Engine</div><div class="svc-cat">VMs</div><div class="svc-desc">High-performance VMs with live migration, custom machine types, and preemptible instances.</div></div>
+        <div class="svc-card"><div class="svc-icon">☸️</div><div class="svc-name">GKE</div><div class="svc-cat">Kubernetes</div><div class="svc-desc">The original managed Kubernetes — Autopilot mode handles all node operations automatically.</div></div>
+        <div class="svc-card"><div class="svc-icon">🔥</div><div class="svc-name">Cloud Run</div><div class="svc-cat">Serverless</div><div class="svc-desc">Fully managed containers that scale to zero. Deploy any container workload in seconds.</div></div>
+        <div class="svc-card"><div class="svc-icon">🗃️</div><div class="svc-name">Cloud Storage</div><div class="svc-cat">Object Store</div><div class="svc-desc">Unified object storage with global consistency, strong SLAs, and HMAC authentication.</div></div>
+        <div class="svc-card"><div class="svc-icon">📊</div><div class="svc-name">BigQuery</div><div class="svc-cat">Analytics</div><div class="svc-desc">Serverless data warehouse. Analyze petabytes in seconds with SQL. Built-in ML with BQML.</div></div>
+        <div class="svc-card"><div class="svc-icon">🔥</div><div class="svc-name">Firebase</div><div class="svc-cat">App Platform</div><div class="svc-desc">Real-time database, authentication, hosting, and analytics for web and mobile apps.</div></div>
+        <div class="svc-card"><div class="svc-icon">🤖</div><div class="svc-name">Vertex AI</div><div class="svc-cat">ML/AI</div><div class="svc-desc">Unified MLOps platform for training, tuning, and serving Gemini and custom models.</div></div>
+        <div class="svc-card"><div class="svc-icon">📡</div><div class="svc-name">Pub/Sub</div><div class="svc-cat">Messaging</div><div class="svc-desc">Global real-time messaging with at-least-once delivery and push/pull subscriptions.</div></div>
+        <div class="svc-card"><div class="svc-icon">🗄️</div><div class="svc-name">Cloud Spanner</div><div class="svc-cat">Database</div><div class="svc-desc">Globally distributed relational DB with 99.999% availability and horizontal scaling.</div></div>
+        <div class="svc-card"><div class="svc-icon">🌐</div><div class="svc-name">Cloud CDN</div><div class="svc-cat">CDN</div><div class="svc-desc">Google's global edge network with cache fill from Cloud Storage and backends.</div></div>
+        <div class="svc-card"><div class="svc-icon">🔐</div><div class="svc-name">IAM</div><div class="svc-cat">Security</div><div class="svc-desc">Fine-grained access with predefined roles, custom roles, and Workload Identity Federation.</div></div>
+        <div class="svc-card"><div class="svc-icon">🔄</div><div class="svc-name">Dataflow</div><div class="svc-cat">Data Pipelines</div><div class="svc-desc">Unified stream and batch processing powered by Apache Beam with autoscaling.</div></div>
+      </div>
+    </div>
+    <div id="gcp-arch" class="ps-panel">
+      <div class="cvs-wrap" style="margin-bottom:1.2rem;">
+        <canvas id="cvs-gcp-arch" data-h="280"></canvas>
+        <div class="cvs-ctrls">
+          <button class="cbtn active" onclick="gcpArchMode('gke')">☸️ GKE Architecture</button>
+          <button class="cbtn" onclick="gcpArchMode('data')">📊 Data Platform</button>
+          <button class="cbtn" onclick="gcpArchMode('serverless')">🔥 Cloud Run</button>
+        </div>
+      </div>
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="info-title">Google Architecture Principles</div>
+          <ul class="info-list il-gcp">
+            <li>Design for failure — assume components will fail</li>
+            <li>Make everything a managed service where possible</li>
+            <li>Use global load balancing with anycast IPs</li>
+            <li>Prefer event-driven over synchronous coupling</li>
+            <li>Automate everything with Cloud Build + Terraform</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <div class="info-title">Common GCP Patterns</div>
+          <ul class="info-list il-gcp">
+            <li>GKE Autopilot + Workload Identity Federation</li>
+            <li>BigQuery + Looker for analytics and BI</li>
+            <li>Pub/Sub + Dataflow for streaming pipelines</li>
+            <li>Cloud Run + Firestore for serverless APIs</li>
+            <li>VPC Service Controls for data exfiltration prevention</li>
+            <li>Anthos for hybrid and multi-cloud workloads</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div id="gcp-devops" class="ps-panel">
+      <div class="info-grid" style="margin-bottom:1.2rem;">
+        <div class="info-card">
+          <div class="info-title">Cloud Build CI/CD</div>
+          <ul class="info-list il-gcp">
+            <li>Cloud Source Repositories — managed Git</li>
+            <li>Cloud Build — serverless CI/CD with 120 free min/day</li>
+            <li>Artifact Registry — Docker, npm, Maven images</li>
+            <li>Cloud Deploy — managed CD for GKE and Cloud Run</li>
+            <li>Skaffold — local K8s development + CI integration</li>
+            <li>Terraform + Cloud Foundation Toolkit for IaC</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <div class="info-title">Observability Stack</div>
+          <ul class="info-list il-gcp">
+            <li>Cloud Monitoring — metrics, dashboards, alerts</li>
+            <li>Cloud Logging — structured logs at petabyte scale</li>
+            <li>Cloud Trace — distributed tracing for microservices</li>
+            <li>Cloud Profiler — continuous CPU/memory profiling</li>
+            <li>Error Reporting — real-time error grouping and alerts</li>
+          </ul>
+        </div>
+      </div>
+      <div class="pipe-wrap"><canvas id="cvs-gcp-pipe" data-h="180"></canvas></div>
+    </div>
+    <div id="gcp-best" class="ps-panel">
+      <div class="bp-grid">
+        <div class="bp-card"><div class="bp-icon" style="background:#eef3ff;">🔑</div><div><div class="bp-title">Workload Identity</div><div class="bp-desc">Use Workload Identity Federation instead of service account keys. Eliminates credential management entirely.</div></div></div>
+        <div class="bp-card"><div class="bp-icon" style="background:#eef3ff;">☸️</div><div><div class="bp-title">GKE Autopilot</div><div class="bp-desc">Let Google manage node provisioning. Focus on workloads not infrastructure. Cost by pod resource requests.</div></div></div>
+        <div class="bp-card"><div class="bp-icon" style="background:#eef3ff;">📊</div><div><div class="bp-title">BigQuery Best Practices</div><div class="bp-desc">Partition by date, cluster by high-cardinality columns. Use BI Engine for sub-second dashboard queries.</div></div></div>
+        <div class="bp-card"><div class="bp-icon" style="background:#eef3ff;">🔒</div><div><div class="bp-title">VPC Service Controls</div><div class="bp-desc">Create security perimeters around GCP services to prevent data exfiltration. Enforce within org policies.</div></div></div>
+        <div class="bp-card"><div class="bp-icon" style="background:#eef3ff;">💰</div><div><div class="bp-title">Committed Use Discounts</div><div class="bp-desc">Get up to 57% discount with 1–3 year CUDs. Use Active Assist recommendations to right-size resources.</div></div></div>
+        <div class="bp-card"><div class="bp-icon" style="background:#eef3ff;">🌍</div><div><div class="bp-title">Global Load Balancing</div><div class="bp-desc">Use Google's Anycast IP for single global VIP. Route users to nearest healthy backend with zero RTT.</div></div></div>
+      </div>
+    </div>
+    <div id="gcp-code" class="ps-panel">
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="info-title">Cloud Run Service (Python)</div>
+          <div class="code-block"><span class="cc"># Cloud Run — Python Flask</span>
+<span class="ck">from</span> flask <span class="ck">import</span> Flask, jsonify
+<span class="ck">from</span> google.cloud <span class="ck">import</span> firestore
+
+app = Flask(__name__)
+db = firestore.<span class="cf">Client</span>()
+
+@app.route(<span class="cs">'/users/&lt;user_id&gt;'</span>)
+<span class="ck">def</span> <span class="cf">get_user</span>(user_id):
+    doc = db.collection(<span class="cs">'users'</span>).<span class="cf">document</span>(user_id).<span class="cf">get</span>()
+    <span class="ck">return</span> <span class="cf">jsonify</span>(doc.to_dict())</div>
+        </div>
+        <div class="info-card">
+          <div class="info-title">BigQuery Query (SQL)</div>
+          <div class="code-block"><span class="cc">-- BigQuery — partitioned analytics</span>
+<span class="ck">SELECT</span>
+  DATE_TRUNC(event_date, MONTH) <span class="ck">AS</span> month,
+  country,
+  <span class="cf">COUNT</span>(*) <span class="ck">AS</span> events,
+  <span class="cf">COUNT</span>(DISTINCT user_id) <span class="ck">AS</span> users
+<span class="ck">FROM</span> <span class="cs">`project.dataset.events`</span>
+<span class="ck">WHERE</span> event_date >= DATE_SUB(CURRENT_DATE(), INTERVAL <span class="cn">90</span> DAY)
+  <span class="ck">AND</span> event_type = <span class="cs">'purchase'</span>
+<span class="ck">GROUP BY</span> <span class="cn">1</span>, <span class="cn">2</span>
+<span class="ck">ORDER BY</span> month <span class="ck">DESC</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON -->
+<section class="section" id="compare">
+  <div class="reveal">
+    <div class="sec-label">Side by Side</div>
+    <h2 class="sec-title">AWS vs Azure vs GCP</h2>
+    <p class="sec-desc">Compare the three major cloud providers across key service categories.</p>
+  </div>
+  <div class="cmp-wrap reveal" style="margin-top:1.8rem;">
+    <table class="cmp-table">
+      <thead><tr><th>Category</th><th class="col-aws">AWS</th><th class="col-az">Azure</th><th class="col-gcp">GCP</th></tr></thead>
+      <tbody>
+        <tr><td>Virtual Machines</td><td class="col-aws">EC2</td><td class="col-az">Virtual Machines</td><td class="col-gcp">Compute Engine</td></tr>
+        <tr><td>Managed Kubernetes</td><td class="col-aws">EKS</td><td class="col-az">AKS</td><td class="col-gcp">GKE (Autopilot)</td></tr>
+        <tr><td>Serverless Functions</td><td class="col-aws">Lambda</td><td class="col-az">Azure Functions</td><td class="col-gcp">Cloud Run / Functions</td></tr>
+        <tr><td>Object Storage</td><td class="col-aws">S3</td><td class="col-az">Blob Storage</td><td class="col-gcp">Cloud Storage</td></tr>
+        <tr><td>Managed SQL</td><td class="col-aws">RDS / Aurora</td><td class="col-az">Azure SQL Database</td><td class="col-gcp">Cloud SQL / Spanner</td></tr>
+        <tr><td>NoSQL Database</td><td class="col-aws">DynamoDB</td><td class="col-az">Cosmos DB</td><td class="col-gcp">Firestore / Bigtable</td></tr>
+        <tr><td>Data Warehouse</td><td class="col-aws">Redshift</td><td class="col-az">Synapse Analytics</td><td class="col-gcp">BigQuery</td></tr>
+        <tr><td>AI / ML Platform</td><td class="col-aws">SageMaker</td><td class="col-az">Azure ML / OpenAI</td><td class="col-gcp">Vertex AI / Gemini</td></tr>
+        <tr><td>CDN</td><td class="col-aws">CloudFront</td><td class="col-az">Azure CDN / Front Door</td><td class="col-gcp">Cloud CDN</td></tr>
+        <tr><td>IaC</td><td class="col-aws">CDK / CloudFormation</td><td class="col-az">Bicep / ARM</td><td class="col-gcp">Deployment Manager / TF</td></tr>
+        <tr><td>CI/CD Native</td><td class="col-aws">CodePipeline</td><td class="col-az">Azure DevOps Pipelines</td><td class="col-gcp">Cloud Build + Deploy</td></tr>
+        <tr><td>Identity & Access</td><td class="col-aws">IAM + Cognito</td><td class="col-az">Azure AD / Entra</td><td class="col-gcp">IAM + Identity Platform</td></tr>
+        <tr><td>Market Share (2024)</td><td class="col-aws">~33%</td><td class="col-az">~22%</td><td class="col-gcp">~11%</td></tr>
+        <tr><td>Regions (approx)</td><td class="col-aws">32 regions, 102 AZs</td><td class="col-az">60+ regions</td><td class="col-gcp">40+ regions</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- DEVOPS -->
+<section class="section" id="devops">
+  <div class="reveal">
+    <div class="sec-label">DevOps Integration</div>
+    <h2 class="sec-title">Cloud-Native DevOps Pipelines</h2>
+    <p class="sec-desc">Each cloud provider offers a complete DevOps toolchain. See how they map to common CI/CD stages.</p>
+  </div>
+  <div class="pipe-wrap reveal" style="margin-top:1.8rem;">
+    <canvas id="cvs-devops" data-h="220"></canvas>
+    <div class="cvs-ctrls">
+      <button class="cbtn active" onclick="devopsMode('all')">🔄 All Providers</button>
+      <button class="cbtn" onclick="devopsMode('aws')">☁️ AWS Pipeline</button>
+      <button class="cbtn" onclick="devopsMode('az')">🔵 Azure Pipeline</button>
+      <button class="cbtn" onclick="devopsMode('gcp')">🟢 GCP Pipeline</button>
+    </div>
+  </div>
+  <div class="info-grid reveal" style="margin-top:1.5rem;">
+    <div class="info-card">
+      <div class="info-title">Common DevOps Stages</div>
+      <ul class="info-list il-gcp">
+        <li>Source Control — Git with branch protection and PR reviews</li>
+        <li>Build — compile, test, lint, and create artifacts</li>
+        <li>Container — build Docker image and push to registry</li>
+        <li>Test — unit, integration, security scanning</li>
+        <li>Deploy — blue/green or canary to staging and production</li>
+        <li>Monitor — observe metrics, logs, traces, and alerts</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <div class="info-title">Third-Party Tools That Work on All</div>
+      <ul class="info-list il-az">
+        <li>GitHub Actions — most popular CI/CD, native cloud integration</li>
+        <li>Terraform — consistent IaC across all three providers</li>
+        <li>Kubernetes — portable container orchestration everywhere</li>
+        <li>Helm — package manager for Kubernetes deployments</li>
+        <li>Prometheus + Grafana — open-source monitoring stack</li>
+        <li>Datadog / New Relic — unified observability across clouds</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- LEARNING RESOURCES -->
+<section class="section" id="learn">
+  <div class="reveal">
+    <div class="sec-label">Learning Resources</div>
+    <h2 class="sec-title">Start Your Cloud Journey</h2>
+    <p class="sec-desc">Curated certifications, documentation, and hands-on labs for each provider.</p>
+  </div>
+  <div class="res-grid reveal" style="margin-top:1.8rem;">
+    <a class="res-card" href="https://aws.amazon.com/certification/" target="_blank" rel="noopener">
+      <div class="res-type" style="background:var(--aws-bg);color:#a16500;">AWS · Certification</div>
+      <div class="res-title">AWS Certified Solutions Architect</div>
+      <div class="res-desc">Associate and Professional tracks. Most in-demand cloud certification globally. Validates design expertise.</div>
+    </a>
+    <a class="res-card" href="https://learn.microsoft.com/azure" target="_blank" rel="noopener">
+      <div class="res-type" style="background:var(--az-bg);color:var(--az2);">Azure · Official Docs</div>
+      <div class="res-title">Microsoft Learn — Azure Fundamentals</div>
+      <div class="res-desc">Free structured learning paths from AZ-900 to advanced architect certifications with hands-on sandboxes.</div>
+    </a>
+    <a class="res-card" href="https://cloud.google.com/learn" target="_blank" rel="noopener">
+      <div class="res-type" style="background:var(--gcp-bg);color:var(--gcp2);">GCP · Learning</div>
+      <div class="res-title">Google Cloud Skills Boost</div>
+      <div class="res-desc">Qwiklabs-powered labs with real GCP environments. Earn skill badges and prepare for Professional certifications.</div>
+    </a>
+    <a class="res-card" href="https://docs.aws.amazon.com/" target="_blank" rel="noopener">
+      <div class="res-type" style="background:var(--aws-bg);color:#a16500;">AWS · Docs</div>
+      <div class="res-title">AWS Documentation</div>
+      <div class="res-desc">Comprehensive technical reference for all 200+ services with getting started guides and API references.</div>
+    </a>
+    <a class="res-card" href="https://azure.microsoft.com/en-us/blog/" target="_blank" rel="noopener">
+      <div class="res-type" style="background:var(--az-bg);color:var(--az2);">Azure · Blog</div>
+      <div class="res-title">Azure Architecture Center</div>
+      <div class="res-desc">Reference architectures, design patterns, and best practice guides for building on Azure.</div>
+    </a>
+    <a class="res-card" href="https://cloud.google.com/architecture" target="_blank" rel="noopener">
+      <div class="res-type" style="background:var(--gcp-bg);color:var(--gcp2);">GCP · Architecture</div>
+      <div class="res-title">Google Cloud Architecture Center</div>
+      <div class="res-desc">Reference architectures, solution guides, and whitepapers for building on Google Cloud.</div>
+    </a>
+  </div>
+</section>
+</div><!-- end container -->
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div style="display:flex;align-items:center;gap:9px;margin-bottom:4px;">
+          <div style="width:28px;height:28px;background:linear-gradient(135deg,var(--p600),#1d4ed8);border-radius:7px;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-sm);">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none"><path d="M3 9l9-6 9 6v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" stroke="white" stroke-width="1.8"/></svg>
+          </div>
+          <div class="footer-brand">Cloud Ecosystem Hub</div>
+        </div>
+        <div class="footer-brand-sub">A Complete Visual Guide to the Modern Cloud Technology Ecosystem</div>
+      </div>
+      <div class="footer-links">
+        <button class="footer-link" onclick="scrollToSec('providers')">Providers</button>
+        <button class="footer-link" onclick="scrollToSec('aws')">AWS</button>
+        <button class="footer-link" onclick="scrollToSec('azure')">Azure</button>
+        <button class="footer-link" onclick="scrollToSec('gcp')">GCP</button>
+        <button class="footer-link" onclick="scrollToSec('compare')">Compare</button>
+        <button class="footer-link" onclick="scrollToSec('learn')">Learn</button>
+      </div>
+    </div>
+    <div class="footer-credit">
+      <div class="fc-icon"><svg viewBox="0 0 24 24" width="13" height="13" fill="white" opacity=".9"><path d="M12 3L4 7v5c0 4.5 3.3 8.7 8 9.9C16.7 20.7 20 16.5 20 12V7L12 3z"/></svg></div>
+      <div>
+        <div class="fc-name">&copy; All copyright reserved by <span>Smruti Ranjan Behera</span></div>
+        <div class="fc-role">Principal Enterprise Architect &ndash; UI/UX &nbsp;&middot;&nbsp; Enterprise Frontend Platforms &nbsp;&middot;&nbsp; React Ecosystem</div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">Built for cloud engineers &middot; Interactive diagrams &amp; animations &middot; Open source</div>
+      <div class="socials">
+        <a class="social-btn" href="https://github.com" target="_blank" title="GitHub"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg></a>
+        <a class="social-btn" href="https://linkedin.com" target="_blank" title="LinkedIn"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+        <a class="social-btn" href="https://twitter.com" target="_blank" title="Twitter"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+<button id="scroll-top" onclick="scrollTo({top:0,behavior:'smooth'})" title="Back to top">
+  <svg viewBox="0 0 24 24" width="16" height="16" fill="none"><path d="M18 15l-6-6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// UTILITIES
+// ═══════════════════════════════════════════════════════════
+const PI2 = Math.PI * 2;
+function lerp(a,b,t){return a+(b-a)*t;}
+function ease(t){return 1-Math.pow(1-t,3);}
+
+function setupCvs(id) {
+  const c = document.getElementById(id);
+  if (!c) return null;
+  c.removeAttribute('style');
+  const dpr = window.devicePixelRatio || 1;
+  const h   = parseInt(c.dataset.h || 300);
+  let w = 0, el = c.parentElement;
+  while (el) {
+    const r = el.getBoundingClientRect();
+    if (r.width >= 40) {
+      const s = getComputedStyle(el);
+      w = Math.floor(r.width - parseFloat(s.paddingLeft||0) - parseFloat(s.paddingRight||0));
+      break;
+    }
+    el = el.parentElement;
+  }
+  if (w < 40) w = 760;
+  c.width  = w * dpr; c.height = h * dpr;
+  c.style.cssText = `display:block;width:${w}px;height:${h}px;`;
+  const ctx = c.getContext('2d');
+  ctx.scale(dpr, dpr);
+  ctx._w = w; ctx._h = h;
+  return ctx;
+}
+function rr(ctx,x,y,w,h,r,fill,stroke,sw){
+  ctx.beginPath();
+  if(ctx.roundRect) ctx.roundRect(x,y,w,h,r); else ctx.rect(x,y,w,h);
+  if(fill){ctx.fillStyle=fill;ctx.fill();}
+  if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=sw||1;ctx.stroke();}
+}
+function txt(ctx,t,x,y,size,color,align,weight){
+  ctx.font=`${weight||400} ${size}px 'DM Sans',sans-serif`;
+  ctx.fillStyle=color;ctx.textAlign=align||'center';ctx.textBaseline='middle';
+  ctx.fillText(t,x,y);
+}
+function dot(ctx,x,y,r,color,alpha){
+  ctx.beginPath();ctx.arc(x,y,r,0,PI2);
+  ctx.globalAlpha=alpha===undefined?1:Math.max(0,Math.min(1,alpha));
+  ctx.fillStyle=color;ctx.fill();ctx.globalAlpha=1;
+}
+function glow(ctx,x,y,r,color){
+  const base=color.length>7?color.slice(0,7):color;
+  const g=ctx.createRadialGradient(x,y,0,x,y,r);
+  g.addColorStop(0,base+'55');g.addColorStop(1,base+'00');
+  ctx.beginPath();ctx.arc(x,y,r,0,PI2);ctx.fillStyle=g;ctx.fill();
+}
+function arrow(ctx,x1,y1,x2,y2,color,prog){
+  const p=prog===undefined?1:Math.max(0,Math.min(1,prog));
+  const ex=x1+(x2-x1)*p,ey=y1+(y2-y1)*p;
+  ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(ex,ey);
+  ctx.strokeStyle=color;ctx.lineWidth=1.8;ctx.stroke();
+  if(p>0.85){
+    const a=Math.atan2(ey-y1,ex-x1);
+    ctx.beginPath();ctx.moveTo(ex,ey);
+    ctx.lineTo(ex-8*Math.cos(a-.4),ey-8*Math.sin(a-.4));
+    ctx.lineTo(ex-8*Math.cos(a+.4),ey-8*Math.sin(a+.4));
+    ctx.closePath();ctx.fillStyle=color;ctx.fill();
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
+// HERO CANVAS
+// ═══════════════════════════════════════════════════════════
+let HERO={ctx:null,t:0,raf:null,nodes:[]};
+function initHero(){
+  const canvas=document.getElementById('hero-canvas');
+  if(!canvas)return;
+  const resize=()=>{
+    canvas.width=canvas.offsetWidth*(window.devicePixelRatio||1);
+    canvas.height=canvas.offsetHeight*(window.devicePixelRatio||1);
+    HERO.ctx=canvas.getContext('2d');
+    HERO.ctx.scale(window.devicePixelRatio||1,window.devicePixelRatio||1);
+  };
+  resize();
+  window.addEventListener('resize',resize,{passive:true});
+  cancelAnimationFrame(HERO.raf);
+  animHero();
+}
+function animHero(){
+  HERO.raf=requestAnimationFrame(animHero);
+  const ctx=HERO.ctx;if(!ctx)return;
+  const W=ctx.canvas.width/(window.devicePixelRatio||1);
+  const H=ctx.canvas.height/(window.devicePixelRatio||1);
+  ctx.clearRect(0,0,W,H);
+  HERO.t++;
+  const t=HERO.t;
+  // Floating nodes
+  const nodes=[
+    {x:W*.1,y:H*.3,c:'#FF9900',l:'EC2'},{x:W*.2,y:H*.7,c:'#FF9900',l:'S3'},
+    {x:W*.35,y:H*.2,c:'#0078D4',l:'AKS'},{x:W*.5,y:H*.75,c:'#0078D4',l:'Functions'},
+    {x:W*.65,y:H*.25,c:'#4285F4',l:'GKE'},{x:W*.8,y:H*.6,c:'#4285F4',l:'BigQuery'},
+    {x:W*.9,y:H*.2,c:'#FF9900',l:'Lambda'},{x:W*.15,y:H*.5,c:'#34A853',l:'Pub/Sub'},
+    {x:W*.72,y:H*.85,c:'#0078D4',l:'SQL DB'},
+  ];
+  nodes.forEach((n,i)=>{
+    const fy=n.y+Math.sin(t*0.012+i*1.1)*18;
+    const alpha=0.25+0.1*Math.sin(t*0.02+i);
+    ctx.globalAlpha=alpha;
+    ctx.beginPath();ctx.arc(n.x,fy,28,0,PI2);
+    ctx.strokeStyle=n.c;ctx.lineWidth=1;ctx.stroke();
+    ctx.globalAlpha=alpha*0.3;
+    ctx.beginPath();ctx.arc(n.x,fy,28,0,PI2);
+    ctx.fillStyle=n.c;ctx.fill();
+    ctx.globalAlpha=alpha*1.4;
+    ctx.font='600 9px DM Sans,sans-serif';
+    ctx.fillStyle=n.c;ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(n.l,n.x,fy);
+    ctx.globalAlpha=1;
+    // Connection lines to next
+    if(i<nodes.length-1){
+      const n2=nodes[i+1];
+      const fy2=n2.y+Math.sin(t*0.012+(i+1)*1.1)*18;
+      ctx.beginPath();ctx.moveTo(n.x,fy);ctx.lineTo(n2.x,fy2);
+      ctx.strokeStyle=n.c+'20';ctx.lineWidth=0.8;ctx.stroke();
+    }
+  });
+  // Floating dots
+  for(let i=0;i<20;i++){
+    const px=(Math.sin(t*0.005+i*0.8)*0.5+0.5)*W;
+    const py=(Math.cos(t*0.007+i*1.3)*0.5+0.5)*H;
+    ctx.beginPath();ctx.arc(px,py,1.5,0,PI2);
+    ctx.fillStyle=`rgba(99,65,204,${0.08+0.06*Math.sin(t*0.03+i)})`;
+    ctx.fill();
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
+// BANNER ANIMATIONS
+// ═══════════════════════════════════════════════════════════
+const BANNERS={aws:{ctx:null,t:0,raf:null},az:{ctx:null,t:0,raf:null},gcp:{ctx:null,t:0,raf:null}};
+function initBanner(id){
+  const ctx=setupCvs('cvs-'+id+'-banner');if(!ctx)return;
+  BANNERS[id].ctx=ctx;BANNERS[id].t=0;
+  cancelAnimationFrame(BANNERS[id].raf);
+  const fn=id==='aws'?animAWSBanner:id==='az'?animAZBanner:animGCPBanner;
+  BANNERS[id].fn=fn; fn();
+}
+function animAWSBanner(){
+  BANNERS.aws.raf=requestAnimationFrame(animAWSBanner);
+  const ctx=BANNERS.aws.ctx;if(!ctx)return;
+  const W=ctx._w,H=ctx._h;
+  ctx.clearRect(0,0,W,H);
+  const t=++BANNERS.aws.t;
+  // Animated cloud infrastructure diagram
+  const svcs=[
+    {x:W*.12,y:H*.35,l:'EC2',c:'#FF9900'},{x:W*.28,y:H*.35,l:'ELB',c:'#FF6B00'},
+    {x:W*.45,y:H*.2,l:'S3',c:'#52aa52'},{x:W*.45,y:H*.5,l:'RDS',c:'#3b82f6'},
+    {x:W*.62,y:H*.35,l:'Lambda',c:'#FF9900'},{x:W*.78,y:H*.35,l:'CloudFront',c:'#FF6B00'},
+  ];
+  const edges=[[0,1],[1,2],[1,3],[1,4],[4,5]];
+  edges.forEach(([a,b])=>{
+    const sa=svcs[a],sb=svcs[b];
+    const p=(Math.sin(t*0.02+a)*.5+.5);
+    arrow(ctx,sa.x,sa.y,sb.x,sb.y,'rgba(255,153,0,0.35)',1);
+    const px=sa.x+(sb.x-sa.x)*p,py=sa.y+(sb.y-sa.y)*p;
+    glow(ctx,px,py,10,'#FF9900');
+    dot(ctx,px,py,3,'#FF9900');
+  });
+  svcs.forEach((s,i)=>{
+    const pulse=0.7+0.3*Math.sin(t*0.04+i);
+    glow(ctx,s.x,s.y,30,s.c);
+    rr(ctx,s.x-30,s.y-16,60,32,8,'rgba(255,153,0,0.12)',s.c,1.5*pulse);
+    txt(ctx,s.l,s.x,s.y,9.5,s.c,'center',600);
+  });
+  txt(ctx,'AWS Architecture',W*.45,H*.82,10,'rgba(255,153,0,0.5)','center',500);
+}
+function animAZBanner(){
+  BANNERS.az.raf=requestAnimationFrame(animAZBanner);
+  const ctx=BANNERS.az.ctx;if(!ctx)return;
+  const W=ctx._w,H=ctx._h;
+  ctx.clearRect(0,0,W,H);
+  const t=++BANNERS.az.t;
+  const svcs=[
+    {x:W*.12,y:H*.35,l:'VMs',c:'#0078D4'},{x:W*.28,y:H*.35,l:'APIM',c:'#0078D4'},
+    {x:W*.45,y:H*.2,l:'Blob',c:'#00b4d8'},{x:W*.45,y:H*.5,l:'SQL',c:'#4361ee'},
+    {x:W*.62,y:H*.35,l:'Functions',c:'#0078D4'},{x:W*.78,y:H*.35,l:'Azure CDN',c:'#0090d1'},
+  ];
+  const edges=[[0,1],[1,2],[1,3],[1,4],[4,5]];
+  edges.forEach(([a,b])=>{
+    const sa=svcs[a],sb=svcs[b];
+    const p=(Math.sin(t*0.025+a*.8)*.5+.5);
+    arrow(ctx,sa.x,sa.y,sb.x,sb.y,'rgba(0,120,212,0.3)',1);
+    const px=sa.x+(sb.x-sa.x)*p,py=sa.y+(sb.y-sa.y)*p;
+    glow(ctx,px,py,10,'#0078D4');
+    dot(ctx,px,py,3,'#0078D4');
+  });
+  svcs.forEach((s,i)=>{
+    const pulse=0.7+0.3*Math.sin(t*0.035+i);
+    glow(ctx,s.x,s.y,30,s.c);
+    rr(ctx,s.x-30,s.y-16,60,32,8,'rgba(0,120,212,0.12)',s.c,1.5*pulse);
+    txt(ctx,s.l,s.x,s.y,9.5,s.c,'center',600);
+  });
+  txt(ctx,'Azure Architecture',W*.45,H*.82,10,'rgba(0,120,212,0.5)','center',500);
+}
+function animGCPBanner(){
+  BANNERS.gcp.raf=requestAnimationFrame(animGCPBanner);
+  const ctx=BANNERS.gcp.ctx;if(!ctx)return;
+  const W=ctx._w,H=ctx._h;
+  ctx.clearRect(0,0,W,H);
+  const t=++BANNERS.gcp.t;
+  const svcs=[
+    {x:W*.12,y:H*.35,l:'GKE',c:'#4285F4'},{x:W*.28,y:H*.35,l:'Cloud LB',c:'#EA4335'},
+    {x:W*.45,y:H*.2,l:'GCS',c:'#34A853'},{x:W*.45,y:H*.5,l:'Spanner',c:'#4285F4'},
+    {x:W*.62,y:H*.35,l:'Cloud Run',c:'#FBBC05'},{x:W*.78,y:H*.35,l:'CDN',c:'#4285F4'},
+  ];
+  const edges=[[0,1],[1,2],[1,3],[1,4],[4,5]];
+  const colors=['#4285F4','#EA4335','#FBBC05','#34A853'];
+  edges.forEach(([a,b],ei)=>{
+    const sa=svcs[a],sb=svcs[b];
+    const p=(Math.sin(t*0.02+a*.9)*.5+.5);
+    const ec=colors[ei%4];
+    arrow(ctx,sa.x,sa.y,sb.x,sb.y,ec+'44',1);
+    const px=sa.x+(sb.x-sa.x)*p,py=sa.y+(sb.y-sa.y)*p;
+    glow(ctx,px,py,10,ec);dot(ctx,px,py,3,ec);
+  });
+  svcs.forEach((s,i)=>{
+    const pulse=0.7+0.3*Math.sin(t*0.038+i);
+    glow(ctx,s.x,s.y,30,s.c);
+    rr(ctx,s.x-30,s.y-16,60,32,8,'rgba(66,133,244,0.1)',s.c,1.5*pulse);
+    txt(ctx,s.l,s.x,s.y,9.5,s.c,'center',600);
+  });
+  txt(ctx,'GCP Architecture',W*.45,H*.82,10,'rgba(66,133,244,0.5)','center',500);
+}
+
+// ═══════════════════════════════════════════════════════════
+// ARCHITECTURE CANVASES
+// ═══════════════════════════════════════════════════════════
+const ARCH={aws:{ctx:null,t:0,raf:null,mode:'vpc'},az:{ctx:null,t:0,raf:null,mode:'hub-spoke'},gcp:{ctx:null,t:0,raf:null,mode:'gke'}};
+
+function initAwsArch(){const ctx=setupCvs('cvs-aws-arch');if(!ctx)return;ARCH.aws.ctx=ctx;ARCH.aws.t=0;cancelAnimationFrame(ARCH.aws.raf);animAwsArch();}
+function awsArchMode(m){ARCH.aws.mode=m;ARCH.aws.t=0;document.querySelectorAll('#aws-arch .cbtn').forEach(b=>b.classList.remove('active'));event.target.classList.add('active');}
+function animAwsArch(){
+  ARCH.aws.raf=requestAnimationFrame(animAwsArch);
+  const ctx=ARCH.aws.ctx;if(!ctx)return;
+  const W=ctx._w,H=ctx._h,t=++ARCH.aws.t;
+  ctx.clearRect(0,0,W,H);rr(ctx,0,0,W,H,0,'#0c0a1e');
+  if(ARCH.aws.mode==='vpc') drawAwsVPC(ctx,W,H,t);
+  else if(ARCH.aws.mode==='serverless') drawAwsServerless(ctx,W,H,t);
+  else drawAwsMicro(ctx,W,H,t);
+}
+function drawAwsVPC(ctx,W,H,t){
+  txt(ctx,'AWS VPC — Multi-AZ High Availability',W/2,18,12,'#FF9900','center',700);
+  const az1x=W*.26,az2x=W*.74,vpcY=40;
+  // VPC boundary
+  rr(ctx,20,vpcY,W-40,H-vpcY-10,12,'transparent','rgba(255,153,0,0.3)',1.5);
+  txt(ctx,'VPC (10.0.0.0/16)',W/2,vpcY+14,9,'rgba(255,153,0,0.6)','center',600);
+  // AZ boxes
+  rr(ctx,30,vpcY+24,W/2-40,H-vpcY-40,8,'rgba(255,153,0,0.04)','rgba(255,153,0,0.2)',1);
+  txt(ctx,'AZ-1a',az1x,vpcY+36,9,'rgba(255,153,0,0.5)','center',600);
+  rr(ctx,W/2+10,vpcY+24,W/2-40,H-vpcY-40,8,'rgba(255,153,0,0.04)','rgba(255,153,0,0.2)',1);
+  txt(ctx,'AZ-1b',az2x,vpcY+36,9,'rgba(255,153,0,0.5)','center',600);
+  // ALB at top
+  const albY=vpcY+56;
+  rr(ctx,W/2-70,albY-14,140,28,8,'#1a1200','#FF9900',1.5);
+  txt(ctx,'Application Load Balancer',W/2,albY,9.5,'#FF9900','center',600);
+  // EC2 instances
+  const ec2Y=albY+60;
+  [[az1x-35,ec2Y],[az1x+35,ec2Y],[az2x-35,ec2Y],[az2x+35,ec2Y]].forEach(([x,y],i)=>{
+    const pulse=0.8+0.2*Math.sin(t*0.04+i);
+    glow(ctx,x,y,20,'#FF9900');
+    rr(ctx,x-26,y-14,52,28,7,'#200e00','#FF9900',1.2*pulse);
+    txt(ctx,'EC2',x,y,9.5,'#FF9900','center',600);
+    arrow(ctx,W/2,albY+14,x,y-14,'rgba(255,153,0,0.4)',Math.min(1,(t%80)/40));
+  });
+  // RDS
+  const rdsY=ec2Y+68;
+  rr(ctx,az1x-45,rdsY-14,90,28,8,'#001428','#60a5fa',1.5);
+  txt(ctx,'RDS Primary',az1x,rdsY,9.5,'#60a5fa','center',600);
+  rr(ctx,az2x-45,rdsY-14,90,28,8,'#001428','#60a5fa88',1);
+  txt(ctx,'RDS Standby',az2x,rdsY,9.5,'#60a5fa88','center',600);
+  ctx.setLineDash([4,4]);
+  arrow(ctx,az1x+45,rdsY,az2x-45,rdsY,'#60a5fa55',1);
+  ctx.setLineDash([]);
+  txt(ctx,'sync replication',W/2,rdsY,8,'#60a5fa44','center');
+  // Travelling packet
+  const pp=(t*0.015)%1;
+  const px=W/2+(az1x-W/2)*ease(pp)*2;
+  if(pp<0.5){dot(ctx,lerp(W/2,az1x,ease(pp*2)),lerp(albY+14,ec2Y-14,ease(pp*2)),4,'#FF9900');}
+}
+function drawAwsServerless(ctx,W,H,t){
+  txt(ctx,'AWS Serverless — API Gateway + Lambda + DynamoDB',W/2,18,12,'#FF9900','center',700);
+  const items=[
+    {x:W*.1,y:H/2,l:'Client',c:'#e2e8f0'},{x:W*.28,y:H/2,l:'API Gateway',c:'#FF9900'},
+    {x:W*.46,y:H*.3,l:'Lambda\nAuth',c:'#f97316'},{x:W*.46,y:H*.7,l:'Lambda\nAPI',c:'#FF9900'},
+    {x:W*.65,y:H*.3,l:'S3',c:'#34d399'},{x:W*.65,y:H*.7,l:'DynamoDB',c:'#60a5fa'},
+    {x:W*.82,y:H/2,l:'CloudWatch',c:'#c084fc'},
+  ];
+  const edges=[[0,1,'#e2e8f0'],[1,2,'#f97316'],[1,3,'#FF9900'],[2,4,'#34d399'],[3,5,'#60a5fa'],[3,6,'#c084fc']];
+  edges.forEach(([a,b,c])=>{
+    const sa=items[a],sb=items[b];
+    const p=(Math.sin(t*0.025+a*.7)*.5+.5);
+    arrow(ctx,sa.x,sa.y,sb.x,sb.y,c+'44',1);
+    const px=sa.x+(sb.x-sa.x)*p,py=sa.y+(sb.y-sa.y)*p;
+    glow(ctx,px,py,8,c);dot(ctx,px,py,3,c);
+  });
+  items.forEach(s=>{
+    glow(ctx,s.x,s.y,28,s.c);
+    rr(ctx,s.x-36,s.y-16,72,32,8,'#16132a',s.c+'aa',1.5);
+    const lines=s.l.split('\n');
+    lines.forEach((l,i)=>txt(ctx,l,s.x,s.y+(i-lines.length/2+.5)*13,9,s.c,'center',600));
+  });
+}
+function drawAwsMicro(ctx,W,H,t){
+  txt(ctx,'AWS EKS Microservices Architecture',W/2,18,12,'#FF9900','center',700);
+  const svcs=[
+    {x:W*.12,y:H*.4,l:'API\nGateway',c:'#FF9900'},{x:W*.3,y:H*.25,l:'Auth\nService',c:'#f97316'},
+    {x:W*.3,y:H*.55,l:'Order\nService',c:'#FF9900'},{x:W*.5,y:H*.4,l:'Event\nBus',c:'#c084fc'},
+    {x:W*.68,y:H*.25,l:'Inventory',c:'#34d399'},{x:W*.68,y:H*.55,l:'Payment',c:'#60a5fa'},
+    {x:W*.86,y:H*.4,l:'DynamoDB',c:'#60a5fa'},
+  ];
+  [[0,1],[0,2],[1,3],[2,3],[3,4],[3,5],[4,6],[5,6]].forEach(([a,b])=>{
+    const sa=svcs[a],sb=svcs[b];
+    const p=(Math.sin(t*0.03+a)*.5+.5);
+    arrow(ctx,sa.x,sa.y,sb.x,sb.y,'rgba(255,153,0,0.25)',1);
+    const px=sa.x+(sb.x-sa.x)*p,py=sa.y+(sb.y-sa.y)*p;
+    glow(ctx,px,py,8,sa.c);dot(ctx,px,py,2.5,sa.c);
+  });
+  svcs.forEach(s=>{
+    glow(ctx,s.x,s.y,24,s.c);
+    rr(ctx,s.x-30,s.y-18,60,36,8,'#16132a',s.c+'99',1.5);
+    const lines=s.l.split('\n');
+    lines.forEach((l,i)=>txt(ctx,l,s.x,s.y+(i-lines.length/2+.5)*12,9,s.c,'center',600));
+  });
+  // EKS boundary
+  rr(ctx,10,30,W-20,H-45,12,'transparent','rgba(255,153,0,0.2)',1);
+  txt(ctx,'EKS Cluster',W/2,H-14,9,'rgba(255,153,0,0.4)','center',500);
+}
+
+function initAzArch(){const ctx=setupCvs('cvs-az-arch');if(!ctx)return;ARCH.az.ctx=ctx;ARCH.az.t=0;cancelAnimationFrame(ARCH.az.raf);animAzArch();}
+function azArchMode(m){ARCH.az.mode=m;ARCH.az.t=0;document.querySelectorAll('#az-arch .cbtn').forEach(b=>b.classList.remove('active'));event.target.classList.add('active');}
+function animAzArch(){
+  ARCH.az.raf=requestAnimationFrame(animAzArch);
+  const ctx=ARCH.az.ctx;if(!ctx)return;
+  const W=ctx._w,H=ctx._h,t=++ARCH.az.t;
+  ctx.clearRect(0,0,W,H);rr(ctx,0,0,W,H,0,'#0c0a1e');
+  if(ARCH.az.mode==='hub-spoke') drawAzHubSpoke(ctx,W,H,t);
+  else if(ARCH.az.mode==='hybrid') drawAzHybrid(ctx,W,H,t);
+  else drawAzAKS(ctx,W,H,t);
+}
+function drawAzHubSpoke(ctx,W,H,t){
+  txt(ctx,'Azure Hub-Spoke Network Topology',W/2,18,12,'#0078D4','center',700);
+  const hub={x:W/2,y:H/2};
+  const spokes=[
+    {x:W*.2,y:H*.25,l:'Spoke 1\nProduction',c:'#0078D4'},
+    {x:W*.8,y:H*.25,l:'Spoke 2\nDev/Test',c:'#0090d1'},
+    {x:W*.2,y:H*.75,l:'Spoke 3\nShared Svcs',c:'#4361ee'},
+    {x:W*.8,y:H*.75,l:'Spoke 4\nDMZ',c:'#0078D4'},
+  ];
+  // Hub
+  glow(ctx,hub.x,hub.y,50,'#0078D4');
+  rr(ctx,hub.x-52,hub.y-26,104,52,10,'#001428','#0078D4',2);
+  txt(ctx,'Hub VNet',hub.x,hub.y-7,10,'#0078D4','center',700);
+  txt(ctx,'Azure Firewall',hub.x,hub.y+8,8.5,'#0078D455','center');
+  spokes.forEach((s,i)=>{
+    const p=(Math.sin(t*0.025+i*.8)*.5+.5);
+    arrow(ctx,hub.x,hub.y,s.x,s.y,s.c+'55',1);
+    const px=lerp(hub.x,s.x,p),py=lerp(hub.y,s.y,p);
+    glow(ctx,px,py,8,s.c);dot(ctx,px,py,3,s.c);
+    glow(ctx,s.x,s.y,32,s.c);
+    rr(ctx,s.x-46,s.y-22,92,44,9,'#001428',s.c+'99',1.5);
+    const lines=s.l.split('\n');
+    lines.forEach((l,j)=>txt(ctx,l,s.x,s.y+(j-lines.length/2+.5)*12,9,s.c,'center',600));
+  });
+  // VPN/ExpressRoute
+  rr(ctx,W/2-44,H*.88,88,22,7,'#2a0038','#c084fc',1);
+  txt(ctx,'ExpressRoute / VPN',W/2,H*.89,8.5,'#c084fc','center',500);
+}
+function drawAzHybrid(ctx,W,H,t){
+  txt(ctx,'Azure Hybrid Cloud — On-Prem + Cloud',W/2,18,12,'#0078D4','center',700);
+  const onprem={x:W*.18,y:H/2};const azure={x:W*.82,y:H/2};
+  rr(ctx,10,40,W*.38,H-60,10,'rgba(100,100,100,0.05)','rgba(150,150,150,0.3)',1);
+  txt(ctx,'On-Premises DC',W*.18,54,9,'rgba(200,200,200,0.5)','center',600);
+  rr(ctx,W*.5,40,W*.46,H-60,10,'rgba(0,120,212,0.04)','rgba(0,120,212,0.25)',1);
+  txt(ctx,'Microsoft Azure',W*.73,54,9,'rgba(0,120,212,0.6)','center',600);
+  const items=[
+    {x:W*.18,y:H*.35,l:'AD DS',c:'#e2e8f0'},{x:W*.18,y:H*.65,l:'VMware',c:'#aaa'},
+    {x:W*.5,y:H*.5,l:'VPN/\nExpressRoute',c:'#c084fc'},
+    {x:W*.72,y:H*.35,l:'Azure AD',c:'#0078D4'},{x:W*.72,y:H*.65,l:'AKS',c:'#0078D4'},
+    {x:W*.88,y:H*.5,l:'Azure Arc',c:'#0090d1'},
+  ];
+  [[0,2],[1,2],[2,3],[2,4],[3,5],[4,5]].forEach(([a,b])=>{
+    const sa=items[a],sb=items[b];
+    const p=(Math.sin(t*0.022+a)*.5+.5);
+    arrow(ctx,sa.x,sa.y,sb.x,sb.y,'rgba(0,120,212,0.3)',1);
+    glow(ctx,lerp(sa.x,sb.x,p),lerp(sa.y,sb.y,p),8,'#0078D4');
+    dot(ctx,lerp(sa.x,sb.x,p),lerp(sa.y,sb.y,p),3,'#0078D4');
+  });
+  items.forEach(s=>{
+    glow(ctx,s.x,s.y,24,s.c);
+    rr(ctx,s.x-32,s.y-18,64,36,8,'#16132a',s.c+'88',1.5);
+    const lines=s.l.split('\n');
+    lines.forEach((l,i)=>txt(ctx,l,s.x,s.y+(i-lines.length/2+.5)*12,9,s.c,'center',600));
+  });
+}
+function drawAzAKS(ctx,W,H,t){
+  txt(ctx,'Azure Kubernetes Service — Production Cluster',W/2,18,12,'#0078D4','center',700);
+  const ctrl={x:W*.18,y:H*.4};
+  rr(ctx,10,H*.25,W*.26,H*.45,10,'rgba(0,120,212,0.04)','rgba(0,120,212,0.3)',1);
+  txt(ctx,'Control Plane (Managed)',W*.18,H*.25+12,8.5,'rgba(0,120,212,0.5)','center');
+  rr(ctx,ctrl.x-44,ctrl.y-14,88,28,7,'#001428','#0078D4',1.5);
+  txt(ctx,'API Server',ctrl.x,ctrl.y,9.5,'#0078D4','center',600);
+  rr(ctx,ctrl.x-44,ctrl.y+26,88,28,7,'#001428','#4361ee',1.5);
+  txt(ctx,'etcd',ctrl.x,ctrl.y+40,9.5,'#4361ee','center',600);
+  // Worker nodes
+  const nodes=[{x:W*.45,y:H*.28},{x:W*.62,y:H*.28},{x:W*.79,y:H*.28}];
+  nodes.forEach((n,i)=>{
+    rr(ctx,n.x-42,n.y,84,H*.5,9,'rgba(0,120,212,0.04)','rgba(0,120,212,0.2)',1);
+    txt(ctx,'Node '+(i+1),n.x,n.y+12,8.5,'rgba(0,120,212,0.4)','center');
+    const pods=[{l:'Pod',c:'#0078D4'},{l:'Pod',c:'#0078D4'},{l:'Pod',c:'#0090d1'}];
+    pods.forEach((p2,j)=>{
+      const py=n.y+32+j*44;
+      const pulse=0.8+0.2*Math.sin(t*0.04+i*1.2+j);
+      glow(ctx,n.x,py+10,'#0078D4');
+      rr(ctx,n.x-28,py,56,28,6,'#001428',p2.c+(j===2?'66':'aa'),1.2*pulse);
+      txt(ctx,p2.l,n.x,py+14,9,p2.c,'center',600);
+    });
+    arrow(ctx,ctrl.x+44,ctrl.y,n.x-42,n.y+30,'rgba(0,120,212,0.3)',1);
+  });
+  rr(ctx,W*.42,H*.85,W*.42,22,7,'rgba(0,120,212,0.08)','rgba(0,120,212,0.25)',1);
+  txt(ctx,'ACR · Azure Monitor · Key Vault · Azure AD Workload Identity',W*.63,H*.85+11,8,'rgba(0,120,212,0.5)','center');
+}
+
+function initGcpArch(){const ctx=setupCvs('cvs-gcp-arch');if(!ctx)return;ARCH.gcp.ctx=ctx;ARCH.gcp.t=0;cancelAnimationFrame(ARCH.gcp.raf);animGcpArch();}
+function gcpArchMode(m){ARCH.gcp.mode=m;ARCH.gcp.t=0;document.querySelectorAll('#gcp-arch .cbtn').forEach(b=>b.classList.remove('active'));event.target.classList.add('active');}
+function animGcpArch(){
+  ARCH.gcp.raf=requestAnimationFrame(animGcpArch);
+  const ctx=ARCH.gcp.ctx;if(!ctx)return;
+  const W=ctx._w,H=ctx._h,t=++ARCH.gcp.t;
+  ctx.clearRect(0,0,W,H);rr(ctx,0,0,W,H,0,'#0c0a1e');
+  if(ARCH.gcp.mode==='gke') drawGcpGKE(ctx,W,H,t);
+  else if(ARCH.gcp.mode==='data') drawGcpData(ctx,W,H,t);
+  else drawGcpServerless(ctx,W,H,t);
+}
+function drawGcpGKE(ctx,W,H,t){
+  txt(ctx,'GKE Autopilot — Cloud-Native Architecture',W/2,18,12,'#4285F4','center',700);
+  const items=[
+    {x:W*.1,y:H*.45,l:'Cloud LB',c:'#EA4335'},{x:W*.28,y:H*.45,l:'Ingress\nGateway',c:'#4285F4'},
+    {x:W*.46,y:H*.25,l:'Frontend\nPods',c:'#34A853'},{x:W*.46,y:H*.65,l:'Backend\nPods',c:'#4285F4'},
+    {x:W*.64,y:H*.25,l:'Redis\nCache',c:'#EA4335'},{x:W*.64,y:H*.65,l:'Cloud\nSpanner',c:'#FBBC05'},
+    {x:W*.82,y:H*.45,l:'Pub/Sub',c:'#34A853'},
+  ];
+  [[0,1],[1,2],[1,3],[2,4],[3,5],[3,6]].forEach(([a,b])=>{
+    const sa=items[a],sb=items[b];
+    const p=(Math.sin(t*0.028+a*.9)*.5+.5);
+    arrow(ctx,sa.x,sa.y,sb.x,sb.y,sa.c+'33',1);
+    glow(ctx,lerp(sa.x,sb.x,p),lerp(sa.y,sb.y,p),8,sa.c);
+    dot(ctx,lerp(sa.x,sb.x,p),lerp(sa.y,sb.y,p),3,sa.c);
+  });
+  items.forEach(s=>{
+    glow(ctx,s.x,s.y,26,s.c);
+    rr(ctx,s.x-32,s.y-18,64,36,8,'#0a1628',s.c+'aa',1.5);
+    const lines=s.l.split('\n');
+    lines.forEach((l,i)=>txt(ctx,l,s.x,s.y+(i-lines.length/2+.5)*12,9,s.c,'center',600));
+  });
+  rr(ctx,10,30,W-20,H-42,12,'transparent','rgba(66,133,244,0.2)',1);
+  txt(ctx,'GKE Autopilot Cluster',W/2,H-12,9,'rgba(66,133,244,0.4)','center',500);
+}
+function drawGcpData(ctx,W,H,t){
+  txt(ctx,'GCP Data Platform — Streaming + Analytics',W/2,18,12,'#4285F4','center',700);
+  const items=[
+    {x:W*.1,y:H*.4,l:'Sources',c:'#e2e8f0'},{x:W*.26,y:H*.4,l:'Pub/Sub',c:'#34A853'},
+    {x:W*.44,y:H*.25,l:'Dataflow',c:'#FBBC05'},{x:W*.44,y:H*.55,l:'Cloud\nStorage',c:'#34A853'},
+    {x:W*.62,y:H*.4,l:'BigQuery',c:'#4285F4'},{x:W*.78,y:H*.28,l:'Looker',c:'#EA4335'},
+    {x:W*.78,y:H*.55,l:'Vertex AI',c:'#4285F4'},
+  ];
+  [[0,1],[1,2],[1,3],[2,4],[3,4],[4,5],[4,6]].forEach(([a,b])=>{
+    const sa=items[a],sb=items[b];
+    const p=(Math.sin(t*0.022+a)*.5+.5);
+    arrow(ctx,sa.x,sa.y,sb.x,sb.y,sa.c+'33',1);
+    glow(ctx,lerp(sa.x,sb.x,p),lerp(sa.y,sb.y,p),8,sa.c);
+    dot(ctx,lerp(sa.x,sb.x,p),lerp(sa.y,sb.y,p),3,sa.c);
+  });
+  items.forEach(s=>{
+    glow(ctx,s.x,s.y,26,s.c);
+    rr(ctx,s.x-32,s.y-18,64,36,8,'#0a1628',s.c+'aa',1.5);
+    const lines=s.l.split('\n');
+    lines.forEach((l,i)=>txt(ctx,l,s.x,s.y+(i-lines.length/2+.5)*12,9,s.c,'center',600));
+  });
+}
+function drawGcpServerless(ctx,W,H,t){
+  txt(ctx,'GCP Cloud Run — Serverless Containers',W/2,18,12,'#EA4335','center',700);
+  const items=[
+    {x:W*.1,y:H*.45,l:'Client',c:'#e2e8f0'},{x:W*.26,y:H*.45,l:'Cloud LB\n+ CDN',c:'#EA4335'},
+    {x:W*.44,y:H*.25,l:'Cloud Run\nFrontend',c:'#FBBC05'},{x:W*.44,y:H*.65,l:'Cloud Run\nAPI',c:'#4285F4'},
+    {x:W*.62,y:H*.25,l:'Firestore',c:'#FBBC05'},{x:W*.62,y:H*.65,l:'Cloud SQL',c:'#4285F4'},
+    {x:W*.8,y:H*.45,l:'Secret\nManager',c:'#34A853'},
+  ];
+  [[0,1],[1,2],[1,3],[2,4],[3,5],[3,6],[2,6]].forEach(([a,b])=>{
+    const sa=items[a],sb=items[b];
+    const p=(Math.sin(t*0.026+a*.8)*.5+.5);
+    arrow(ctx,sa.x,sa.y,sb.x,sb.y,sa.c+'33',1);
+    glow(ctx,lerp(sa.x,sb.x,p),lerp(sa.y,sb.y,p),8,sa.c);
+    dot(ctx,lerp(sa.x,sb.x,p),lerp(sa.y,sb.y,p),3,sa.c);
+  });
+  items.forEach(s=>{
+    glow(ctx,s.x,s.y,26,s.c);
+    rr(ctx,s.x-32,s.y-18,64,36,8,'#0a1628',s.c+'aa',1.5);
+    const lines=s.l.split('\n');
+    lines.forEach((l,i)=>txt(ctx,l,s.x,s.y+(i-lines.length/2+.5)*12,9,s.c,'center',600));
+  });
+}
+
+// ═══════════════════════════════════════════════════════════
+// PIPELINE CANVASES
+// ═══════════════════════════════════════════════════════════
+const PIPES={aws:{ctx:null,t:0,raf:null},az:{ctx:null,t:0,raf:null},gcp:{ctx:null,t:0,raf:null},devops:{ctx:null,t:0,raf:null,mode:'all'}};
+function initPipe(id){
+  const ctx=setupCvs('cvs-'+id+'-pipe');if(!ctx)return;
+  PIPES[id].ctx=ctx;PIPES[id].t=0;
+  cancelAnimationFrame(PIPES[id].raf);
+  const fns={aws:animAwsPipe,az:animAzPipe,gcp:animGcpPipe};
+  if(fns[id]) fns[id]();
+}
+function drawPipe(ctx,W,H,t,stages,color){
+  txt(ctx,stages.map(s=>s.l).join('  →  '),W/2,H*.25,9,'rgba(255,255,255,0.2)','center');
+  const bw=Math.min(90,(W-60)/stages.length-8);
+  const by=H*.45,bh=38;
+  stages.forEach((s,i)=>{
+    const x=30+(bw+8)*i+bw/2;
+    const pp=((t*0.012+i*0.25)%1);
+    const active=Math.abs(pp-0.5)<0.15;
+    const c=s.c||color;
+    if(active) glow(ctx,x,by+bh/2,36,c);
+    rr(ctx,x-bw/2,by,bw,bh,8,active?c+'22':'#16132a',c+(active?'cc':'55'),active?2:1);
+    txt(ctx,s.icon,x,by+12,12,c,'center');
+    txt(ctx,s.l,x,by+28,8.5,c,'center',600);
+    if(i<stages.length-1){
+      const nx=30+(bw+8)*(i+1)+bw/2;
+      arrow(ctx,x+bw/2+2,by+bh/2,nx-bw/2-2,by+bh/2,c+'44',1);
+      const dp=((t*0.012+i*0.25)%1);
+      const dx=x+bw/2+2+(nx-bw/2-2-x-bw/2-2)*dp;
+      glow(ctx,dx,by+bh/2,8,c);dot(ctx,dx,by+bh/2,2.5,c);
+    }
+  });
+}
+function animAwsPipe(){
+  PIPES.aws.raf=requestAnimationFrame(animAwsPipe);
+  const ctx=PIPES.aws.ctx;if(!ctx)return;
+  const W=ctx._w,H=ctx._h,t=++PIPES.aws.t;
+  ctx.clearRect(0,0,W,H);rr(ctx,0,0,W,H,0,'#0c0a1e');
+  txt(ctx,'AWS CI/CD Pipeline',W/2,16,11,'#FF9900','center',700);
+  drawPipe(ctx,W,H,t,[
+    {l:'CodeCommit',icon:'📝',c:'#FF9900'},{l:'CodeBuild',icon:'🔨',c:'#f97316'},
+    {l:'ECR',icon:'📦',c:'#34d399'},{l:'CodeDeploy',icon:'🚀',c:'#FF9900'},
+    {l:'CloudWatch',icon:'📊',c:'#c084fc'},{l:'Production',icon:'✅',c:'#34d399'},
+  ],'#FF9900');
+}
+function animAzPipe(){
+  PIPES.az.raf=requestAnimationFrame(animAzPipe);
+  const ctx=PIPES.az.ctx;if(!ctx)return;
+  const W=ctx._w,H=ctx._h,t=++PIPES.az.t;
+  ctx.clearRect(0,0,W,H);rr(ctx,0,0,W,H,0,'#0c0a1e');
+  txt(ctx,'Azure DevOps Pipeline',W/2,16,11,'#0078D4','center',700);
+  drawPipe(ctx,W,H,t,[
+    {l:'Azure Repos',icon:'📝',c:'#0078D4'},{l:'Build',icon:'🔨',c:'#0090d1'},
+    {l:'ACR',icon:'📦',c:'#34d399'},{l:'Azure CD',icon:'🚀',c:'#0078D4'},
+    {l:'Monitor',icon:'📊',c:'#4361ee'},{l:'Production',icon:'✅',c:'#34d399'},
+  ],'#0078D4');
+}
+function animGcpPipe(){
+  PIPES.gcp.raf=requestAnimationFrame(animGcpPipe);
+  const ctx=PIPES.gcp.ctx;if(!ctx)return;
+  const W=ctx._w,H=ctx._h,t=++PIPES.gcp.t;
+  ctx.clearRect(0,0,W,H);rr(ctx,0,0,W,H,0,'#0c0a1e');
+  txt(ctx,'GCP Cloud Build Pipeline',W/2,16,11,'#4285F4','center',700);
+  drawPipe(ctx,W,H,t,[
+    {l:'Cloud Source',icon:'📝',c:'#4285F4'},{l:'Cloud Build',icon:'🔨',c:'#FBBC05'},
+    {l:'Artifact Reg',icon:'📦',c:'#34A853'},{l:'Cloud Deploy',icon:'🚀',c:'#EA4335'},
+    {l:'Monitoring',icon:'📊',c:'#4285F4'},{l:'Production',icon:'✅',c:'#34A853'},
+  ],'#4285F4');
+}
+function initDevops(){
+  const ctx=setupCvs('cvs-devops');if(!ctx)return;
+  PIPES.devops.ctx=ctx;PIPES.devops.t=0;
+  cancelAnimationFrame(PIPES.devops.raf);animDevops();
+}
+function devopsMode(m){
+  PIPES.devops.mode=m;PIPES.devops.t=0;
+  document.querySelectorAll('#devops .cbtn').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+}
+function animDevops(){
+  PIPES.devops.raf=requestAnimationFrame(animDevops);
+  const ctx=PIPES.devops.ctx;if(!ctx)return;
+  const W=ctx._w,H=ctx._h,t=++PIPES.devops.t;
+  ctx.clearRect(0,0,W,H);rr(ctx,0,0,W,H,0,'#0c0a1e');
+  const m=PIPES.devops.mode;
+  if(m==='all'){
+    // Show all 3 pipelines stacked
+    const rows=[
+      {label:'AWS',color:'#FF9900',stages:['Source','Build','Test','Package','Deploy','Monitor']},
+      {label:'Azure',color:'#0078D4',stages:['Repos','Pipeline','Test','ACR','Release','Monitor']},
+      {label:'GCP',color:'#4285F4',stages:['CSR','Cloud Build','Test','Artifact','Deploy','Ops']},
+    ];
+    rows.forEach((row,ri)=>{
+      const ry=30+ri*60;
+      txt(ctx,row.label,30,ry+16,9.5,row.color,'left',700);
+      const bw=(W-80)/6-4;
+      row.stages.forEach((s,si)=>{
+        const x=55+si*(bw+4);
+        const pp=((t*0.01+si*0.18+ri*0.3)%1);
+        const active=Math.abs(pp-0.5)<0.12;
+        if(active) glow(ctx,x+bw/2,ry+14,20,row.color);
+        rr(ctx,x,ry,bw,28,6,active?row.color+'22':'#16132a',row.color+(active?'cc':'44'),active?1.8:1);
+        txt(ctx,s,x+bw/2,ry+14,8,row.color,'center',600);
+        if(si<row.stages.length-1){
+          const nx=55+(si+1)*(bw+4);
+          const dp=pp;
+          const dx=x+bw+dp*4;
+          dot(ctx,dx,ry+14,2,row.color,.8);
+        }
+      });
+    });
+    txt(ctx,'All three providers follow the same CI/CD principles — only the tool names differ',W/2,H-14,9.5,'rgba(255,255,255,0.2)','center');
+  } else {
+    const configs={
+      aws:{color:'#FF9900',label:'AWS CodePipeline',stages:[{l:'CodeCommit',icon:'📝'},{l:'CodeBuild',icon:'🔨'},{l:'ECR Push',icon:'📦'},{l:'CodeDeploy',icon:'🚀'},{l:'CloudWatch',icon:'📊'},{l:'Live',icon:'✅'}]},
+      az:{color:'#0078D4',label:'Azure DevOps',stages:[{l:'Azure Repos',icon:'📝'},{l:'Build Agent',icon:'🔨'},{l:'ACR Push',icon:'📦'},{l:'AKS Deploy',icon:'🚀'},{l:'App Insights',icon:'📊'},{l:'Live',icon:'✅'}]},
+      gcp:{color:'#4285F4',label:'GCP Cloud Build',stages:[{l:'Cloud Source',icon:'📝'},{l:'Cloud Build',icon:'🔨'},{l:'Artifact Reg',icon:'📦'},{l:'Cloud Deploy',icon:'🚀'},{l:'Cloud Ops',icon:'📊'},{l:'Live',icon:'✅'}]},
+    };
+    const cfg=configs[m];
+    txt(ctx,cfg.label,W/2,18,12,cfg.color,'center',700);
+    drawPipe(ctx,W,H,t,cfg.stages,cfg.color);
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
+// UI INTERACTIONS
+// ═══════════════════════════════════════════════════════════
+function showTab(provider,panel,btn){
+  document.querySelectorAll(`#${provider}-${panel}`).forEach(()=>{});
+  document.querySelectorAll(`[id^="${provider}-"]`).forEach(p=>{
+    if(p.classList.contains('ps-panel')) p.classList.remove('active');
+  });
+  const el=document.getElementById(`${provider}-${panel}`);
+  if(el) el.classList.add('active');
+  // Update buttons
+  const providerSection=btn.closest('.ps-section');
+  if(providerSection) providerSection.querySelectorAll('.ps-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  // Init canvas if needed
+  if(panel==='arch'){
+    if(provider==='aws') setTimeout(initAwsArch,80);
+    else if(provider==='az') setTimeout(initAzArch,80);
+    else if(provider==='gcp') setTimeout(initGcpArch,80);
+  } else if(panel==='devops'){
+    if(provider==='aws') setTimeout(()=>initPipe('aws'),80);
+    else if(provider==='az') setTimeout(()=>initPipe('az'),80);
+    else if(provider==='gcp') setTimeout(()=>initPipe('gcp'),80);
+  }
+}
+function scrollToSec(id){
+  const el=document.getElementById(id);
+  if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+}
+function toggleTheme(){
+  const dark=document.documentElement.getAttribute('data-theme')==='dark';
+  document.documentElement.setAttribute('data-theme',dark?'light':'dark');
+  document.getElementById('theme-lbl').textContent=dark?'Dark':'Light';
+  const icon=document.querySelector('#theme-btn svg path');
+  if(icon) icon.setAttribute('d',dark?'M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z':'M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 7a5 5 0 100 10A5 5 0 0012 7z');
+  localStorage.setItem('ceh-theme',dark?'light':'dark');
+}
+
+// ═══════════════════════════════════════════════════════════
+// PROGRESS BAR + SCROLL + REVEAL
+// ═══════════════════════════════════════════════════════════
+(function(){
+  const bar=document.getElementById('progress');
+  const hdr=document.getElementById('hdr');
+  const scrollTop=document.getElementById('scroll-top');
+  let ticking=false;
+  window.addEventListener('scroll',function(){
+    if(!ticking){
+      requestAnimationFrame(function(){
+        const docH=document.documentElement.scrollHeight-window.innerHeight;
+        if(bar) bar.style.width=Math.min(100,(window.scrollY/Math.max(1,docH))*100)+'%';
+        if(hdr) hdr.classList.toggle('scrolled',window.scrollY>10);
+        if(scrollTop) scrollTop.classList.toggle('vis',window.scrollY>320);
+        ticking=false;
+      });
+      ticking=true;
+    }
+  },{passive:true});
+})();
+
+// ── Reveal on scroll ───────────────────────────────────────
+(function(){
+  if(!window.IntersectionObserver) return;
+  const obs=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}
+    });
+  },{threshold:0.06});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+})();
+
+// ── Banner IntersectionObserver ───────────────────────────
+(function(){
+  if(!window.IntersectionObserver) return;
+  const map={'cvs-aws-banner':()=>initBanner('aws'),'cvs-az-banner':()=>initBanner('az'),'cvs-gcp-banner':()=>initBanner('gcp')};
+  const obs=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{if(e.isIntersecting){const fn=map[e.target.id];if(fn) setTimeout(fn,60);}});
+  },{threshold:0.1});
+  Object.keys(map).forEach(id=>{const el=document.getElementById(id);if(el) obs.observe(el);});
+})();
+
+// ── DevOps canvas observer ────────────────────────────────
+(function(){
+  if(!window.IntersectionObserver) return;
+  const obs=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{if(e.isIntersecting) setTimeout(initDevops,80);});
+  },{threshold:0.1});
+  const el=document.getElementById('cvs-devops');
+  if(el) obs.observe(el);
+})();
+
+// ── Ripple on buttons ─────────────────────────────────────
+document.addEventListener('click',function(e){
+  const btn=e.target.closest('button,a.provider-chip');
+  if(!btn) return;
+  const r=document.createElement('span');
+  r.style.cssText=`position:absolute;border-radius:50%;background:rgba(99,65,204,0.25);width:20px;height:20px;margin:-10px;pointer-events:none;animation:ripple .5s linear;`;
+  const rect=btn.getBoundingClientRect();
+  r.style.left=(e.clientX-rect.left)+'px';r.style.top=(e.clientY-rect.top)+'px';
+  btn.style.position=btn.style.position||'relative';
+  btn.style.overflow='hidden';
+  btn.appendChild(r);setTimeout(()=>r.remove(),520);
+});
+
+// ── Theme restore ─────────────────────────────────────────
+(function(){
+  const saved=localStorage.getItem('ceh-theme');
+  const dark=saved?saved==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;
+  if(dark){document.documentElement.setAttribute('data-theme','dark');document.getElementById('theme-lbl').textContent='Light';}
+})();
+
+// ── INIT ──────────────────────────────────────────────────
+window.addEventListener('load',function(){
+  initHero();
+  // Ripple keyframe
+  const style=document.createElement('style');
+  style.textContent='@keyframes ripple{to{transform:scale(4);opacity:0;}}';
+  document.head.appendChild(style);
+});
+</script>
+</body>
+</html>
